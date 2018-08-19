@@ -35,12 +35,12 @@
             <a class="nav-link" href="#"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un événement</button></a>
         </li>
     </ul>
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" style="background-color: rgba(128, 128, 128, 0.7)">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('register') }}">Inscription</a>
+            <a style="color: white" class="nav-link" href="{{ route('register') }}">Inscription</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Connexion</a>
+            <a style="color: white" class="nav-link" href="#">Connexion</a>
         </li>
     </ul>
 </nav>

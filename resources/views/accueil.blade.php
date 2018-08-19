@@ -24,7 +24,7 @@
                 var adress = document.getElementById('adresse').value;
                 adress = adress.replace(' ', '%20');
 
-                document.getElementById('iframeCarte').src = 'carte.html?'+adress;
+                document.getElementById('iframeCarte').src = '{{route('carte')}}?'+adress;
                 console.log(document.location.href);
             }
         }
