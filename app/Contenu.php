@@ -13,7 +13,7 @@ class Contenu extends Model
 
     //renvoie toutes les infos d'un contenu
     public function getContenu(){
-        if(!isset($id_contenu))
+        if(!isset($this->id_contenu))
             return 0;
 
         $contenu = Contenu::join('contenu_categories', 'contenus.id_Contenu', '=', 'contenu_categories.id_Contenu')
@@ -21,7 +21,7 @@ class Contenu extends Model
             ->join('Contenu_Criteres', 'contenus.id_Contenu', '=', 'Contenu_Criteres.id_Contenu')
             ->join('Criteres', 'Contenu_Criteres.id_Critere', '=', 'Criteres.id_Critere')
             ->join('Users', 'contenus.id_User', '=', 'Users.id')
-            ->where('id_contenu', '=', $this->id_contenu)
+            ->where('contenus.id_contenu', '=', $this->id_contenu)
             ->get();
 
         return $contenu;
@@ -61,7 +61,8 @@ class Contenu extends Model
                 ->where('contenus.CoordonneesX', '<', $basX)
                 ->where('contenus.Coordonneesy', '<', $basY)
                 ->select('id_Contenu', 'Coordonnees')
-                ->get();
+                ->toSql();
+            dd($data);
             if($data){
                 $values.push($data);
             }
