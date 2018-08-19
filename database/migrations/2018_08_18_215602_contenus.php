@@ -18,7 +18,8 @@ class Contenus extends Migration
             $table->increments('id_Contenu');
             $table->integer('id_User')->unsigned();
             $table->string('Adresse')->nullable();
-            $table->string('Coordonnees');
+            $table->string('CoordonneesX');
+            $table->string('CoordonneesY');
             $table->string('Date');
             $table->text('Description');
             $table->string('Annonce');
