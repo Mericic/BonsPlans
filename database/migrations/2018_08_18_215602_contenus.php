@@ -17,7 +17,8 @@ class Contenus extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id_Contenu');
             $table->integer('id_User')->unsigned();
-            $table->string('Adresse');
+            $table->string('Adresse')->nullable();
+            $table->string('Coordonnees');
             $table->string('Date');
             $table->text('Description');
             $table->string('Annonce');
