@@ -76,6 +76,9 @@
         L.marker([latitude, longitude]).addTo(mymap)
             .bindPopup("<b>Night Mario Kart</b><hr>Pour la sortie du nouveau mario kart, venez-vous amusé avec nous !!!<hr>Organisateur : <a href=\"#\">Maxou</a>");
 
+        L.marker([45.758419, 4.832507]).addTo(mymap)
+            .bindPopup("<b>Night Mario Kart</b><hr>Pour la sortie du nouveau mario kart, venez-vous amusé avec nous !!!<hr>Organisateur : <a href=\"#\">Maxou</a>");
+
         L.circle([latitude, longitude], 500, {
             color: 'red',
             fillColor: '#f03',
@@ -112,12 +115,15 @@
                 var test = this.responseText.substr(17);
                 test = test.substr(0, test.length-1);
                 var myObj = JSON.parse(test);
-                //console.log(myObj[0].display_name.substr(0, test.length-6));
-                if(myObj[0].display_name.substr(0, test.length-6) == "France")
+
+                var display_name = myObj[0].display_name.substr(myObj[0].display_name.length-6, myObj[0].display_name.length)
+                console.log(display_name);
+                if(display_name == "France")
                     maps(myObj[0].lat, myObj[0].lon, "succes");
-                else
+                else {
                     maps(45.758399, 4.832487, "succes");
-                alert('Erreur: Aucune correspondance en France');
+                    alert('Erreur: Aucune correspondance en France');
+                }
             }
         };
         adress = adress.replace(' ', '%20');

@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-    <title>Linky's</title>
+    <title>Tricky's</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -32,15 +32,15 @@
     </ul>
     <ul class="navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" href="#"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i>Ajouter un événement</button></a>
+            <a class="nav-link" href="#"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un événement</button></a>
         </li>
     </ul>
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" style="background-color: rgba(128, 128, 128, 0.7)">
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('register') }}">Inscription</a>
+            <a style="color: white" class="nav-link" href="{{ route('register') }}">Inscription</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Connexion</a>
+            <a style="color: white" class="nav-link" href="#">Connexion</a>
         </li>
     </ul>
 </nav>
