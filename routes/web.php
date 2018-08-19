@@ -23,3 +23,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/profil/{pseudo}', 'HomeController@profil')->name('profil')->where(['pseudo'=>'[a-zA-Z0-9]+']);
+
+
+Route::get('/contenu/{id_contenu}', 'HomeController@contenu')->name('contenu')->where(['id_contenu'=>'[0-9]{1,6}']);

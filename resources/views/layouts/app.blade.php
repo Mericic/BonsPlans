@@ -52,6 +52,7 @@
 </nav>
 
 @yield('content')
-
+<script src="\js\smoothJump.js"></script>
+<script src="\js\infiniteScroll.js"></script>
 </body>
 </html>

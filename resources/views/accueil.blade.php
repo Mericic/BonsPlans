@@ -58,7 +58,6 @@
             }
         }
     </script>
-    <script src="\js\smoothJump.js"></script>
-    <script src="\js\infiniteScroll.js"></script>
+
 @endsection
 

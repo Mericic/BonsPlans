@@ -164,3 +164,75 @@ input, select {
     margin: 0;
     height: 100%;
 }
+
+#image_haut img{
+    width : 100%;
+    position: absolute;
+
+}
+
+#image_haut{
+    height: 80%;
+    width : 100%;
+    overflow: hidden;
+    top: 0;
+    z-index: 0;
+    position: absolute;
+}
+
+#image_haut h1{
+    z-index: 1;
+    color: white;
+    text-align: center;
+    position: relative;
+    top: 30%;
+    font-size: 3em;
+}
+
+#image_haut a{
+    z-index: 1;
+    position: relative;
+    display: block;
+    top: 80%;
+    text-align: center;
+
+}
+
+#image_haut button{
+    color: white;
+    background-color: black;
+
+    border-radius: 50%;
+
+    font-size: 2em;
+}
+
+#description{
+    position: absolute;
+    top: 80%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    width:100%;
+}
+
+#criteres{
+    grid-column: 2 / 9;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.critere p, .critere div{
+    width: 50%;
+    padding: 0;
+}
+
+#categories{
+    margin-top: 2px;
+    margin-right: 3px;
+    grid-column: 9 / 13;
+    box-shadow: 1px 1px 1px black;
+}
+
+.categorie{
+
+}
