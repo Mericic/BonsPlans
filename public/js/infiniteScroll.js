@@ -1,8 +1,21 @@
 var ticking = false;
+var data = new Array();
+
+document.getElementById('chercher').addEventListener('click', search(data));
+
+function search(data) {
+    var adresse = document.getElementById('adresse').value;
+    var select = document.getElementById('categorie');
+    var categories = select.options[select.selectedIndex].value;  
+    var range = document.getElementById('range');
+    data = [ adresse, categories, range ];
+    data.toString();
+    return (data);
+}
 
 function infiniteScroll() {
     if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100){
-        /*var lastId = { lastId : (document.getElementById('container').lastElementChild.id),  };
+        array = { lastId : (document.getElementById('container').lastElementChild.id),  };
         $.ajax({
             type: 'POST',
             url: "infinite.php", 
@@ -18,7 +31,7 @@ function infiniteScroll() {
                     document.getElementById('container').appendChild(img);
                 }
             }
-        });*/
+        });
         let list = document.getElementById('list');
         var i = 0;
         while (i++ < 15) {

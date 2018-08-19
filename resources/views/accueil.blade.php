@@ -2,28 +2,34 @@
 @section('content')
     <div id="main-container">
         <iframe style="position: absolute; z-index: 1; top: 0px; overflow: hidden; border: hidden;" id="iframeCarte" title="carte" src="{{route('carte')}}" width="100%"></iframe>
-        <div id="cadre">
-                <div style="font-size: 1.2em; width: 45%; float: left;" class="form-group">
-                    <label>Lieu: </label>
-                    <input type="text" id="adresse" class="form-control" placeholder="Lyon">
-                </div>
-                <div style="font-size: 1.2em; width: 45%; float: right;" class="form-group">
-                    <label>Catégorie: </label>
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </div>
-                <div>
-                    <p id="valueRange"></p>
-                    <input id="range" type="range" class="custom-range" style="color: black">
-                    <button type="button" class="btn btn-dark" id="chercher" onclick="search()">Chercher</button>
-                </div>
-        </div>
         <div class="links">
             <a href="#list"> &#8595; Voir la liste &#8595; </a>
+        </div>
+        <div id="cadre">
+                <div style="font-size: 1.2em;" class="form-group">
+                    <input type="text" id="adresse" placeholder="Choisis un lieu...">
+                </div>
+                <div style="font-size: 1.2em;" class="form-group">
+                    <select id="categorie">
+                        <option value='' disabled selected>Choisis un filtre...</option>
+                        <option value='1'>1</option>
+                        <option value='2'>2</option>
+                        <option value='3'>3</option>
+                        <option value='4'>4</option>
+                    </select>
+                </div>
+                <div id="rangeDiv">
+                    <div style="font-size: 1.2em;" class="form-group">
+                        <select id="categorie">
+                            <option value='' disabled selected>Choisis un rayon...</option>
+                            <option value='2000'>2000m</option>
+                            <option value='1500'>1500m</option>
+                            <option value='1000'>1000m</option>
+                            <option value='500'>500m</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn" id="chercher">GO!</button>
+                </div>
         </div>
     </div>  
     <div id="list">
