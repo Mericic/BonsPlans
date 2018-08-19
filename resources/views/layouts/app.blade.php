@@ -36,12 +36,18 @@
         </li>
     </ul>
     <ul class="navbar-nav" style="background-color: rgba(128, 128, 128, 0.7)">
+        @if(!Auth::check())
         <li class="nav-item">
             <a style="color: white" class="nav-link" href="{{ route('register') }}">Inscription</a>
         </li>
         <li class="nav-item">
             <a style="color: white" class="nav-link" href="#">Connexion</a>
         </li>
+        @else
+            <li class="nav-item">
+                <a style="color: white" class="nav-link" href="{{ route('profil', ['pseudo'=>Auth::user()->pseudo]) }}">Mon Profil</a>
+            </li>
+        @endif
     </ul>
 </nav>
 
