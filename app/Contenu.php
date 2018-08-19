@@ -12,6 +12,8 @@ class Contenu extends Model
     public $id_contenus = [];
     public $categories = [];
     public $criteres = [];
+    public $images = [];
+    public $contenu;
 
     //renvoie toutes les infos d'un contenu
     public function getContenu(){
@@ -36,8 +38,15 @@ class Contenu extends Model
             ->select('criteres.nom as nom_critere')
             ->get();
 
+        $this->images = Contenu::join('Contenu_Images', 'contenus.id_Contenu', '=', 'contenu_images.id_image')
+            ->join('images', 'Contenu_Images.id_image', '=', 'images.id')
+            ->where('contenus.id_contenu', '=', $this->id_contenu)
+            ->get();
+
+        $this->contenu = $contenu;
         $contenu->categories = $this->categories;
         $contenu->criteres = $this->criteres;
+        $contenu->images = $this->images;
 
 
         return $contenu;
