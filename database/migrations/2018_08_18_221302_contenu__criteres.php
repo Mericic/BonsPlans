@@ -13,7 +13,7 @@ class ContenuCriteres extends Migration
      */
     public function up()
     {
-        Schema::create('contenu-criteres', function (Blueprint $table) {
+        Schema::create('contenu_criteres', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('id_Critere')->unsigned();

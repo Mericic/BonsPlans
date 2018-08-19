@@ -21,3 +21,5 @@ Route::get('/carte', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/profil/{pseudo}', 'HomeController@profil')->name('profil')->where(['pseudo'=>'[a-zA-Z0-9]+']);

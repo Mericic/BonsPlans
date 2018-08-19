@@ -12,7 +12,7 @@ class ContenuController extends Controller
         $contenu = new Contenu();
         $contenu->id_contenu = $id_contenu;
         $description = $contenu->getContenu();
-        if($description != 0){
+        if(!$description){
             return response()->json([
                 'contenu' => $description
             ], 200);
