@@ -18,6 +18,7 @@ class ContenuController extends Controller
                 'contenu' => $description,
                 'criteres' => $description->criteres,
                 'categories' => $description->categories,
+                'images' => $description->images,
             ], 200);
         }else{
             return response()->json([
@@ -36,19 +37,6 @@ class ContenuController extends Controller
     }
 
     public function getAllCoordonnees(Request $request){
-        //echo preg_match('#^(([1-9]{1,3})+,+([1-9]{5})+&+([1-9]{1,3})+,+([1-9]{5})+)+\|+(([1-9]{1,3})+,+([1-9]{5})+&+([1-9]{1,3})+,+([1-9]{5})+)+$#', '45,12345&45,12345|45,12345&45,12345');
-        //json sous la forme :
-        //{
-        //      "perimetre" : regex,
-        //      "categories" : [
-        //          {"id_categorie" : "1"}, {"id_categorie" :"2"}
-        //      ]
-        //}
-/*        $request->validate([
-            'perimetre' => 'required|max:20',
-            'categories' => 'nullable|json'
-        ]);*/
-//        dd('coucou');
 
         $categories =$request->input('categories');
 

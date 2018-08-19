@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contenu;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -31,5 +32,14 @@ class HomeController extends Controller
 //        $profil =
 
         return view('pages.profil');
+    }
+
+    public function contenu($id_contenu){
+
+        $contenu = new Contenu();
+        $contenu->id_contenu = $id_contenu;
+        $contenu->getContenu();
+        return view('pages.detail_contenu')
+            ->with(['contenu'=>$contenu->contenu[0], 'images'=>$contenu->images, 'categories'=>$contenu->categories, 'criteres'=>$contenu->criteres]);
     }
 }

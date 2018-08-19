@@ -41,13 +41,13 @@ class Contenu extends Model
         $this->images = Contenu::join('Contenu_Images', 'contenus.id_Contenu', '=', 'contenu_images.id_image')
             ->join('images', 'Contenu_Images.id_image', '=', 'images.id')
             ->where('contenus.id_contenu', '=', $this->id_contenu)
+            ->select('nom as nom_image', 'path')
             ->get();
 
         $this->contenu = $contenu;
         $contenu->categories = $this->categories;
         $contenu->criteres = $this->criteres;
         $contenu->images = $this->images;
-
 
         return $contenu;
     }
