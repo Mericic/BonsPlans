@@ -6,9 +6,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
 
-    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('css/style.css')}}" type="text/css"/>
 
-    <link rel="stylesheet" href="css/Control.OSMGeocoder.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('css/Control.OSMGeocoder.css')}}" type="text/css"/>
 
     <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
 
@@ -16,7 +16,7 @@
 
     <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
 
-    <script src="Control.OSMGeocoder.js"></script>
+    <script src="{{ asset('js/Control.OSMGeocoder.js')}}"></script>
 </head>
 <body onLoad="getLocation()">
 <div id="mapid"></div>
