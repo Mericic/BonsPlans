@@ -3,22 +3,24 @@
     <div id="main-container">
         <iframe style="position: absolute; z-index: 1; top: 0px; overflow: hidden; border: hidden;" id="iframeCarte" title="carte" src="{{route('carte')}}" width="100%"></iframe>
         <div id="cadre">
-            <div id="lieu">
-                <label>Lieu: </label>
-                <input type="text" id="adresse" class="form-control" placeholder="Lyon">
-            </div>
-            <div id="categories">
-                <label>Catégorie: </label>
-                <select class="form-control">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                </select>
-            </div>
-            <p id="valueRange"></p>
-            <input id="range" type="range" class="custom-range" style="color: black">
-            <button type="button" class="btn btn-dark" id="chercher" onclick="search()">Chercher</button>
+                <div style="font-size: 1.2em; width: 45%; float: left;" class="form-group">
+                    <label>Lieu: </label>
+                    <input type="text" id="adresse" class="form-control" placeholder="Lyon">
+                </div>
+                <div style="font-size: 1.2em; width: 45%; float: right;" class="form-group">
+                    <label>Catégorie: </label>
+                    <select class="form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+                <div>
+                    <p id="valueRange"></p>
+                    <input id="range" type="range" class="custom-range" style="color: black">
+                    <button type="button" class="btn btn-dark" id="chercher" onclick="search()">Chercher</button>
+                </div>
         </div>
         <div class="links">
             <a href="#list"> &#8595; Voir la liste &#8595; </a>

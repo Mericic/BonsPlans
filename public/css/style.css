@@ -144,16 +144,6 @@ nav{
     margin-bottom: 20px;
 }
 
-#lieu {
-    float: left;
-    width: 48%;
-}
-
-#categories {
-    float: right;
-    width: 48%;
-}
-
 #cadre {
     font-size: 2vw;
     padding: 10px;
@@ -165,6 +155,4 @@ nav{
 
 #chercher {
     width: 100%;
-    margin: auto;
-    margin-top: 1%;
 }
