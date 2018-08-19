@@ -5,7 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+        <title>Linky's</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -65,18 +68,44 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
 
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <img alt="petitLogo" src="{{ asset('img/logo.png')}}" width="60px">
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un événement</button></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Connexion</a>
+                </li>
+            </ul>
+        </nav>
+        <iframe style="position: absolute; z-index: 1; margin-top: 0px; overflow: hidden; border: hidden;" id="iframeCarte" title="carte" src="{{URL::to('/')}}/carte.php" width="100%"></iframe>
+        <div style="position: absolute; z-index: 2; margin-top: 10px; margin-left: 40%;">
+            <input type="text" id="adresse">
+            <button onclick="search()">Chercher</button>
+        </div>
+        <div style="position: absolute; z-index: 2;" class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
@@ -91,5 +120,18 @@
                 </div>
             </div>
         </div>
+        <img style="position: absolute; z-index: 0; width: 200px; display: block; left: 45%; top: 35%;" src="images/wait.gif">
+        <script>
+            document.getElementById('iframeCarte').height = window.innerHeight;
+            function search() {
+                if(document.getElementById('adresse').value != ""){
+                    var adress = document.getElementById('adresse').value;
+                    adress = adress.replace(' ', '%20');
+
+                    document.getElementById('iframeCarte').src = 'carte.html?'+adress;
+                    console.log(document.location.href);
+                }
+            }
+        </script>
     </body>
 </html>
