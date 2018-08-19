@@ -78,7 +78,7 @@ html, body {
     color: white;
     text-align: center;
     padding: 0 25px;
-    font-size: 1.5vw;
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: .1rem;
     text-decoration: none;
@@ -122,7 +122,7 @@ nav{
 #vers-carte {
     position: sticky;
     top: 0;
-    height: 30px;
+    grid-column: 5 / 6;
 }
 
 .newDiv {
@@ -138,7 +138,7 @@ nav{
     bottom: 0;
     color: white;
     z-index: 2;
-    font-size: 1.5vw;
+    font-size: 16px;
     border-radius: 5px;
     padding-left: 3px;
     background-color: rgba(61, 61, 61, 0.534);
@@ -147,12 +147,18 @@ nav{
 #cadre > div, .form-group, #chercher {
     margin: auto;
     display: inline-block;
+    border-radius: 5px;
+}
+
+input, select {
+    border-radius: 5px;
+    padding: 3px;
 }
 
 #chercher {
     background-color: rgb(33, 101, 189);
     color: white;
-    font-size: 2vw;
+    font-size: 20px;
     font-weight: 900; 
     padding: 10px;
     margin: 0;
