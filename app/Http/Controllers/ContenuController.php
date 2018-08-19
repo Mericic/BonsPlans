@@ -12,9 +12,12 @@ class ContenuController extends Controller
         $contenu = new Contenu();
         $contenu->id_contenu = $id_contenu;
         $description = $contenu->getContenu();
-        if(!$description){
+//        dd($description->criteres);
+        if($description){
             return response()->json([
-                'contenu' => $description
+                'contenu' => $description,
+                'criteres' => $description->criteres,
+                'categories' => $description->categories,
             ], 200);
         }else{
             return response()->json([
@@ -23,16 +26,38 @@ class ContenuController extends Controller
         }
     }
 
-    public function getAllCoordonnees(Request $request){
-        //echo preg_match('#^(([1-9]{1,3})+,+([1-9]{5})+&+([1-9]{1,3})+,+([1-9]{5})+)+\|+(([1-9]{1,3})+,+([1-9]{5})+&+([1-9]{1,3})+,+([1-9]{5})+)+$#', '45,12345&45,12345|45,12345&45,12345');
-
+    public function getContenus(Request $request){
         $request->validate([
             'perimetre' => 'required|max:20|regex:#^(([0-9]{1,3})+,+([0-9]{5})+&+([0-9]{1,3})+,+([0-9]{5})+)+\|+(([0-9]{1,3})+,+([0-9]{5})+&+([0-9]{1,3})+,+([0-9]{5})+)+$#',
             'categories' => 'nullable|json'
         ]);
+        $contenu = new Contenu();
+
+    }
+
+    public function getAllCoordonnees(Request $request){
+        //echo preg_match('#^(([1-9]{1,3})+,+([1-9]{5})+&+([1-9]{1,3})+,+([1-9]{5})+)+\|+(([1-9]{1,3})+,+([1-9]{5})+&+([1-9]{1,3})+,+([1-9]{5})+)+$#', '45,12345&45,12345|45,12345&45,12345');
+        //json sous la forme :
+        //{
+        //      "perimetre" : regex,
+        //      "categories" : [
+        //          {"id_categorie" : "1"}, {"id_categorie" :"2"}
+        //      ]
+        //}
+/*        $request->validate([
+            'perimetre' => 'required|max:20',
+            'categories' => 'nullable|json'
+        ]);*/
+//        dd('coucou');
+
+        $categories =$request->input('categories');
 
         $contenu = new Contenu();
-        $coordonnees = $contenu ->getAllCoordonnees($request->perimetre, $request->categories);
+//        dd($request->perimetre);
+        $contenu->getContenus($request->perimetre, $categories);
+
+
+        $coordonnees = $contenu ->getAllCoordonnees();
 
         if($coordonnees!=''){
             return response()->json([

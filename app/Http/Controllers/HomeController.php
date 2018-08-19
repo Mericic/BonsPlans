@@ -25,4 +25,11 @@ class HomeController extends Controller
     {
         return view('accueil');
     }
+
+    public function profil($pseudo){
+
+//        $profil =
+
+        return view('pages.profil');
+    }
 }
