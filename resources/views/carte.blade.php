@@ -12,6 +12,8 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
 
     <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
@@ -74,22 +76,16 @@
 
 
         L.marker([latitude, longitude]).addTo(mymap)
-            .bindPopup("<b>Night Mario Kart</b><hr>Pour la sortie du nouveau mario kart, venez-vous amusé avec nous !!!<hr>Organisateur : <a href=\"#\">Maxou</a>");
+            .bindPopup("<b>Night Mario Kart2</b><hr>Pour la sortie du nouveau mario kart, venez-vous amusé avec nous !!!<img style='width: 100%' src='https://cdn.static-economist.com/sites/default/files/images/2016/12/articles/main/20161224_xmc701.jpg'><hr>Organisateur : <a href=\"#\">Maxou</a><a href=\"#\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a>");
 
         L.marker([45.758419, 4.832507]).addTo(mymap)
-            .bindPopup("<b>Night Mario Kart</b><hr>Pour la sortie du nouveau mario kart, venez-vous amusé avec nous !!!<hr>Organisateur : <a href=\"#\">Maxou</a>");
+            .bindPopup("<b>Night Mario Kart</b><br>Pour la sortie du nouveau mario kart, venez-vous amusé avec nous !!!<hr>Organisateur : <a href=\"#\">Maxou</a><a href=\"#\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a>");
 
         L.circle([latitude, longitude], 500, {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5
-        }).addTo(mymap).bindPopup("I am a circle.");
-
-        L.polygon([
-            [51.509, -0.08],
-            [51.503, -0.06],
-            [51.51, -0.047]
-        ]).addTo(mymap).bindPopup("I am a polygon.");
+        }).addTo(mymap).bindPopup("Périmètre a proximité du point recherché<br>(~1km de diamètre)");
 
 
         var popup = L.popup();
