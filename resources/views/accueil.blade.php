@@ -7,7 +7,7 @@
         </div>
         <div id="cadre">
                 <div style="font-size: 1.2em;" class="form-group">
-                    <input type="text" id="adresse" placeholder="Choisis un lieu...">
+                    <input type="text" id="adresse" placeholder="Choisis un lieu..." required>
                 </div>
                 <div style="font-size: 1.2em;" class="form-group">
                     <select id="categorie">
@@ -20,7 +20,7 @@
                 </div>
                 <div id="rangeDiv">
                     <div style="font-size: 1.2em;" class="form-group">
-                        <select id="categorie">
+                        <select id="range">
                             <option value='' disabled selected>Choisis un rayon...</option>
                             <option value='2000'>2000m</option>
                             <option value='1500'>1500m</option>
@@ -28,7 +28,7 @@
                             <option value='500'>500m</option>
                         </select>
                     </div>
-                    <button type="button" class="btn" id="chercher">GO!</button>
+                    <button type="button" class="btn" id="chercher" onclick="search()">GO!</button>
                 </div>
         </div>
     </div>  
@@ -57,10 +57,6 @@
                 console.log(document.location.href);
             }
         }
-        var slider = new Slider("#range");
-        slider.on("slide", function(sliderValue) {
-            document.getElementById("valueRange").textContent = sliderValue;
-        });
     </script>
     <script src="\js\smoothJump.js"></script>
     <script src="\js\infiniteScroll.js"></script>
