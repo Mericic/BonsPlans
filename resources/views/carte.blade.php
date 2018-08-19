@@ -18,6 +18,8 @@
 
     <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script src="{{ asset('js/Control.OSMGeocoder.js')}}"></script>
 </head>
 <body onLoad="getLocation()">
@@ -74,13 +76,11 @@
             id: 'mapbox.streets'
         }).addTo(mymap);
 
+        startMaps(latitude, longitude);
 
-        L.marker([latitude, longitude]).addTo(mymap)
-            .bindPopup("<b>Night Mario Kart2</b><hr>Pour la sortie du nouveau mario kart, venez-vous amusé avec nous !!!<img style='width: 100%' src='https://cdn.static-economist.com/sites/default/files/images/2016/12/articles/main/20161224_xmc701.jpg'><hr>Organisateur : <a href=\"#\">Maxou</a><a href=\"#\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a>");
-
-        L.marker([45.758419, 4.832507]).addTo(mymap)
+        /*L.marker([45.758419, 4.832507]).addTo(mymap)
             .bindPopup("<b>Night Mario Kart</b><br>Pour la sortie du nouveau mario kart, venez-vous amusé avec nous !!!<hr>Organisateur : <a href=\"#\">Maxou</a><a href=\"#\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a>");
-
+        */
         L.circle([latitude, longitude], 500, {
             color: 'red',
             fillColor: '#f03',
@@ -97,10 +97,37 @@
                 .openOn(mymap);
         }
 
+        function startMaps(latitude, longitude){
+            $.ajax({
+                type: "GET",
+                url: "api/contenu/start/"+latitude+'/'+longitude,
+                success: function(data){
+                    console.log(data);
+                    data.forEach(function (element) {
+                        L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
+                                .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href='#' style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"#\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
+                    });
+
+                }
+            });
+        }
+
         mymap.on('click', onMapClick);
 
         document.getElementsByClassName("leaflet-control-zoom leaflet-bar leaflet-control")[0].style.display = "none";
         //document.getElementsByClassName("leaflet-control-attribution leaflet-control")[0].style.display = "none";
+    }
+
+    function clickOnBalise(id){
+        $.ajax({
+            type: "GET",
+            url: "api/contenu/"+id,
+            success: function(data){
+                console.log(data);
+
+                $('#list-Quota').html(item);
+            }
+        });
     }
 
     function search(adress) {
