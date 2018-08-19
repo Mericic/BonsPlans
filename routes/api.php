@@ -18,4 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/contenu/{id_contenu}', 'ContenuController@getContenu')->where('id_contenu', '[0-9]{1,6}')->name('getContenu');
-Route::post('/contenu/getAllCoordonnees', 'ContenuController@getAllCoordonnees')->name('getAllCoordonnees');
+Route::get('/contenu/start/{latitude}/{longitude}', 'MapsController@getContenuStart')->name('getContenuStart');
+
+Route::get('/contenu/getAllCoordonnees', 'ContenuController@getAllCoordonnees')->name('getAllCoordonnees');
