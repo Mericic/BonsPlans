@@ -12,5 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('accueil');
+})->name('accueil');
+Route::get('/carte', function () {
+    return view('carte');
+})->name('carte');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
