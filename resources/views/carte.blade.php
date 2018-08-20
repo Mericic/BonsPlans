@@ -22,7 +22,7 @@
 
     <script src="{{ asset('js/Control.OSMGeocoder.js')}}"></script>
 </head>
-<body onLoad="getLocation()" onscroll="demo()">
+<body onLoad="getLocation()">
 <div id="mapid"></div>
 <script>
     function getLocation() {
@@ -75,7 +75,7 @@
             minZoom: 10,
             id: 'mapbox.streets'
         }).addTo(mymap);
-        
+
 
         startMaps(latitude, longitude);
 
@@ -111,7 +111,7 @@
                         console.log(data);
                         data.forEach(function (element) {
                             L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
-                                    .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href='#' style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"#\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
+                                    .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href='#' style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"contenu/"+element.id_Contenu+"\" target=\"_parent\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
                         });
 
                     }
@@ -127,7 +127,7 @@
                     console.log(data);
                     data.forEach(function (element) {
                         L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
-                                .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href='#' style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"#\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
+                                .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href='#' style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"contenu/"+element.id_Contenu+"\" target=\"_parent\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
                     });
 
                 }
