@@ -14,6 +14,7 @@ class Contenu extends Model
     public $categories = [];
     public $criteres = [];
     public $images = [];
+    public $commentaires = [];
     public $contenu;
 
     //renvoie toutes les infos d'un contenu
@@ -42,6 +43,8 @@ class Contenu extends Model
             ->where('contenus.id_contenu', '=', '1')
             ->groupby('criteres.id_critere')
             ->get();
+
+        $this->commentaires = Commentaire::getCommentaireByContenu($this->id_contenu);
 
         $this->images = Contenu::join('Contenu_Images', 'contenus.id_Contenu', '=', 'contenu_images.id_contenu')
             ->join('images', 'Contenu_Images.id_image', '=', 'images.id')

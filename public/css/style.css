@@ -19,6 +19,8 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 
+
+
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -244,7 +246,7 @@ nav{
 }
 
 #criteres{
-    float: left;
+    /*float: left;*/
 }
 
 .critere{
@@ -259,7 +261,7 @@ nav{
 
 .progress{
     float: left;
-    width: 85%;
+    width: 81%;
 }
 .critere p{
     padding-right: 15px;
@@ -273,12 +275,11 @@ nav{
 #categories{
     margin-top: 2px;
     margin-right: 3px;
-    box-shadow: 1px 1px 1px black;
 }
 
 #categories{
     /*display: grid;*/
-    padding: 2px 5px;
+    /*padding: 2px 5px;*/
 }
 .categorie{
     overflow: hidden;
@@ -289,7 +290,7 @@ nav{
 
 #descriptiondetaillee{
     margin-top: 20px;
-    display: block;
+    /*display: block;*/
 }
 
 
@@ -413,3 +414,21 @@ nav{
     grid-row: 6 / 7;
 }
 
+#criteres, #categories, #descriptiondetaillee, #commentaires{
+    margin: 2px;
+    background-color: rgb(243, 248, 253);
+    box-shadow: 1px 1px 1px grey;
+    padding-bottom: 15px;
+}
+.commentaire, .reponse{
+    box-shadow: 1px 1px 1px grey;
+    margin-bottom: 5px;
+}
+
+.commentaire{
+    background-color: white;
+}
+.reponse{
+    background-color: lightgray;
+    padding: 3px;
+}

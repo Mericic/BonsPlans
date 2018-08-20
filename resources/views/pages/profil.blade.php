@@ -7,7 +7,7 @@
     <div id="profile-wrapper">
         <div id="user-info-container">
             <div id="profile-picture"><img src="#"></div>
-            <div id="username">USERNAME <br> Name</div>
+            <div id="username"> <br> Name</div>
             <div id="user-info">User info <br> user info</div>
         </div>
         <div id="fav-categories">

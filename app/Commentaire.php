@@ -17,6 +17,13 @@ class Commentaire extends Model
         return ($commentaires);
     }
     
-    //public  function getCommentaireByContenu($id_contenu) {}
+    public static function getCommentaireByContenu($id_contenu) {
+        $commentaires = Commentaire::join('users', 'commentaires.id_User', '=', 'users.id')
+            ->leftjoin('reponses', 'commentaires.id_commentaire', '=', 'reponses.id_commentaire')
+            ->where('commentaires.id_contenu', '=', $id_contenu)
+            ->get();
+
+        return ($commentaires);
+    }
     
 }
