@@ -63,7 +63,7 @@ html, body {
     font-size: 84px;
 }
 
-.links {
+.buttonLinks {
     padding: 15px;
     position: absolute;
     bottom: 0;
@@ -72,17 +72,18 @@ html, body {
     border-radius: 4px;
     text-align: center;
     z-index: 1;
+    text-decoration: none;
 }
 
-.links > a {
+.links {
     color: white;
     text-align: center;
     padding: 0 25px;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: .1rem;
-    text-decoration: none;
     text-transform: uppercase;
+    text-decoration: none;
 }
 
 .m-b-md {
@@ -138,21 +139,22 @@ nav{
     bottom: 0;
     color: white;
     z-index: 2;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 5px;
-    padding-left: 3px;
+    padding: 3px;
     background-color: rgba(61, 61, 61, 0.534);
 }
 
-#cadre > div, .form-group, #chercher {
+#cadre > div, .inputCadre, #chercher {
     margin: auto;
     display: inline-block;
     border-radius: 5px;
 }
 
-input, select {
-    border-radius: 5px;
-    padding: 3px;
+#cadre  input, select {
+    margin-top: 5px;
+    border-radius: 7px;
+    padding: 5px;
 }
 
 #chercher {
@@ -168,7 +170,6 @@ input, select {
 #image_haut img{
     width : 100%;
     position: absolute;
-
 }
 
 #image_haut{
