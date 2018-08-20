@@ -17,7 +17,7 @@ class Reponses extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id_reponse');
             $table->integer('id_Commentaire')->unsigned();
-            $table->text('Commentaire');
+            $table->text('Reponse');
             $table->timestamps();
         });
     }

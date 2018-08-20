@@ -19,6 +19,7 @@ class VoteCriteres extends Migration
             $table->integer('id_User');
             $table->integer('id_Contenu')->unsigned();
             $table->integer('id_Critere')->unsigned();
+            $table->integer('value')->unsigned()->nullable();
 
 
         });
