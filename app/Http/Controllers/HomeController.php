@@ -30,13 +30,13 @@ class HomeController extends Controller
         return view('accueil');
     }
 
-    public function profil($pseudo){
+    public function profil($pseudo) {
 
         $user = User::where('pseudo', $pseudo) -> first();
 
 
         $commentaire = Commentaire::getCommentaireByUser($user->id);
-        
+
         return view('pages.profil') ->with(['user'=>$user, 'commentaires'=>$commentaire]);
     }
 
