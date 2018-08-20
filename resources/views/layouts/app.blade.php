@@ -53,6 +53,7 @@
             </li>
         @endif
     </ul>
+
 </nav>
 
 @yield('content')
