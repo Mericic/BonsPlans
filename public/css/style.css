@@ -146,13 +146,14 @@ nav{
 }
 
 #cadre > div, .inputCadre, #chercher {
-    margin: auto;
     display: inline-block;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
+#inputsCadre{
+    vertical-align: middle;
+}
 #cadre  input, select {
-    margin-top: 5px;
     border-radius: 7px;
     padding: 5px;
 }
