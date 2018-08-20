@@ -7,8 +7,8 @@
     <div id="profile-wrapper">
         <div id="user-info-container">
             <div id="profile-picture"><img src="#"></div>
-            <div id="username"> <br> Name</div>
-            <div id="user-info">User info <br> user info</div>
+            <div id="username">{{ $user->pseudo }} <br> {{ ucfirst($user->first_name) }} {{  ucfirst($user->last_name) }}  </div>
+            <div id="user-info">Créé le : {{ isset(Auth::user()->created_at) ? Auth::user()->created_at->toDateString() : Auth::user()->email }} </div>
         </div>
         <div id="fav-categories">
             <div class="profil-progress">
@@ -37,62 +37,15 @@
             </div>
         </div>
         <div id="com-historique">
+            @foreach ($commentaires as $commentaire)
             <div class="profil-com">
-                <p class="com-title">Com-Title</p>
+                <p class="com-title"> {{ strtoupper($commentaire->nom_contenu) }} </p>
                 <div class="progress .com-bar">
                     <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <p class="com-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class="com-main"> {{ $commentaire->Commentaire }} </p>
             </div>
-            <div class="profil-com">
-                <p class="com-title">Com-Title</p>
-                <div class="progress .com-bar">
-                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="com-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="profil-com">
-                <p class="com-title">Com-Title</p>
-                <div class="progress .com-bar">
-                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="com-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="profil-com">
-                <p class="com-title">Com-Title</p>
-                <div class="progress .com-bar">
-                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="com-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="profil-com">
-                <p class="com-title">Com-Title</p>
-                <div class="progress .com-bar">
-                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="com-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="profil-com">
-                <p class="com-title">Com-Title</p>
-                <div class="progress .com-bar">
-                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="com-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="profil-com">
-                <p class="com-title">Com-Title</p>
-                <div class="progress .com-bar">
-                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="com-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="profil-com">
-                <p class="com-title">Com-Title</p>
-                <div class="progress .com-bar">
-                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="com-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
+            @endforeach
         </div>
         <div id="participation">
             <div class="participation-div">
