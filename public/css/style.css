@@ -172,6 +172,11 @@ nav{
     height: 100%;
 }
 
+
+.clicable{
+    cursor: pointer;
+}
+
 #image_haut img{
     width : 100%;
     position: absolute;
@@ -214,31 +219,57 @@ nav{
 }
 
 #description{
+    margin-top: 20px;
     position: absolute;
     top: 80%;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
     width:100%;
 }
 
 #criteres{
-    grid-column: 2 / 9;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    float: left;
 }
 
-.critere p, .critere div{
+.critere{
+    padding: 5px 5px;
+}
+.critere p, .div_progress{
     width: 50%;
     padding: 0;
+    float: right;
+    text-align: right;
+}
+
+.progress{
+    float: left;
+    width: 85%;
+}
+.critere p{
+    padding-right: 15px;
+    float: left
+}
+
+.div_progress{
+    display: inline-block;
 }
 
 #categories{
     margin-top: 2px;
     margin-right: 3px;
-    grid-column: 9 / 13;
     box-shadow: 1px 1px 1px black;
 }
 
+#categories{
+    /*display: grid;*/
+    padding: 2px 5px;
+}
 .categorie{
+    overflow: hidden;
+}
+.categorie p{
+    display: inline;
+}
 
+#descriptiondetaillee{
+    margin-top: 20px;
+    display: block;
 }

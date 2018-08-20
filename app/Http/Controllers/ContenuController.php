@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contenu;
+use App\votes_critere;
 use Illuminate\Http\Request;
 
 class ContenuController extends Controller
@@ -34,6 +35,47 @@ class ContenuController extends Controller
         ]);
         $contenu = new Contenu();
 
+    }
+
+    //return 2 si déjà voté, 200 si tout ok
+    public function categorie_vote_plus(Request $request){
+        //on regarde si il a pas déjà voté
+        $dejavote = votes_critere::where('id_User', '=', $request->id_user)
+            ->where('id_Contenu', '=', $request->id_contenu)
+            ->where('id_Critere', '=', $request->id_critere)
+            ->get();
+//        dd($dejavote);
+
+        if(count($dejavote))
+            return 2;
+
+            $vote = new votes_critere();
+            $vote->id_User = $request->id_user;
+            $vote->id_Contenu = $request->id_contenu;
+            $vote->id_Critere = $request->id_critere;
+            $vote->value = 1;
+            $vote->save();
+            return 200;
+    }
+
+    public function categorie_vote_moins(Request $request){
+        //on regarde si il a pas déjà voté
+        $dejavote = votes_critere::where('id_User', '=', $request->id_user)
+            ->where('id_Contenu', '=', $request->id_contenu)
+            ->where('id_Critere', '=', $request->id_critere)
+            ->get();
+//        dd($dejavote);
+
+        if(count($dejavote))
+            return 2;
+
+        $vote = new votes_critere();
+        $vote->id_User = $request->id_user;
+        $vote->id_Contenu = $request->id_contenu;
+        $vote->id_Critere = $request->id_critere;
+        $vote->value = 0;
+        $vote->save();
+        return 200;
     }
 
     public function getAllCoordonnees(Request $request){

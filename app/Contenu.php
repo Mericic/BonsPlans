@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Contenu extends Model
 {
@@ -28,17 +29,21 @@ class Contenu extends Model
         $this->categories = Contenu::join('contenu_categories', 'contenus.id_Contenu', '=', 'contenu_categories.id_Contenu')
             ->join('Categories', 'contenu_categories.id_Categorie', '=', 'Categories.id_Categorie')
             ->where('contenus.id_contenu', '=', $this->id_contenu)
-            ->select('categories.nom as nom_categorie')
+            ->select('categories.nom as nom_categorie', 'categories.id_categorie')
             ->get();
 
-
-        $this->criteres =Contenu::join('Contenu_Criteres', 'contenus.id_Contenu', '=', 'Contenu_Criteres.id_Contenu')
+        $this->criteres = Contenu::select(DB::raw('criteres.nom as nom_critere, criteres.id_critere, AVG(votes_criteres.value) as moyenne'))
+            ->join('Contenu_Criteres', 'contenus.id_Contenu', '=', 'Contenu_Criteres.id_Contenu')
             ->join('criteres', 'Contenu_Criteres.id_Critere', '=', 'criteres.id_critere')
-            ->where('contenus.id_contenu', '=', $this->id_contenu)
-            ->select('criteres.nom as nom_critere')
+            ->join('votes_criteres', function($join){
+                $join->on('contenus.id_contenu',  '=', 'votes_criteres.id_contenu');
+                $join->on('criteres.id_critere', '=', 'votes_criteres.id_critere');
+            })
+            ->where('contenus.id_contenu', '=', '1')
+            ->groupby('criteres.id_critere')
             ->get();
 
-        $this->images = Contenu::join('Contenu_Images', 'contenus.id_Contenu', '=', 'contenu_images.id_image')
+        $this->images = Contenu::join('Contenu_Images', 'contenus.id_Contenu', '=', 'contenu_images.id_contenu')
             ->join('images', 'Contenu_Images.id_image', '=', 'images.id')
             ->where('contenus.id_contenu', '=', $this->id_contenu)
             ->select('nom as nom_image', 'path')

@@ -21,3 +21,6 @@ Route::get('/contenu/{id_contenu}', 'ContenuController@getContenu')->where('id_c
 Route::get('/contenu/start/{latitude}/{longitude}', 'MapsController@getContenuStart')->name('getContenuStart');
 
 Route::get('/contenu/getAllCoordonnees', 'ContenuController@getAllCoordonnees')->name('getAllCoordonnees');
+
+Route::post('/contenu/categorie/vote/plus', 'ContenuController@categorie_vote_plus')->name('categorie_vote_plus');
+Route::post('/contenu/categorie/vote/moins', 'ContenuController@categorie_vote_moins')->name('categorie_vote_moins');

@@ -39,6 +39,7 @@ class HomeController extends Controller
         $contenu = new Contenu();
         $contenu->id_contenu = $id_contenu;
         $contenu->getContenu();
+
         return view('pages.detail_contenu')
             ->with(['contenu'=>$contenu->contenu[0], 'images'=>$contenu->images, 'categories'=>$contenu->categories, 'criteres'=>$contenu->criteres]);
     }
