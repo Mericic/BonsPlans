@@ -30,25 +30,27 @@
         </li>
 
     </ul>
-    <ul class="navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" href="#"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un événement</button></a>
-        </li>
-    </ul>
-    <ul class="navbar-nav" style="background-color: rgba(128, 128, 128, 0.7)">
-        @if(!Auth::check())
-        <li class="nav-item">
-            <a style="color: white" class="nav-link" href="{{ route('register') }}">Inscription</a>
-        </li>
-        <li class="nav-item">
-            <a style="color: white" class="nav-link" href="#">Connexion</a>
-        </li>
-        @else
-            <li class="nav-item">
-                <a style="color: white" class="nav-link" href="{{ route('profil', ['pseudo'=>Auth::user()->pseudo]) }}">Mon Profil</a>
+    @if(substr($_SERVER['REQUEST_URI'],-8) != 'register')
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un événement</button></a>
             </li>
-        @endif
-    </ul>
+        </ul>
+        <ul class="navbar-nav" style="background-color: rgba(128, 128, 128, 0.7)">
+            @if(!Auth::check())
+            <li class="nav-item">
+                <a style="color: white" class="nav-link" href="{{ route('register') }}">Inscription</a>
+            </li>
+            <li class="nav-item">
+                <a style="color: white" class="nav-link" href="#">Connexion</a>
+            </li>
+            @else
+                <li class="nav-item">
+                    <a style="color: white" class="nav-link" href="{{ route('profil', ['pseudo'=>Auth::user()->pseudo]) }}">Mon Profil</a>
+                </li>
+            @endif
+        </ul>
+    @endif
 </nav>
 
 @yield('content')

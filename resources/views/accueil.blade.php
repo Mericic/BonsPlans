@@ -6,6 +6,7 @@
             <p class="links">&#8595; Voir la liste &#8595;</p>
         </a>
         <div id="cadre">
+            <div id="inputsCadre">
                 <div style="font-size: 1.2em;" class="inputCadre">
                     <input type="text" id="adresse" placeholder="Choisis un lieu..." required>
                 </div>
@@ -27,7 +28,8 @@
                         <option value='500'>500m</option>
                     </select>
                 </div>
-                <button type="button" class="btn" id="chercher" onclick="search()">GO!</button>
+            </div>
+            <button type="button" class="btn" id="chercher" onclick="search()">GO!</button>
         </div>
     </div>  
     <div id="list">
