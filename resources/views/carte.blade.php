@@ -22,7 +22,7 @@
 
     <script src="{{ asset('js/Control.OSMGeocoder.js')}}"></script>
 </head>
-<body onLoad="getLocation()">
+<body onLoad="getLocation()" onscroll="demo()">
 <div id="mapid"></div>
 <script>
     function getLocation() {
@@ -68,25 +68,26 @@
         document.getElementById('mapid').style.width = largeur;
         document.getElementById('mapid').style.height = hauteur;
 
-        var mymap = L.map('mapid').setView([latitude, longitude], 14);
+        var mymap = L.map('mapid').setView([latitude, longitude], 15);
 
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
             maxZoom: 18,
             minZoom: 10,
             id: 'mapbox.streets'
         }).addTo(mymap);
+        
 
         startMaps(latitude, longitude);
 
         /*L.marker([45.758419, 4.832507]).addTo(mymap)
             .bindPopup("<b>Night Mario Kart</b><br>Pour la sortie du nouveau mario kart, venez-vous amusé avec nous !!!<hr>Organisateur : <a href=\"#\">Maxou</a><a href=\"#\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a>");
         */
-        L.circle([latitude, longitude], 500, {
+        /*L.circle([latitude, longitude], 500, {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5
         }).addTo(mymap).bindPopup("Périmètre a proximité du point recherché<br>(~1km de diamètre)");
-
+        */
 
         var popup = L.popup();
 
@@ -95,6 +96,27 @@
                 .setLatLng(e.latlng)
                 .setContent("Vous avec cliquer sur le point " + e.latlng.toString())
                 .openOn(mymap);
+        }
+
+        function zoom(e){
+            var style = document.getElementsByClassName('leaflet-proxy leaflet-zoom-animated')[0].style.transform;
+            console.log(style.substring(0,style.length-1).split("(")[2]);
+            //if(lvl !== undefined || lvl > style.substring(0,style.length-1).split("(")[2]){
+                var lvl = style.substring(0,style.length-1).split("(")[2];
+                console.log(lvl);
+                $.ajax({
+                    type: "GET",
+                    url: "api/contenu/zoom/"+lvl+"/"+latitude+'/'+longitude,
+                    success: function(data){
+                        console.log(data);
+                        data.forEach(function (element) {
+                            L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
+                                    .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href='#' style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"#\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
+                        });
+
+                    }
+                });
+            //}
         }
 
         function startMaps(latitude, longitude){
@@ -113,6 +135,7 @@
         }
 
         mymap.on('click', onMapClick);
+        mymap.on('zoom', zoom);
 
         document.getElementsByClassName("leaflet-control-zoom leaflet-bar leaflet-control")[0].style.display = "none";
         //document.getElementsByClassName("leaflet-control-attribution leaflet-control")[0].style.display = "none";
