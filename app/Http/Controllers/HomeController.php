@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Contenu;
+use App\User;
+use App\Commentaire;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -29,9 +31,11 @@ class HomeController extends Controller
 
     public function profil($pseudo){
 
-//        $profil =
+        $user = User::where('pseudo', $pseudo) -> first();
 
-        return view('pages.profil');
+        $commentaire = Commentaire::getCommentaireByUser($user->id);
+        
+        return view('pages.profil') ->with(['user'=>$user, 'commentaires'=>$commentaire]);
     }
 
     public function contenu($id_contenu){
