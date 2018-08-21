@@ -8,7 +8,7 @@
         <div id="user-info-container">
             <div id="profile-picture"><img src="#"></div>
             <div id="username">{{ $user->pseudo }} <br> {{ ucfirst($user->first_name) }} {{  ucfirst($user->last_name) }}  </div>
-            <div id="user-info">Créé le : {{ isset(Auth::user()->created_at) ? Auth::user()->created_at->toDateString() : Auth::user()->email }} </div>
+            <div id="user-info">Créé le : {{ isset($user->created_at) ? $user->created_at->toDateString() : "pas de date" }} </div>
         </div>
         <div id="fav-categories">
             <div class="profil-progress">
