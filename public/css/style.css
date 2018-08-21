@@ -232,6 +232,12 @@ nav{
     top: 30%;
     font-size: 3em;
 }
+#image_haut input{
+    text-align: center;
+    position: relative;
+    top: 30%;
+    font-size: 3em;
+}
 
 #image_haut a{
     z-index: 1;
@@ -470,6 +476,7 @@ nav{
     position: fixed;
     border-radius: 6px;
     overflow: hidden;
+    bottom: 5%;
     bottom: 5%;
     right: 5%;
     user-select: none;

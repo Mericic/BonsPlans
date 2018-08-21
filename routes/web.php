@@ -27,3 +27,4 @@ Route::get('/profil/{pseudo}', 'HomeController@profil')->name('profil')->where([
 
 
 Route::get('/contenu/{id_contenu}', 'HomeController@contenu')->name('contenu')->where(['id_contenu'=>'[0-9]{1,6}']);
+Route::get('/contenu/creation', 'ContenuController@addContenu')->name('addcontenu');

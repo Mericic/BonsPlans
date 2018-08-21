@@ -78,10 +78,12 @@
             @if($commentaires)
             @foreach($commentaires as $commentaire)
                 <div class="commentaire col-sm-6" id="commentaire_{{ $commentaire->id_commentaire }}">
-                    @if($commentaire->id == Auth::user()->id)
-                    <button type="button" class="close" onclick="dellComm({{ $commentaire->id_commentaire }})">
-                        <span aria-hidden="true"><i class="fas fa-trash-alt" style="color: red;"></i></span>
-                    </button>
+                     @if(Auth::check())
+                        @if($commentaire->id == Auth::user()->id)
+                        <button type="button" class="close" onclick="dellComm({{ $commentaire->id_commentaire }})">
+                            <span aria-hidden="true"><i class="fas fa-trash-alt" style="color: red;"></i></span>
+                        </button>
+                        @endif
                     @endif
                     <p style="text-decoration: underline">{{ $commentaire->pseudo }}</p>
                     <p>{{ $commentaire->Commentaire }}</p>
@@ -97,7 +99,7 @@
             @endforeach
             @endif
             </div>
-            @if(Auth::check() && $contenu->id_user != Auth::user()->id)
+            @if( Auth::check() && $contenu->id_user != Auth::user()->id)
             <button class="btn btn-secondary"  data-toggle="modal" id="btn_commentaire" data-target="#AjoutCommentaireModal" style="@if(count($commentaire_User)) display:none @endif">Ajoutez votre commentaire</button>
             @endif
         </section>
@@ -123,19 +125,6 @@
                         <input type="hidden" name="id_User" value="{{ Auth::user()->id }}">
                         @endif
                         <input type="hidden" name="id_Contenu" value="{{ $contenu->id_contenu }}">
-                        {{--<div class="form-group row">
-                            <label for="note" class="col-sm-4 col-form-label text-md-right">Note</label>
-
-                            <div class="col-md-6">
-                                <input id="note" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>--}}
 
                         <div class="form-group row">
                             <label for="Commentaire" class="col-sm-4 col-form-label text-md-right">Commentaire</label>
@@ -151,18 +140,6 @@
                             </div>
                         </div>
 
-
-                        {{--<div class="form-group row mb-0">--}}
-                            {{--<div class="col-md-8 offset-md-4">--}}
-                                {{--<button type="submit" class="btn btn-primary">--}}
-                                    {{--{{ __('Connexion') }}--}}
-                                {{--</button>--}}
-
-                                {{--<a class="btn btn-link" href="{{ route('password.request') }}">--}}
-                                    {{--{{ __('Mot de passe oublié ?') }}--}}
-                                {{--</a>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -270,11 +247,6 @@
             })
 
         }
-
-
-
-
-
         @if($errors->has('Reponse'))
                 window.onload = function(){
             $('#AjoutReponseModal').modal('show')
