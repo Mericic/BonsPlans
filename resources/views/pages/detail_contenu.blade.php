@@ -65,12 +65,14 @@
                             <p style="text-decoration: underline">L'organisateur a répondu</p>
                             <p>{{ $commentaire->Reponse }}</p>
                         </div>
+                    @elseif($contenu->id_user == Auth::user()->id && $commentaire->Reponse=='')
+                        <button class="btn btn-secondary"  data-toggle="modal" data-target="#AjoutReponseModal" data-id_commentaire="{{ $commentaire->id_commentaire }}">Répondre</button>
                     @endif
                 </div>
             @endforeach
             @endif
             </div>
-            @if(Auth::check())
+            @if(Auth::check() && $contenu->id_user != Auth::user()->id )
             <button class="btn btn-secondary"  data-toggle="modal" data-target="#AjoutCommentaireModal">Ajoutez votre commentaire</button>
             @endif
         </section>
@@ -188,6 +190,57 @@
             </div>
         </div>
     </div>
+    @if(Auth::check() && $contenu->id_user != Auth::user()->id )
+    <div class="modal fade" id="AjoutReponseModal" tabindex="-1" role="dialog" aria-labelledby="AjoutReponseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AjoutReponseModalLabel">Ajouter une Réponse</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('ajout_reponse') }}" id="ReponseForm">
+                        @csrf
+
+                        <input type="hidden" id="id_Commentaire_reponse" name="id_Commentaire" value="">
+
+                        <div class="form-group row">
+                            <label for="Commentaire" class="col-sm-4 col-form-label text-md-right">Réponse</label>
+
+                            <div class="col-md-6">
+
+                                <textarea id="Reponse" class="form-control" name="Reponse"></textarea>
+                                @if ($errors->has('Reponse'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('Reponse') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="$('#ReponseForm').submit()">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+<script>
+    $('#AjoutReponseModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id_commentaire = button.data('id_commentaire') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+//        $('#id_Commentaire_reponse').val(id_commentaire)
+        modal.find('#id_Commentaire_reponse').val(id_commentaire)
+        console.log('id_commentaire '+id_commentaire)
+    })
+</script>
 
 
 </body>

@@ -24,7 +24,7 @@ class Contenu extends Model
 
         $contenu = Contenu::join('Users', 'contenus.id_User', '=', 'Users.id')
             ->where('contenus.id_contenu', '=', $this->id_contenu)
-            ->select('contenus.id_contenu', 'contenus.nom_contenu', 'contenus.adresse', 'contenus.description', 'contenus.coordonneesX', 'contenus.coordonneesY', 'users.pseudo')
+            ->select('contenus.id_contenu', 'contenus.nom_contenu', 'contenus.adresse', 'contenus.description', 'contenus.coordonneesX', 'contenus.coordonneesY', 'users.pseudo', 'users.id as id_user')
             ->get();
 
         $this->categories = Contenu::join('contenu_categories', 'contenus.id_Contenu', '=', 'contenu_categories.id_Contenu')

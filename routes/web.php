@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('accueil');
 Route::post('/commentaire/add', 'CommentaireController@addCommentaire')->name('ajout_commentaire');
+Route::post('/reponse/add', 'CommentaireController@addReponse')->name('ajout_reponse');
 
 Route::get('/profil/{pseudo}', 'HomeController@profil')->name('profil')->where(['pseudo'=>'[a-zA-Z0-9]+']);
 

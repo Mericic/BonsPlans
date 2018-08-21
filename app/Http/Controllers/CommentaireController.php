@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commentaire;
+use App\Reponse;
 use Illuminate\Http\Request;
 
 class CommentaireController extends Controller
@@ -14,6 +15,14 @@ class CommentaireController extends Controller
         $commentaire->Commentaire = $request->Commentaire;
         $commentaire->pertinence = 0;
         $commentaire->save();
+        return back();
+    }
+
+    public function addReponse(Request $request){
+        $reponse = new Reponse();
+        $reponse->id_Commentaire = $request->id_Commentaire;
+        $reponse->Reponse = $request->Reponse;
+        $reponse->save();
         return back();
     }
 }
