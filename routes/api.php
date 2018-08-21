@@ -29,3 +29,5 @@ Route::post('/contenu/categorie/vote/moins', 'ContenuController@categorie_vote_m
 
 
 Route::post('/commentaire/delete', 'CommentaireController@delCommentaire')->name('delCommentaire');
+
+Route::get('/criteres/recherche/{value}', 'CritereController@rechercheCritere')->name('rechercheCritere');

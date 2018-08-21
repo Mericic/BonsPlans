@@ -16,6 +16,8 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy" crossorigin="anonymous"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
@@ -33,7 +35,7 @@
     </ul>
     <ul class="navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" href="#"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un événement</button></a>
+            <a class="nav-link" href="{{ route('addcontenu') }}"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un événement</button></a>
         </li>
     </ul>
     <ul class="navbar-nav" id="auth" style="background-color: rgba(128, 128, 128, 0.7)">

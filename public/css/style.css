@@ -231,6 +231,12 @@ nav{
     top: 30%;
     font-size: 3em;
 }
+#image_haut input{
+    text-align: center;
+    position: relative;
+    top: 30%;
+    font-size: 3em;
+}
 
 #image_haut a{
     z-index: 1;
@@ -473,6 +479,7 @@ nav{
     border-radius: 6px;
     overflow: hidden;
     bottom: 5%;
+    bottom: 5%;
     right: 5%;
     user-select: none;
     cursor: pointer;
@@ -543,8 +550,19 @@ nav{
 }
 
 .avatar {
-    max-width: 150px;
-    border-radius: 100px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.profilBtn p {
+    display: none;
+}
+
+@media only screen and (min-width: 768px) {
+    .profilBtn p {
+        display: block;
+    }
 }
 
 .card.hovercard {

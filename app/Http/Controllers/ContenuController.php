@@ -108,6 +108,6 @@ class ContenuController extends Controller
 
         $contenu = new Contenu();
 
-        return back();
+        return view('pages.creationContenu');
     }
 }
