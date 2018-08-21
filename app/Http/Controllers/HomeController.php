@@ -7,6 +7,7 @@ use App\User;
 use App\Commentaire;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -46,7 +47,13 @@ class HomeController extends Controller
         $contenu->id_contenu = $id_contenu;
         $contenu->getContenu();
 
+        if(Auth::check()){
+            $commentaire_User = Commentaire::join('users', 'commentaires.id_user', '=', 'users.id')
+                ->where('commentaires.id_contenu', '=', $id_contenu)->get();
+        }
+
+
         return view('pages.detail_contenu')
-            ->with(['contenu'=>$contenu->contenu[0], 'images'=>$contenu->images, 'categories'=>$contenu->categories, 'criteres'=>$contenu->criteres, 'commentaires'=>$contenu->commentaires]);
+            ->with(['contenu'=>$contenu->contenu[0], 'images'=>$contenu->images, 'categories'=>$contenu->categories, 'criteres'=>$contenu->criteres, 'commentaires'=>$contenu->commentaires, 'commentaire_User'=>$commentaire_User]);
     }
 }

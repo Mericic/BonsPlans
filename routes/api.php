@@ -26,3 +26,6 @@ Route::get('/contenu/getAllCoordonnees', 'ContenuController@getAllCoordonnees')-
 
 Route::post('/contenu/categorie/vote/plus', 'ContenuController@categorie_vote_plus')->name('categorie_vote_plus');
 Route::post('/contenu/categorie/vote/moins', 'ContenuController@categorie_vote_moins')->name('categorie_vote_moins');
+
+
+Route::post('/commentaire/delete', 'CommentaireController@delCommentaire')->name('delCommentaire');

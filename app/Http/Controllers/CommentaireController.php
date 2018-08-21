@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commentaire;
+use App\Http\Requests\CommentaireRequest;
 use App\Reponse;
 use Illuminate\Http\Request;
 
@@ -18,11 +19,21 @@ class CommentaireController extends Controller
         return back();
     }
 
-    public function addReponse(Request $request){
+    public function addReponse(CommentaireRequest $request){
         $reponse = new Reponse();
         $reponse->id_Commentaire = $request->id_Commentaire;
         $reponse->Reponse = $request->Reponse;
         $reponse->save();
         return back();
+    }
+
+    public function delCommentaire(Request $request){
+        $commentaire = Commentaire::findOrFail($request->id_commentaire);
+        $reponse = Reponse::where('id_Commentaire', '=',$request->id_commentaire );
+        if($reponse){
+            $reponse->delete();
+        }
+        $commentaire->delete();
+        return 200;
     }
 }

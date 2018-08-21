@@ -1,11 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+
 <body>
     <div id="image_haut">
         <img src="{{ asset($images[0]->path) }}" alt="{{ $images[0]->nom_image }}"/>
         <h1>{{ $contenu->nom_contenu }}</h1>
     </div>
+
+    <script>
+
+        function dellComm(id_commentaire){
+            $.ajax({
+                method: 'post',
+                url: "{{ action('CommentaireController@delCommentaire') }}",
+                data : {'id_commentaire': id_commentaire}
+            }).done(function(data){
+                if(data==200){
+                    $('#commentaire_'+id_commentaire).hide();
+                    $('#commentaire_'+id_commentaire).hide();
+                    $('#btn_commentaire').show();
+                }
+            })
+
+        }
+
+    </script>
 <div id="description" class="container-fluid">
     <div class="row">
         <section id="criteres" class="col-sm">
@@ -57,7 +77,12 @@
             <div class="row">
             @if($commentaires)
             @foreach($commentaires as $commentaire)
-                <div class="commentaire col-sm-6">
+                <div class="commentaire col-sm-6" id="commentaire_{{ $commentaire->id_commentaire }}">
+                    @if($commentaire->id == Auth::user()->id)
+                    <button type="button" class="close" onclick="dellComm({{ $commentaire->id_commentaire }})">
+                        <span aria-hidden="true"><i class="fas fa-trash-alt" style="color: red;"></i></span>
+                    </button>
+                    @endif
                     <p style="text-decoration: underline">{{ $commentaire->pseudo }}</p>
                     <p>{{ $commentaire->Commentaire }}</p>
                     @if($commentaire->Reponse!='')
@@ -72,8 +97,8 @@
             @endforeach
             @endif
             </div>
-            @if(Auth::check() && $contenu->id_user != Auth::user()->id )
-            <button class="btn btn-secondary"  data-toggle="modal" data-target="#AjoutCommentaireModal">Ajoutez votre commentaire</button>
+            @if(Auth::check() && $contenu->id_user != Auth::user()->id)
+            <button class="btn btn-secondary"  data-toggle="modal" id="btn_commentaire" data-target="#AjoutCommentaireModal" style="@if(count($commentaire_User)) display:none @endif">Ajoutez votre commentaire</button>
             @endif
         </section>
     </div>
@@ -81,51 +106,7 @@
 </div>
 
 
-<script>
-        function votemoins(id_contenu, id_critere){
-                    @if(Auth::check())
-            var id_profil = {{ Auth::user()->id }};
-            @endif
 
-            $.ajax({
-                method: 'post',
-                url: "{{ action('ContenuController@categorie_vote_moins') }}",
-                data : {'id_user': id_profil, 'id_contenu': id_contenu, 'id_critere': id_critere}
-            }).done(function(data){
-                if(data==2){
-                    console.log('deja voté');
-                }else if(data==200)
-                    console.log('vote pris en compte');
-                else
-                    console.log('must be a mistake somewhere');
-                $('#moins_'+id_critere).hide();
-                $('#plus_'+id_critere).hide();
-            })
-
-
-        }
-
-        function voteplus(id_contenu, id_critere){
-                    @if(Auth::check())
-            var id_profil = {{ Auth::user()->id }};
-            @endif
-            $.ajax({
-                method: 'post',
-                url: "{{ action('ContenuController@categorie_vote_plus') }}",
-                data : {'id_user': id_profil, 'id_contenu': id_contenu, 'id_critere': id_critere}
-            }).done(function(data){
-                if(data==2){
-                    console.log('deja voté');
-                }else if(data==200)
-                    console.log('vote pris en compte');
-                else
-                    console.log('must be a mistake somewhere');
-                $('#moins_'+id_critere).hide();
-                $('#plus_'+id_critere).hide();
-            })
-
-        }
-    </script>
     <div class="modal fade" id="AjoutCommentaireModal" tabindex="-1" role="dialog" aria-labelledby="AjoutCommentaireModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -190,7 +171,7 @@
             </div>
         </div>
     </div>
-    @if(Auth::check() && $contenu->id_user != Auth::user()->id )
+    @if(Auth::check() && $contenu->id_user == Auth::user()->id )
     <div class="modal fade" id="AjoutReponseModal" tabindex="-1" role="dialog" aria-labelledby="AjoutReponseModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -204,18 +185,16 @@
                     <form method="POST" action="{{ route('ajout_reponse') }}" id="ReponseForm">
                         @csrf
 
-                        <input type="hidden" id="id_Commentaire_reponse" name="id_Commentaire" value="">
+                        <input type="hidden" id="id_Commentaire_reponse" name="id_Commentaire" value="{{ old('id_Commentaire') }}">
 
                         <div class="form-group row">
-                            <label for="Commentaire" class="col-sm-4 col-form-label text-md-right">Réponse</label>
-
+                            <label for="Reponse" class="col-sm-4 col-form-label text-md-right">Réponse</label>
                             <div class="col-md-6">
-
-                                <textarea id="Reponse" class="form-control" name="Reponse"></textarea>
+                                <textarea id="Reponse" class="form-control @if($errors->has('Reponse')) is-invalid @endif" name="Reponse" value="{{ old('Reponse') }}"></textarea>
                                 @if ($errors->has('Reponse'))
-                                    <span class="invalid-feedback" role="alert">
+                                    <div class="invalid-feedback">
                                         <strong>{{ $errors->first('Reponse') }}</strong>
-                                    </span>
+                                    </div>
                                 @endif
                             </div>
                         </div>
@@ -229,6 +208,12 @@
         </div>
     </div>
     @endif
+
+    @if ($errors->has('id_Commentaire'))
+        <div class="alert alert-danger" role="alert">
+            {{ $errors->first('id_Commentaire') }}
+        </div>
+    @endif
 <script>
     $('#AjoutReponseModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
@@ -241,7 +226,71 @@
         console.log('id_commentaire '+id_commentaire)
     })
 </script>
+    <script>
+        function votemoins(id_contenu, id_critere){
+                    @if(Auth::check())
+            var id_profil = {{ Auth::user()->id }};
+            @endif
 
+            $.ajax({
+                method: 'post',
+                url: "{{ action('ContenuController@categorie_vote_moins') }}",
+                data : {'id_user': id_profil, 'id_contenu': id_contenu, 'id_critere': id_critere}
+            }).done(function(data){
+                if(data==2){
+                    console.log('deja voté');
+                }else if(data==200)
+                    console.log('vote pris en compte');
+                else
+                    console.log('must be a mistake somewhere');
+                $('#moins_'+id_critere).hide();
+                $('#plus_'+id_critere).hide();
+            })
+
+
+        }
+
+        function voteplus(id_contenu, id_critere){
+            @if(Auth::check())
+            var id_profil = {{ Auth::user()->id }};
+            @endif
+            $.ajax({
+                method: 'post',
+                url: "{{ action('ContenuController@categorie_vote_plus') }}",
+                data : {'id_user': id_profil, 'id_contenu': id_contenu, 'id_critere': id_critere}
+            }).done(function(data){
+                if(data==2){
+                    console.log('deja voté');
+                }else if(data==200)
+                    console.log('vote pris en compte');
+                else
+                    console.log('must be a mistake somewhere');
+                $('#moins_'+id_critere).hide();
+                $('#plus_'+id_critere).hide();
+            })
+
+        }
+
+
+
+
+
+        @if($errors->has('Reponse'))
+                window.onload = function(){
+            $('#AjoutReponseModal').modal('show')
+        }
+        @endif
+    </script>
+    @if (!$errors->isEmpty())
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @foreach ($errors->all() as $error)
+                <div>{{ $error }}</div>
+            @endforeach
+        </div>
+    @endif
 
 </body>
 
