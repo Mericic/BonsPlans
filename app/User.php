@@ -27,4 +27,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
+    public static function getProfilePic($id_user) {
+        $profilPic = User::
+        join('images', 'users.id', '=', 'images.id_proprietaire')
+        ->where('images.id_proprietaire', '=', $id_user)
+        ->first();
+        if ($profilPic)
+           return ($profilPic);
+        $profilPic = new User();
+        $profilPic->path = 'https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png';
+        return ($profilPic);
+    }
 }

@@ -34,11 +34,15 @@ class HomeController extends Controller
     public function profil($pseudo) {
 
         $user = User::where('pseudo', $pseudo) -> first();
-
+        
+        $profilePic = User::getProfilePic($user->id);
 
         $commentaire = Commentaire::getCommentaireByUser($user->id);
-
-        return view('pages.profil') ->with(['user'=>$user, 'commentaires'=>$commentaire]);
+        return view('pages.profiltest')->with([
+            'user'=>$user, 
+            'commentaires'=>$commentaire,
+            'profilePic'=>$profilePic
+        ]);
     }
 
     public function contenu($id_contenu){

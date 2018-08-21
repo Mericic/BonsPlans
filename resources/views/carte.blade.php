@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <title>Test - Map</title>
 
@@ -24,15 +24,19 @@
 
     <script src="http://xguaita.github.io/Leaflet.MapCenterCoord/dist/L.Control.MapCenterCoord.min.js"></script>
 
-
     <script src="{{ asset('js/Control.OSMGeocoder.js')}}"></script>
+
+    <script src="{{ asset('js/leaflet-routing-machine.min.js')}}"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
 </head>
 <body onLoad="getLocation()">
 <div id="mapid"></div>
 <script>
     function getLocation() {
+        console.log(window.location.search.substring(1,8));
         var verif = document.location.href.split('?');
-        if(verif[1] != null){
+        console.log(verif[1]);
+        if(verif[1] != null && window.location.search.substring(1,8) != "contenu"){
             if(verif[1].substr(0, 8) == "latitude"){
                 var position = verif[1].split('&');
                 var latitude = position[0].split('=');
@@ -53,17 +57,69 @@
             }
         }
     }
+
     function succes(position) {
         var longitude = position.coords.longitude;
         var latitude = position.coords.latitude;
         var msg = "succes";
-        maps(latitude, longitude, msg)
+        if (window.location.search.substring(1,8) == "contenu")
+            MapsOfContenu(latitude, longitude, msg);
+        else
+            maps(latitude, longitude, msg)
     }
     function error() {
         var longitude = 4.832487;
         var latitude = 45.758399;
         var msg = "error";
-        maps(latitude, longitude, msg)
+        if (window.location.search.substring(1,8) == "contenu")
+            MapsOfContenu(latitude, longitude, msg);
+        else
+            maps(latitude, longitude, msg)
+    }
+
+    function MapsOfContenu(latitude, longitude, localisation){
+        var hauteur = window.innerHeight+'px';
+        var largeur = window.innerWidth+'px';
+        document.getElementById('mapid').style.width = largeur;
+        document.getElementById('mapid').style.height = hauteur;
+
+        var mymap = L.map('mapid').setView([latitude, longitude], 15);
+        var popup = L.popup();
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWF4ZW5jZW1nciIsImEiOiJjamwzeWJzbHkyNm1uM3hxcDg2dTh4ZHZlIn0.bpVBOvFUvL0lssod_zC_tw', {
+            maxZoom: 18,
+            minZoom: 1,
+            id: 'mapbox.streets'
+        }).addTo(mymap);
+
+        if(localisation == "succes"){
+            var adress = new URLSearchParams(window.location.search)
+            $.ajax({
+                type: "GET",
+                url: "api/contenu/"+adress.get("contenu"),
+                success: function(data){
+                    console.log(data);
+                    L.Routing.control({
+                        waypoints: [
+                            L.latLng(latitude, longitude),
+                            L.latLng(data.contenu[0].coordonneesX, data.contenu[0].coordonneesY)
+                        ],
+                        localize: 'fr',
+                        routeWhileDragging: true,
+                        router: L.Routing.mapbox('pk.eyJ1IjoibWF4ZW5jZW1nciIsImEiOiJjamwzeWJzbHkyNm1uM3hxcDg2dTh4ZHZlIn0.bpVBOvFUvL0lssod_zC_tw')
+                    }).addTo(mymap);
+                    L.marker([latitude, longitude]).addTo(mymap)
+                            .bindPopup('<h1 style="text-align:center; width: 100%;">Vous</h1>');
+                    L.marker([data.contenu[0].coordonneesX, data.contenu[0].coordonneesY]).addTo(mymap)
+                            .bindPopup('<h1 style="text-align:center; width: 100%;">Destination</h1>');
+
+                }
+            });
+            document.getElementsByClassName("leaflet-control-zoom leaflet-bar leaflet-control")[0].style.display = "none";
+        }
+        else{
+            alert('Impossible de vous localiser');
+        }
     }
 
     function maps(latitude, longitude, msg) {
@@ -75,14 +131,13 @@
 
         var mymap = L.map('mapid').setView([latitude, longitude], 15);
 
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWF4ZW5jZW1nciIsImEiOiJjamwzeWJzbHkyNm1uM3hxcDg2dTh4ZHZlIn0.bpVBOvFUvL0lssod_zC_tw', {
             maxZoom: 18,
-            minZoom: 10,
+            minZoom: 1,
             id: 'mapbox.streets'
         }).addTo(mymap);
 
         L.control.mapCenterCoord().addTo(mymap);
-
 
         startMaps(latitude, longitude);
 
@@ -120,7 +175,8 @@
                     console.log(data);
                     data.forEach(function (element) {
                         L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
-                                .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href=\"profil/"+element.pseudo+"\" target=\"_parent\" style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"contenu/"+element.id_Contenu+"\" target=\"_parent\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
+                                .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'"></div>')
+                                .on('click', function(){console.log(element.id_Contenu); clickOnBalise(element.id_Contenu); $('#'+element.id_Contenu).parents('.leaflet-popup-content').css('width', '300px');});
                     });
 
                 }
@@ -138,12 +194,25 @@
                         console.log(data);
                         data.forEach(function (element) {
                             L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
-                                    .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href=\"profil/"+element.pseudo+"\" target=\"_parent\" style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"contenu/"+element.id_Contenu+"\" target=\"_parent\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
+                                    .bindPopup('<div class="contenuPopUp" id='+element.id_Contenu+'><b style="font-size: 1.5em">'+element.nom_contenu+'</b><hr><p style="font-size: 1.2em">'+element.Description+'</p><hr><a href="profil/'+element.pseudo+'" target="_parent" style="font-size: 1.4em">'+element.pseudo+'</a><a href="contenu/'+element.id_Contenu+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a></div>');
                         });
 
                     }
                 });
             //}
+        }
+
+        function clickOnBalise(id){
+            console.log(id);
+            $.ajax({
+                type: "GET",
+                url: "api/contenu/"+id,
+                success: function(data){
+                    console.log(data);
+                    var value = '<b style="font-size: 1.5em">'+data.contenu[0].nom_contenu+'</b><hr><p style="font-size: 1.2em">'+data.contenu[0].description+'</p><hr><a href="profil/'+data.contenu[0].pseudo+'" target="_parent" style="font-size: 1.4em">'+data.contenu[0].pseudo+'</a><a href="contenu/'+id+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a>';
+                    $('#'+id).html(value);
+                }
+            });
         }
 
         function startMaps(latitude, longitude){
@@ -154,7 +223,7 @@
                     console.log(data);
                     data.forEach(function (element) {
                         L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
-                                .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href=\"profil/"+element.pseudo+"\" target=\"_parent\" style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"contenu/"+element.id_Contenu+"\" target=\"_parent\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
+                                .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'"><b style="font-size: 1.5em">'+element.nom_contenu+'</b><hr><p style="font-size: 1.2em">'+element.Description+'</p><hr><a href="profil/'+element.pseudo+'" target="_parent" style="font-size: 1.4em">'+element.pseudo+'</a><a href="contenu/'+element.id_Contenu+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a></div>');
                     });
 
                 }
@@ -168,18 +237,6 @@
         document.getElementsByClassName("leaflet-control-mapcentercoord leaflet-control")[0].style.display = "none";
         document.getElementsByClassName("leaflet-control-zoom leaflet-bar leaflet-control")[0].style.display = "none";
         //document.getElementsByClassName("leaflet-control-attribution leaflet-control")[0].style.display = "none";
-    }
-
-    function clickOnBalise(id){
-        $.ajax({
-            type: "GET",
-            url: "api/contenu/"+id,
-            success: function(data){
-                console.log(data);
-
-                $('#list-Quota').html(item);
-            }
-        });
     }
 
     function search(adress) {
