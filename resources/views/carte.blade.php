@@ -110,9 +110,9 @@
             var lvl = style.substring(0,style.length-1).split("(")[2];
 
             var center = document.getElementsByClassName("leaflet-control-mapcentercoord leaflet-control")[0].innerHTML.split(" | ");
-            var latitude = center[0].substring(0,center.length-1);
-            var longitude = center[1].substring(0,center.length-1);
-            console.log(center+' : '+latitude+'/'+longitude);
+            var latitude = center[0].substring(0,center[0].length-1);
+            var longitude = center[1].substring(0,center[1].length-1);
+            console.log(latitude+'/'+longitude);
             $.ajax({
                 type: "GET",
                 url: "api/contenu/zoom/"+lvl+"/"+latitude+'/'+longitude,
