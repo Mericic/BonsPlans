@@ -101,4 +101,13 @@ class ContenuController extends Controller
 
 
     }
+
+
+
+    public function addContenu(Request $request){
+
+        $contenu = new Contenu();
+
+        return back();
+    }
 }

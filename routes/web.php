@@ -11,16 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('accueil');
-})->name('accueil');
+Route::get('/', 'HomeController@index')->name('accueil');
+
 Route::get('/carte', function () {
     return view('carte');
 })->name('carte');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('accueil');
+Route::post('/commentaire/add', 'CommentaireController@addCommentaire')->name('ajout_commentaire');
 
 Route::get('/profil/{pseudo}', 'HomeController@profil')->name('profil')->where(['pseudo'=>'[a-zA-Z0-9]+']);
 

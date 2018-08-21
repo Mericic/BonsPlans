@@ -55,6 +55,7 @@
         <section id="commentaires" class="col-sm">
             <h2 class="col-sm-12"  style="text-decoration: underline">Commentaires des voyageurs</h2>
             <div class="row">
+            @if($commentaires)
             @foreach($commentaires as $commentaire)
                 <div class="commentaire col-sm-6">
                     <p style="text-decoration: underline">{{ $commentaire->pseudo }}</p>
@@ -67,14 +68,18 @@
                     @endif
                 </div>
             @endforeach
+            @endif
             </div>
             @if(Auth::check())
-            <button class="btn btn-secondary">Ajoutez votre commentaire</button>
+            <button class="btn btn-secondary"  data-toggle="modal" data-target="#AjoutCommentaireModal">Ajoutez votre commentaire</button>
             @endif
         </section>
     </div>
+
 </div>
-    <script>
+
+
+<script>
         function votemoins(id_contenu, id_critere){
                     @if(Auth::check())
             var id_profil = {{ Auth::user()->id }};
@@ -119,6 +124,70 @@
 
         }
     </script>
+    <div class="modal fade" id="AjoutCommentaireModal" tabindex="-1" role="dialog" aria-labelledby="AjoutCommentaireModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AjoutCommentaireModalLabel">Ajouter un Commentaire</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('ajout_commentaire') }}" id="CommentaireForm">
+                        @csrf
+                        @if(Auth::check())
+                        <input type="hidden" name="id_User" value="{{ Auth::user()->id }}">
+                        @endif
+                        <input type="hidden" name="id_Contenu" value="{{ $contenu->id_contenu }}">
+                        {{--<div class="form-group row">
+                            <label for="note" class="col-sm-4 col-form-label text-md-right">Note</label>
+
+                            <div class="col-md-6">
+                                <input id="note" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+
+                                @if ($errors->has('email'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>--}}
+
+                        <div class="form-group row">
+                            <label for="Commentaire" class="col-sm-4 col-form-label text-md-right">Commentaire</label>
+
+                            <div class="col-md-6">
+
+                                <textarea id="Commentaire" class="form-control" name="Commentaire"></textarea>
+                                @if ($errors->has('Commentaire'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('Commentaire') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
+                        {{--<div class="form-group row mb-0">--}}
+                            {{--<div class="col-md-8 offset-md-4">--}}
+                                {{--<button type="submit" class="btn btn-primary">--}}
+                                    {{--{{ __('Connexion') }}--}}
+                                {{--</button>--}}
+
+                                {{--<a class="btn btn-link" href="{{ route('password.request') }}">--}}
+                                    {{--{{ __('Mot de passe oublié ?') }}--}}
+                                {{--</a>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="$('#CommentaireForm').submit()">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </body>
