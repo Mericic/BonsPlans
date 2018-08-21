@@ -12,6 +12,8 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
 
+    {{--<link rel="stylesheet" href="http://xguaita.github.io/Leaflet.MapCenterCoord/dist/L.Control.MapCenterCoord.min.css" />--}}
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
@@ -19,6 +21,9 @@
     <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="http://xguaita.github.io/Leaflet.MapCenterCoord/dist/L.Control.MapCenterCoord.min.js"></script>
+
 
     <script src="{{ asset('js/Control.OSMGeocoder.js')}}"></script>
 </head>
@@ -76,6 +81,8 @@
             id: 'mapbox.streets'
         }).addTo(mymap);
 
+        L.control.mapCenterCoord().addTo(mymap);
+
 
         startMaps(latitude, longitude);
 
@@ -98,12 +105,32 @@
                 .openOn(mymap);
         }
 
+        function onMapMove(e) {
+            var style = document.getElementsByClassName('leaflet-proxy leaflet-zoom-animated')[0].style.transform;
+            var lvl = style.substring(0,style.length-1).split("(")[2];
+
+            var center = document.getElementsByClassName("leaflet-control-mapcentercoord leaflet-control")[0].innerHTML.split(" | ");
+            var latitude = center[0].substring(0,center.length-1);
+            var longitude = center[1].substring(0,center.length-1);
+            console.log(center+' : '+latitude+'/'+longitude);
+            $.ajax({
+                type: "GET",
+                url: "api/contenu/zoom/"+lvl+"/"+latitude+'/'+longitude,
+                success: function(data){
+                    console.log(data);
+                    data.forEach(function (element) {
+                        L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
+                                .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href=\"profil/"+element.pseudo+"\" target=\"_parent\" style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"contenu/"+element.id_Contenu+"\" target=\"_parent\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
+                    });
+
+                }
+            });
+        }
+
         function zoom(e){
             var style = document.getElementsByClassName('leaflet-proxy leaflet-zoom-animated')[0].style.transform;
-            console.log(style.substring(0,style.length-1).split("(")[2]);
             //if(lvl !== undefined || lvl > style.substring(0,style.length-1).split("(")[2]){
                 var lvl = style.substring(0,style.length-1).split("(")[2];
-                console.log(lvl);
                 $.ajax({
                     type: "GET",
                     url: "api/contenu/zoom/"+lvl+"/"+latitude+'/'+longitude,
@@ -136,7 +163,9 @@
 
         mymap.on('click', onMapClick);
         mymap.on('zoom', zoom);
+        mymap.on('moveend', onMapMove);
 
+        document.getElementsByClassName("leaflet-control-mapcentercoord leaflet-control")[0].style.display = "none";
         document.getElementsByClassName("leaflet-control-zoom leaflet-bar leaflet-control")[0].style.display = "none";
         //document.getElementsByClassName("leaflet-control-attribution leaflet-control")[0].style.display = "none";
     }
