@@ -124,6 +124,14 @@ nav{
     z-index: 100;
 }
 
+#auth, .nav-item {
+    border-radius: 4px;
+}
+
+#auth .nav-item:hover {
+    background-color: rgb(87, 87, 87);
+}
+
 .nav-item > a{
     cursor: pointer;
 }
@@ -142,7 +150,7 @@ nav{
     background-color: black;
     position: absolute;
     width: 100%;
-    display: grid;
+    display: none;
     grid-template-columns: repeat(5, 1fr);
     -webkit-transition: top 5s; /* For Safari 3.1 to 6.0 */
     transition: top 5s;
@@ -400,6 +408,18 @@ nav{
     grid-template-columns: 1fr 1fr;
     grid-gap: 4%;
     background-color: rgba(255, 255, 255, 0.5);
+}
+
+.participation-div {
+    position: relative;
+}
+
+.participation-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
 }
 
 .participation-div:hover .participation-title {

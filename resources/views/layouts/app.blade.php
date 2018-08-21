@@ -36,7 +36,7 @@
             <a class="nav-link" href="#"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un événement</button></a>
         </li>
     </ul>
-    <ul class="navbar-nav" style="background-color: rgba(128, 128, 128, 0.7)">
+    <ul class="navbar-nav" id="auth" style="background-color: rgba(128, 128, 128, 0.7)">
         @if(!Auth::check())
         <li class="nav-item">
             <a style="color: white" class="nav-link" href="{{ route('register') }}">Inscription</a>

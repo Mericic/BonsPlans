@@ -90,6 +90,7 @@
         document.getElementById('vers-list').addEventListener('click', function() {
             if(toggleNumber != 'vers-list'){
                 toggleNumber = 'vers-list';
+                $('#list').css('display', 'grid');
                 change('droite');
             }
         })
@@ -97,9 +98,12 @@
         document.getElementById('vers-carte').addEventListener('click', function() {
             if(toggleNumber != 'vers-carte'){
                 toggleNumber = 'vers-carte';
+                setTimeout(() => {
+                    $('#list').css('display', 'none');
+                }, 700);
                 change('gauche');
+                window.scrollTo(0, 0);
             }
-
         })
 
         function change(position) {
