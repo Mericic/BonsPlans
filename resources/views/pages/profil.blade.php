@@ -4,12 +4,12 @@
 @section('content')
 
 <div id="profile-container">
+    <div id="user-info-container">
+        <div id="profile-picture"><img id="avatar" src="{{ asset($profilePic->path) }}"></div>
+        <div id="username">{{ $user->pseudo }} <br> {{ ucfirst($user->first_name) }} {{  ucfirst($user->last_name) }}  </div>
+        <div id="user-info">Créé le : {{ isset(Auth::user()->created_at) ? Auth::user()->created_at->toDateString() : Auth::user()->email }} </div>
+    </div>
     <div id="profile-wrapper">
-        <div id="user-info-container">
-            <div id="profile-picture"><img src="#"></div>
-            <div id="username">{{ $user->pseudo }} <br> {{ ucfirst($user->first_name) }} {{  ucfirst($user->last_name) }}  </div>
-            <div id="user-info">Créé le : {{ isset(Auth::user()->created_at) ? Auth::user()->created_at->toDateString() : Auth::user()->email }} </div>
-        </div>
         <div id="fav-categories">
             <div class="profil-progress">
                 <p>Categorie 1</p>

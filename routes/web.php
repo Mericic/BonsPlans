@@ -25,5 +25,6 @@ Route::post('/reponse/add', 'CommentaireController@addReponse')->name('ajout_rep
 
 Route::get('/profil/{pseudo}', 'HomeController@profil')->name('profil')->where(['pseudo'=>'[a-zA-Z0-9]+']);
 
+Route::get('/profiltest/{pseudo}', 'HomeController@profil')->name('profil')->where(['pseudo'=>'[a-zA-Z0-9]+']);
 
 Route::get('/contenu/{id_contenu}', 'HomeController@contenu')->name('contenu')->where(['id_contenu'=>'[0-9]{1,6}']);

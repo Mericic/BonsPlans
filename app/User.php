@@ -27,4 +27,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
+    public static function getProfilePic($id_user) {
+        $profilPic = User::
+        join('images', 'users.id', '=', 'images.id_proprietaire')
+        ->where('images.id_proprietaire', '=', $id_user)
+        ->get();
+
+        return ($profilPic[0]);
+    }
 }

@@ -116,7 +116,6 @@ html, body {
 
 .navbar {
     background-color: #ffffff00 !important;
-    position: sticky;
     top: 0;
 }
 
@@ -314,11 +313,11 @@ nav{
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(8, 1fr);
 }
 
 #profile-wrapper {
-    grid-column: 2 / 4;
+    grid-column: 3 / 7;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(6, 1fr);
@@ -336,10 +335,7 @@ nav{
 }
 
 #user-info-container {
-    background-color: white !important;
-    grid-row: 1 / 2;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-column: 2 / 8;
 }
 
 #user-info-container > div {
@@ -347,6 +343,8 @@ nav{
 }
 
 #profile-picture {
+    width: 200px;
+    height: auto;
     box-shadow: 1px 1px 1px grey;
 }
 
@@ -369,6 +367,11 @@ nav{
 }
 
 #com-historique {
+    max-height: 50vh;
+    overflow: scroll;
+}
+
+/*#com-historique {
     box-shadow: 1px 1px 1px grey;
     grid-row: 3 / 5;
     grid-template-columns: 1fr 1fr !important;
@@ -382,10 +385,11 @@ nav{
     overflow: auto;
     height: 100%;
     max-height: 100%;
-}
+}*/
 
 .profil-com {
     padding: 2%;
+    box-shadow: 1px 1px 1px grey;
 }
 
 .com-title, .com-bar {
@@ -394,7 +398,6 @@ nav{
 
 #participation {
     box-shadow: 1px 1px 1px grey;
-    grid-row: 5 / 6;
     display: block;
 }
 
@@ -404,10 +407,8 @@ nav{
 }
 
 .participation-div:hover .participation-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 4%;
     background-color: rgba(255, 255, 255, 0.5);
+    display: block;
 }
 
 .participation-div {
@@ -431,7 +432,8 @@ nav{
     color: white;
     font-weight: bold;
     margin: 2%;
-    background-image: url("https://cdn.theculturetrip.com/wp-content/uploads/2017/01/sunrise-on-a-paris-street--tommie-hansen-flickr-e1484816402657-650x375.jpg");
+    height: 10vh;
+    background-color: grey;
 }
 
 #creation {
@@ -514,4 +516,68 @@ nav{
 
 .switchToggle:nth-child(1) {
     right: 0;
+}
+
+.container {
+    height: 80%;
+}
+
+.profil-entete {
+    height: 40%;
+}
+
+#main-frame {
+    box-shadow: 1px 1px 1px grey;
+    background-color: white;
+}
+
+.mySlides {
+    display:none;
+    text-align: center;
+}
+
+.card {
+    text-align: center;
+    color: white;
+    font-weight: bolder;
+}
+
+.avatar {
+    max-width: 150px;
+    border-radius: 100px;
+}
+
+.card.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, 1);
+}
+.card.hovercard .card-background {
+    height: 10px;
+}
+
+.card-background img {
+    -webkit-filter: blur(25px);
+    -moz-filter: blur(25px);
+    -o-filter: blur(25px);
+    -ms-filter: blur(25px);
+    filter: blur(25px);
+    margin-left: -100px;
+    margin-top: -200px;
+    min-width: 130%;
+}
+
+.fg {
+    z-index: 100;
+}
+
+.card-title {
+    font-size: 140%;
+}
+
+.progress {
+    width: 100%;
 }

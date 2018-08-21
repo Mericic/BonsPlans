@@ -34,11 +34,15 @@ class HomeController extends Controller
     public function profil($pseudo) {
 
         $user = User::where('pseudo', $pseudo) -> first();
-
+        
+        $profilePic = User::getProfilePic($user->id);
 
         $commentaire = Commentaire::getCommentaireByUser($user->id);
-
-        return view('pages.profil') ->with(['user'=>$user, 'commentaires'=>$commentaire]);
+        return view('pages.profiltest')->with([
+            'user'=>$user, 
+            'commentaires'=>$commentaire,
+            'profilePic'=>$profilePic
+        ]);
     }
 
     public function contenu($id_contenu){
@@ -46,13 +50,6 @@ class HomeController extends Controller
         $contenu = new Contenu();
         $contenu->id_contenu = $id_contenu;
         $contenu->getContenu();
-
-        if(Auth::check()){
-            $commentaire_User = Commentaire::join('users', 'commentaires.id_user', '=', 'users.id')
-                ->where('commentaires.id_contenu', '=', $id_contenu)->get();
-        }
-
-
         return view('pages.detail_contenu')
             ->with(['contenu'=>$contenu->contenu[0], 'images'=>$contenu->images, 'categories'=>$contenu->categories, 'criteres'=>$contenu->criteres, 'commentaires'=>$contenu->commentaires, 'commentaire_User'=>$commentaire_User]);
     }
