@@ -111,7 +111,7 @@
                         console.log(data);
                         data.forEach(function (element) {
                             L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
-                                    .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href='#' style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"contenu/"+element.id_Contenu+"\" target=\"_parent\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
+                                    .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href=\"profil/"+element.pseudo+"\" target=\"_parent\" style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"contenu/"+element.id_Contenu+"\" target=\"_parent\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
                         });
 
                     }
@@ -127,7 +127,7 @@
                     console.log(data);
                     data.forEach(function (element) {
                         L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
-                                .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href='#' style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"contenu/"+element.id_Contenu+"\" target=\"_parent\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
+                                .bindPopup("<div id='"+element.id_Contenu+"'><b style=\"font-size: 1.5em\">"+element.nom_contenu+"</b><hr><p style=\"font-size: 1.2em\">"+element.Description+"</p><hr><a href=\"profil/"+element.pseudo+"\" target=\"_parent\" style=\"font-size: 1.4em\">"+element.pseudo+"</a><a href=\"contenu/"+element.id_Contenu+"\" target=\"_parent\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a></div>");
                     });
 
                 }
