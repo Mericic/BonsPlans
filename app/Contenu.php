@@ -65,63 +65,23 @@ class Contenu extends Model
 
     //renvoie tous les contenus qui ont les bonnes catégories et dans le périmètre,
     // return id
-    public function getContenus($perimetre, $categories){
-
-        $perimetre = explode('|', $perimetre);
-
-        $haut = $perimetre[0];
-        $bas = $perimetre[1];
-        $haut = explode('&', $haut);
-        $bas = explode('&', $bas);
-
-        $hautX = $haut[0];
-        $hautY = $haut[1];
-
-        $basX = $bas[0];
-        $basY = $bas[1];
-        $id_Contenus = [];
-        if($categories!=null){
-            foreach($categories as $categorie){
-                $data = Contenu::join('contenu_categories', 'contenus.id_Contenu', '=', 'contenu_categories.id_Contenu')
-                    ->where('contenu_categories', 'IN', $categorie)
-                    ->where('contenus.CoordonneesX', '<', $hautX)
-                    ->where('contenus.Coordonneesy', '<', $hautY)
-                    ->where('contenus.CoordonneesX', '>', $basX)
-                    ->where('contenus.Coordonneesy', '', $basY)
-                    ->select('id_Contenu')
-                    ->get();
-                if($data){
-                    array_push($id_Contenus, $data);
-                }
-            }
-        }else{
-            $data = Contenu::join('contenu_categories', 'contenus.id_Contenu', '=', 'contenu_categories.id_Contenu')
-                ->select('contenus.id_Contenu')
-                ->where('contenus.CoordonneesX', '<', $hautX)
-                ->where('contenus.Coordonneesy', '<', $hautY)
-                ->where('contenus.CoordonneesX', '>', $basX)
-                ->where('contenus.Coordonneesy', '>', $basY)
-                ->get();
-            dd($data);
-
-        }
-        $this->id_Contenus = $data;
-
+    public function getAllContenus(){
 
         return $this->id_Contenus;
 
     }
 
     //renvoie les coordonnées pour la map avec les données récup par getContenus
-    public function getAllCoordonnees(){
-        $coordonnees = [];
-        dd($this->id_Contenus);
-        foreach($this->id_Contenus as $id_contenu){
-            $data =Contenu::where('contenus.id_contenu', '=', $id_contenu[0]->id_Contenu)->select('contenus.CoordonneesX', 'contenus.CoordonneesY')->get();
-
-            array_push($coordonnees, $data);
-        }
-        return $coordonnees;
+    //epicentre ['latitude'=>value, 'longitude'=>value]
+    public static function getContenus($epicentre, $zoom){
+        return Contenu::join('users', 'contenus.id_User', '=', 'users.id')
+            ->select('users.pseudo', 'contenus.*')
+            ->where('contenus.CoordonneesX', '<=', $epicentre->latitude + $zoom)
+            ->where('contenus.CoordonneesY', '<=', $epicentre->longitude + $zoom)
+            ->where('contenus.CoordonneesX', '>=', $epicentre->latitude - $zoom)
+            ->where('contenus.CoordonneesY', '>=', $epicentre->longitude - $zoom)
+            ->distinct()
+            ->get();
 
     }
 

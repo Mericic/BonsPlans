@@ -8,14 +8,10 @@ use Illuminate\Http\Request;
 class MapsController extends Controller
 {
     public function getContenuStart($latitude, $longitude){
-        $Contenu = Contenu::join('users', 'contenus.id_User', '=', 'users.id')
-            ->select('users.pseudo', 'contenus.*')
-            ->where('contenus.CoordonneesX', '<=', $latitude + 0.012)
-            ->where('contenus.CoordonneesY', '<=', $longitude + 0.012)
-            ->where('contenus.CoordonneesX', '>=', $latitude - 0.012)
-            ->where('contenus.CoordonneesY', '>=', $longitude - 0.012)
-            ->distinct()
-            ->get();
+        $epicentre=(object)'epicentre';
+        $epicentre->latitude=$latitude;
+        $epicentre->longitude=$longitude;
+        $Contenu = Contenu::getContenus($epicentre, 0.012);
         return $Contenu;
     }
     public function getContenuZoom($lvl, $latitude, $longitude){
@@ -48,18 +44,11 @@ class MapsController extends Controller
                 $zoom = 0.00075;
                 break;
         }
-        $Contenu = Contenu::join('users', 'contenus.id_User', '=', 'users.id')
-            ->select('users.pseudo', 'contenus.*')
-            ->where('contenus.CoordonneesX', '<=', $latitude + $zoom)
-            ->where('contenus.CoordonneesY', '<=', $longitude + $zoom)
-            ->where('contenus.CoordonneesX', '>=', $latitude - $zoom)
-            ->where('contenus.CoordonneesY', '>=', $longitude - $zoom)
-            ->distinct()
-            ->get();
+        $epicentre=(object)'epicentre';
+        $epicentre->latitude=$latitude;
+        $epicentre->longitude=$longitude;
+        $Contenu = Contenu::getContenus($epicentre, $zoom);
         return $Contenu;
     }
 
-    public function doCircle($idContenu){
-
-    }
 }
