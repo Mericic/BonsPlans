@@ -7,6 +7,7 @@
             <div class="card-background">
                 <img class="card-bkimg" alt="" src="{{ asset($profilePic->path) }}">
             </div>
+            <div class="blur"></div>
             <div class="useravatar fg">
                 <img class="avatar mx-auto d-block" src="{{ asset($profilePic->path) }}" alt="Card image cap">
             </div>

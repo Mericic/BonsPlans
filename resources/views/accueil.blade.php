@@ -21,19 +21,31 @@
     <div style="position: absolute; width: 100%; height: 100%; transition-duration: 0.7s;" class="UP" id="all">
         <div id="main-container">
             <iframe style="position: absolute; z-index: 1; top: 0px; overflow: hidden; border: hidden;" id="iframeCarte" title="carte" src="{{route('carte')}}" width="100%"></iframe>
+            <div id="elementCategorie" style="display: none; left: 10px; bottom: 85px; z-index: 5; position: absolute; background-color: white; width: 180px; overflow: auto; max-height: 300px;">
+                <p class="categorie">Sport</p>
+                <p class="categorie">Sortie</p>
+                <p class="categorie">Game</p>
+                <p class="categorie">Lecture</p>
+                <p class="categorie">Sport</p>
+                <p class="categorie">Sortie</p>
+                <p class="categorie">Game</p>
+                <p class="categorie">Lecture</p>
+            </div>
             <div id="cadre">
+                <div id="categoriesSelected" style="display: block; width: 100%;"></div>
                 <div id="inputsCadre">
                     <div style="font-size: 1.2em;" class="inputCadre">
                         <input type="text" id="adresse" placeholder="Choisis un lieu..." required>
                     </div>
                     <div style="font-size: 1.2em;" class="inputCadre">
-                        <select id="categorie">
-                            <option value='' disabled selected>Choisis un filtre...</option>
-                            <option value='1'>1</option>
-                            <option value='2'>2</option>
-                            <option value='3'>3</option>
-                            <option value='4'>4</option>
-                        </select>
+                        <input id="inputCategorie" type="text" placeholder="Catégorie (max 3)" name="categorie">
+                        {{--<select id="categorie">--}}
+                            {{--<option value='' disabled selected>Choisis un filtre...</option>--}}
+                            {{--<option value='1'>1</option>--}}
+                            {{--<option value='2'>2</option>--}}
+                            {{--<option value='3'>3</option>--}}
+                            {{--<option value='4'>4</option>--}}
+                        {{--</select>--}}
                     </div>
                     <div style="font-size: 1.2em;" class="inputCadre">
                         <select id="range">
@@ -45,21 +57,60 @@
                         </select>
                     </div>
                 </div>
-                <button type="button" class="btn" id="chercher" onclick="search()">GO!</button>
+                <button type="button" class="btn" id="chercher" onclick="search()"><i class="fas fa-search"></i></button>
             </div>
         </div>
-        <div id="list">
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
+        <div onLoad="getLocation()" id="list">
+            <div class="row justify-content-center list" id="row">
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+            </div>
         </div>
         <img id="imgGIF" src="{{ asset('img/wait.gif')}}">
     </div>
+    <script type="text/javascript" src="{{ asset('js/maps.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $("#inputCategorie").focusin(function(){
+                $("#elementCategorie").css("display", "block");
+            });
+            $(".categorie").click(function(){
+                console.log(this.innerHTML);
+                document.getElementById('categoriesSelected').innerHTML += '<div id="categorieSelected">'+this.innerHTML+' <i onclick="deleteCategorieSelected(this);" style="color: red; cursor: pointer;" class="fas fa-times"></i></div>';
+                document.getElementById('iframeCarte').src += "?filtre";
+                var nb = document.getElementById('categoriesSelected').innerHTML.split('<div');
+                nb = nb.length-1;
+                console.log('nb:'+nb);
+                if (nb == 3){
+                    document.getElementById('inputCategorie').disabled = true;
+                }
+            });
+            $("#inputCategorie").blur(function(e){
+                setTimeout(function () {
+                    if (e.type == 'blur') {
+                        $("#elementCategorie").css("display", "none");
+                    }
+                }, 100);
+
+            });
+            $("#inputCategorie").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#elementCategorie p").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+        function deleteCategorieSelected(elem){
+            $(elem).parent().remove();
+            document.getElementById('inputCategorie').disabled = false;
+        }
+    </script>
 
     <script>
         document.getElementById('iframeCarte').height = window.innerHeight;
@@ -104,10 +155,11 @@
                 change('gauche');
                 window.scrollTo(0, 0);
             }
-        })
+        });
 
         function change(position) {
             if (position == 'droite') {
+                getLocation();
                 toggleContainer.style.clipPath = 'inset(0 0 0 50%)';
                 toggleContainer.style.backgroundColor = 'black';
             } else {
@@ -116,7 +168,7 @@
             }
         };
     </script>
-
+<script src="\bonplan\public\js\infiniteScroll.js"></script>
 
 
 @endsection
