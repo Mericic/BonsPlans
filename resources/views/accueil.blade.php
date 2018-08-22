@@ -49,18 +49,20 @@
             </div>
         </div>
         <div id="list">
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
-            <div class="newDiv"></div>
+            <div class="row justify-content-center list" id="row">
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+                <div class="col-11 col-md-7 newDiv"></div>
+            </div>
         </div>
         <img id="imgGIF" src="{{ asset('img/wait.gif')}}">
     </div>
-
+    <script type="text/javascript" src="/bonplan/public/js/maps.js"></script>
     <script>
         document.getElementById('iframeCarte').height = window.innerHeight;
         function search() {
@@ -108,6 +110,7 @@
 
         function change(position) {
             if (position == 'droite') {
+
                 toggleContainer.style.clipPath = 'inset(0 0 0 50%)';
                 toggleContainer.style.backgroundColor = 'black';
             } else {
@@ -116,7 +119,7 @@
             }
         };
     </script>
-
+<script src="\bonplan\public\js\infiniteScroll.js"></script>
 
 
 @endsection

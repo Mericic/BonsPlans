@@ -31,11 +31,11 @@ function infiniteScroll() {
                 }
             }
         });*/
-        let list = document.getElementById('list');
+        let list = document.getElementById('row');
         var i = 0;
         while (i++ < 15) {
             let newDiv = document.createElement('div');
-            newDiv.className = 'newDiv';
+            newDiv.className = 'col-11 col-md-7 newDiv';
             newDiv.id = 'content' + i;
             list.appendChild(newDiv);
         }
