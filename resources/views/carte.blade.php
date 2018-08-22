@@ -86,7 +86,7 @@
         var mymap = L.map('mapid').setView([latitude, longitude], 15);
         var popup = L.popup();
 
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWF4ZW5jZW1nciIsImEiOiJjamwzeWJzbHkyNm1uM3hxcDg2dTh4ZHZlIn0.bpVBOvFUvL0lssod_zC_tw', {
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
             maxZoom: 18,
             minZoom: 1,
             id: 'mapbox.streets'
@@ -106,7 +106,7 @@
                         ],
                         localize: 'fr',
                         routeWhileDragging: true,
-                        router: L.Routing.mapbox('pk.eyJ1IjoibWF4ZW5jZW1nciIsImEiOiJjamwzeWJzbHkyNm1uM3hxcDg2dTh4ZHZlIn0.bpVBOvFUvL0lssod_zC_tw')
+                        router: L.Routing.mapbox('pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw')
                     }).addTo(mymap);
                     L.marker([latitude, longitude]).addTo(mymap)
                             .bindPopup('<h1 style="text-align:center; width: 100%;">Vous</h1>');
@@ -131,7 +131,7 @@
 
         var mymap = L.map('mapid').setView([latitude, longitude], 15);
 
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWF4ZW5jZW1nciIsImEiOiJjamwzeWJzbHkyNm1uM3hxcDg2dTh4ZHZlIn0.bpVBOvFUvL0lssod_zC_tw', {
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
             maxZoom: 18,
             minZoom: 1,
             id: 'mapbox.streets'
@@ -223,7 +223,7 @@
                     console.log(data);
                     data.forEach(function (element) {
                         L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
-                                .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'"><b style="font-size: 1.5em">'+element.nom_contenu+'</b><hr><p style="font-size: 1.2em">'+element.Description+'</p><hr><a href="profil/'+element.pseudo+'" target="_parent" style="font-size: 1.4em">'+element.pseudo+'</a><a href="contenu/'+element.id_Contenu+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a></div>');
+                                .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'"><b style="font-size: 1.5em">'+element.nom_contenu+'</b><hr><p style="font-size: 1.2em">'+element.Description+'</p><hr><a onclick="callMethod("changePage/Profile/'+element.pseudo+')" href="profil/'+element.pseudo+'" target="_parent" style="font-size: 1.4em">'+element.pseudo+'</a><a href="contenu/'+element.id_Contenu+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a></div>');
                     });
 
                 }

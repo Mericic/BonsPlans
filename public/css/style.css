@@ -19,8 +19,6 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 
-
-
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -665,4 +663,21 @@ nav{
 
 .contenuPopUp{
     width: 300px;
+}
+#elementCategorie p{
+    padding: 10px;
+}
+#elementCategorie p:hover{
+    background-color: rgba(128, 128, 128, 0.6);
+    color: white;
+    cursor: pointer;
+}
+#categorieSelected{
+    background-color: black;
+    text-align: center;
+    font-size: 1.5em;
+    display: inline-block;
+    margin: 5px;
+    width: 30%;
+    border-radius: 7px;
 }
