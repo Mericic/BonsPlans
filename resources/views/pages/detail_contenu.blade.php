@@ -105,7 +105,7 @@
         </section>
     </div>
     <div class="row">
-        <iframe style="overflow: hidden; border: hidden; height: 500px; width: 100%;" id="iframeCarte" title="carte" src="{{route('carte')}}?contenu=2" width="100%"></iframe>
+        <iframe style="overflow: hidden; border: hidden; height: 500px; width: 100%;" id="iframeCarte" title="carte" src="{{route('carte')}}?contenu={{ $contenu->id_contenu }}" width="100%"></iframe>
     </div>
     </iframe>
 </div>
