@@ -60,7 +60,7 @@
                 <button type="button" class="btn" id="chercher" onclick="search()"><i class="fas fa-search"></i></button>
             </div>
         </div>
-        <div id="list">
+        <div onLoad="getLocation()" id="list">
             <div class="row justify-content-center list" id="row">
                 <div class="col-11 col-md-7 newDiv"></div>
                 <div class="col-11 col-md-7 newDiv"></div>
@@ -74,7 +74,7 @@
         </div>
         <img id="imgGIF" src="{{ asset('img/wait.gif')}}">
     </div>
-    <script type="text/javascript" src="/bonplan/public/js/maps.js"></script>
+    <script type="text/javascript" src="{{ asset('js/maps.js') }}"></script>
     <script>
         $(document).ready(function(){
             $("#inputCategorie").focusin(function(){
@@ -83,6 +83,7 @@
             $(".categorie").click(function(){
                 console.log(this.innerHTML);
                 document.getElementById('categoriesSelected').innerHTML += '<div id="categorieSelected">'+this.innerHTML+' <i onclick="deleteCategorieSelected(this);" style="color: red; cursor: pointer;" class="fas fa-times"></i></div>';
+                document.getElementById('iframeCarte').src += "?filtre";
                 var nb = document.getElementById('categoriesSelected').innerHTML.split('<div');
                 nb = nb.length-1;
                 console.log('nb:'+nb);
@@ -158,7 +159,7 @@
 
         function change(position) {
             if (position == 'droite') {
-
+                getLocation();
                 toggleContainer.style.clipPath = 'inset(0 0 0 50%)';
                 toggleContainer.style.backgroundColor = 'black';
             } else {
