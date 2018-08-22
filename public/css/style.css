@@ -127,6 +127,7 @@ right {
 
 .navbar-toggler {
     background-color: rgba(161, 161, 161, 0.664);
+    float: right;
 }
 
 .collapse .navbar-collapse {

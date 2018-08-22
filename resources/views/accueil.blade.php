@@ -45,7 +45,7 @@
                         </select>
                     </div>
                 </div>
-                <button type="button" class="btn" id="chercher" onclick="search()">GO!</button>
+                <button type="button" class="btn" id="chercher" onclick="search()"><i class="fas fa-search"></i></button>
             </div>
         </div>
         <div id="list">
