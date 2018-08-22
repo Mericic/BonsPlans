@@ -34,7 +34,7 @@
     <button class="navbar-toggler right" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse right" id="collapsibleNavbar">
+    <div class="collapse navbar-collapse right float-right" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('addcontenu') }}"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un événement</button></a>
@@ -137,7 +137,6 @@
     </div>
 </div>
 
-<script src="\js\infiniteScroll.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
