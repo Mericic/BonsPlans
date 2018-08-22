@@ -5,7 +5,7 @@
 function ajoutCritere(){
     var critere = $('#CritereInput').val()
 
-    if(critere==null)
+    if(critere==null || critere=='')
         return;
 
     if (document.getElementById('listeCriteres').hasChildNodes()) {
@@ -27,6 +27,13 @@ function ajoutCritere(){
     p.setAttribute('class', 'critere col-6 col-md-3')
     p.innerHTML=critere
     document.getElementById('listeCriteres').appendChild(p)
+
+    //on ajoute au input hidden la valeur
+    var hidden = $('#inputCriteres').val();
+    hidden += critere+'|';
+    $('#inputCriteres').val(hidden)
+    console.log(hidden)
+
     $('#CritereInput').val('')
     console.log('fini')
 }
@@ -34,7 +41,7 @@ function ajoutCritere(){
 function ajoutCategorie(){
     var categorie = $('#CategorieInput').val()
 
-    if(categorie==null)
+    if(categorie==null || categorie=='')
         return;
 
     if (document.getElementById('listeCategorie').hasChildNodes()) {
@@ -56,11 +63,29 @@ function ajoutCategorie(){
     p.setAttribute('class', 'categorie col-6 col-md-3')
     p.innerHTML=categorie
     document.getElementById('listeCategorie').appendChild(p)
+
+    //on ajoute au input hidden la valeur
+    var hidden = $('#inputCategories').val();
+    hidden += categorie+'|';
+    $('#inputCategories').val(hidden)
+    console.log(hidden)
+
     $('#CategorieInput').val('')
     console.log('fini')
 }
 
 
-function refreshImg(fichier) {
-    $.ajax()
+
+
+function readURL(input) {
+    console.log('coucou')
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#image_haut_defaut').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }

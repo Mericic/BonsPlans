@@ -8,4 +8,10 @@ class Categorie extends Model
 {
     protected $primaryKey = 'id_Categorie';
 
+
+    public static function getIdFromNom($nom){
+        $id = Categorie::where('nom', '=', $nom)
+            ->select('id_Categorie')->first();
+        return $id['id_Categorie'];
+    }
 }

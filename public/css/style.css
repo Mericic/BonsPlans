@@ -284,7 +284,7 @@ nav{
     /*float: left;*/
 }
 
-.critere{
+.critere, .categorie{
     padding: 5px 5px;
 }
 .critere p, .div_progress{

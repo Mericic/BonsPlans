@@ -63,4 +63,12 @@ class HomeController extends Controller
             ->with(['contenu'=>$contenu->contenu[0], 'images'=>$contenu->images, 'categories'=>$contenu->categories, 'criteres'=>$contenu->criteres, 'commentaires'=>$contenu->commentaires, 'commentaire_User'=>$commentaire_User]);
     }
 
+
+    public function addContenu(Request $request){
+
+        $contenu = new Contenu();
+
+        return view('pages.creationContenu');
+    }
+
 }

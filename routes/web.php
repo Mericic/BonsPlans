@@ -28,4 +28,5 @@ Route::get('/profil/{pseudo}', 'HomeController@profil')->name('profil')->where([
 Route::get('/profiltest/{pseudo}', 'HomeController@profil')->name('profil')->where(['pseudo'=>'[a-zA-Z0-9]+']);
 
 Route::get('/contenu/{id_contenu}', 'HomeController@contenu')->name('contenu')->where(['id_contenu'=>'[0-9]{1,6}']);
-Route::get('/contenu/creation', 'ContenuController@addContenu')->name('addcontenu');
+Route::get('/contenu/creation', 'HomeController@addContenu')->name('addcontenu');
+Route::post('/contenu/nouveau', 'ContenuController@addContenu')->name('addcontenuForm');

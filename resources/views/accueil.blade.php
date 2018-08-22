@@ -168,7 +168,10 @@
             }
         };
     </script>
-<script src="\bonplan\public\js\infiniteScroll.js"></script>
+
+
+    <script src="\js\infiniteScroll.js"></script>
+
 
 
 @endsection
