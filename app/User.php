@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -39,14 +40,19 @@ class User extends Authenticatable
 
     public static function getInfoByPseudo($pseudo){
         $user = User::where('pseudo', $pseudo)->join('images', 'users.id_imageprofil', '=', 'images.id')->first();
-        if($user!=null)
-            return $user;
+        if($user==null) {
+            $user = User::where('pseudo', $pseudo)->first();
+            $user->id_imageprofil = 1;
+            $user->save();
+            $user = User::leftjoin('images', 'users.id', '=', 'images.id_proprietaire')
+                ->where('pseudo', $pseudo)->first();
+        }
+        $contenus = Contenu::where('id_User', '=', $user->id)->get();
+        $user->contenus = $contenus;
 
-        $user = User::where('pseudo', $pseudo)->first();
-        $user->id_imageprofil = 1;
-        $user->save();
-        $user2 = User::leftjoin('images', 'users.id', '=', 'images.id_proprietaire')
-            ->where('pseudo', $pseudo)->first();
-        return $user2;
+        $commentaires = Commentaire::getCommentaireByUser($user->id);
+        $user->commentaires = $commentaires;
+
+        return $user;
     }
 }
