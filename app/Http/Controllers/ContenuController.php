@@ -104,7 +104,7 @@ class ContenuController extends Controller
         $contenu->save();
         $id = $contenu->id_Contenu;
 
-        $path = 'img\contenu\\'.$id;
+        $path = 'img/contenu/'.$id;
         File::makeDirectory($path);
         $name = Input::file('imageContenu')->getClientOriginalName();
         Input::file('imageContenu')->move(public_path().'/'.$path, $name);
@@ -112,7 +112,7 @@ class ContenuController extends Controller
 
         $image = new Image();
         $image->nom = $name;
-        $image->path = $path.'\\'.$name;
+        $image->path = $path.'/'.$name;
         $image->id_proprietaire = Auth::id();
         $image->save();
         $id_image = $image->id;
