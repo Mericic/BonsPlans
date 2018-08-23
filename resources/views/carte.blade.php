@@ -100,6 +100,7 @@
                 url: "api/contenu/"+adress.get("contenu"),
                 success: function(data){
                     console.log(data);
+                    document.cookie = "mapData=" + JSON.stringify(data);
                     L.Routing.control({
                         waypoints: [
                             L.latLng(latitude, longitude),
