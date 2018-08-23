@@ -186,9 +186,9 @@
                 type: "GET",
                 url: "api/contenu/zoom/"+lvl+"/"+latitude+'/'+longitude,
                 success: function(data){
-                    console.log(data);
-                    
                     document.cookie = "mapData=" + JSON.stringify(data);
+                    console.log('onMapMove');
+                    console.log(data);
                     data.forEach(function (element) {
                         L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
                                 .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'"></div>')
