@@ -66,9 +66,8 @@ class HomeController extends Controller
 
 
     public function addContenu(Request $request){
-
-        $contenu = new Contenu();
-
+        if(!Auth::check())
+            return redirect('/login');
         return view('pages.creationContenu');
     }
 
