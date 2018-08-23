@@ -686,7 +686,7 @@ nav{
     width: 300px;
 }
 
-#categorieSelected {
+.categorieSelected {
     background-color: black;
     color: white;
     font-size: 1.3em;

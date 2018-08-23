@@ -64,7 +64,7 @@
             });
             $(".categorie").click(function(){
                 console.log(this.innerHTML);
-                document.getElementById('categoriesSelected').innerHTML += '<div id="categorieSelected">'+this.innerHTML+' <i onclick="deleteCategorieSelected(this);" style="color: red; cursor: pointer; float: right; margin-top: 3px;" class="fas fa-times" ></i></div>';
+                document.getElementById('categoriesSelected').innerHTML += '<div id="' + this.innerHTML + '" class="categorieSelected">'+this.innerHTML+' <i onclick="deleteCategorieSelected(this);" style="color: red; cursor: pointer; float: right; margin-top: 3px;" class="fas fa-times" ></i></div>';
 
                 var nb = document.getElementById('categoriesSelected').innerHTML.split('<div');
                 nb = nb.length-1;
