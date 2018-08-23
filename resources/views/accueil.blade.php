@@ -21,7 +21,7 @@
     <div style="position: absolute; width: 100%; height: 100%; transition-duration: 0.7s;" class="UP" id="all">
         <div id="main-container">
             <iframe style="position: absolute; z-index: 1; top: 0px; overflow: hidden; border: hidden;" id="iframeCarte" title="carte" src="{{route('carte')}}" width="100%"></iframe>
-            <div id="elementCategorie" style="display: none; left: 10px; bottom: 85px; z-index: 5; position: absolute; background-color: white; width: 180px; overflow: auto; max-height: 300px;">
+            <div id="elementCategorie" style="display: none; left: 10px; bottom: 110px; z-index: 5; position: absolute; background-color: white; width: 180px; overflow: auto; max-height: 300px;">
                 <p class="categorie">Sport</p>
                 <p class="categorie">Sortie</p>
                 <p class="categorie">Game</p>
@@ -31,12 +31,10 @@
                 <p class="categorie">Game</p>
                 <p class="categorie">Lecture</p>
             </div>
+            <p>Selected: <strong id="address-value">none</strong></p>
             <div id="cadre">
                 <div id="categoriesSelected" style="display: block; width: 100%;"></div>
                 <div id="inputsCadre">
-                    <div style="font-size: 1.2em;" class="inputCadre">
-                        <input type="text" id="adresse" placeholder="Choisis un lieu..." required>
-                    </div>
                     <div style="font-size: 1.2em;" class="inputCadre">
                         <input id="inputCategorie" type="text" placeholder="Catégorie (max 3)" name="categorie">
                         {{--<select id="categorie">--}}
@@ -55,6 +53,10 @@
                             <option value='1000'>1000m</option>
                             <option value='500'>500m</option>
                         </select>
+                    </div>
+                    <br>
+                    <div style="font-size: 1.2em; width: 100%; margin-top: 5px;" class="inputCadre">
+                        <input type="search" id="adresse" placeholder="Choisis un lieu..." required>
                     </div>
                 </div>
                 <button type="button" class="btn" id="chercher" onclick="search()"><i class="fas fa-search"></i></button>
@@ -96,6 +98,9 @@
                 $("#elementCategorie p").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
+            });
+            $("#adresse").click(function(){
+                adresseFiltre();
             });
         });
         function deleteCategorieSelected(elem){
@@ -159,9 +164,37 @@
                 toggleContainer.style.backgroundColor = 'black';
             }
         };
+
+        function adresseFiltre(){
+            $.ajax({
+                type: "POST",
+                url: "https://places-dsn.algolia.net/1/places/query?x-algolia-agent=Algolia%20for%20vanilla%20JavaScript%20(lite)%203.27.1%3BAlgolia%20Places%201.9.0&x-algolia-application-id=&x-algolia-api-key=",
+                success: function(data){
+                    console.log(data);
+                }
+            });
+        }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.9.0"></script>
+    <script>
+        (function() {
+            var placesAutocomplete = places({
+                container: document.querySelector('#adresse')
+            });
 
+            var $address = document.querySelector('#address-value');
+            document.getElementById("algolia-places-listbox-0").style.top = '-320px';
+            document.getElementById("algolia-places-listbox-0").style.color = 'black';
+            placesAutocomplete.on('change', function(e) {
+                $address.textContent = e.suggestion.value;
+            });
 
+            placesAutocomplete.on('clear', function() {
+                $address.textContent = 'none';
+            });
+
+        })();
+    </script>
 
 
 

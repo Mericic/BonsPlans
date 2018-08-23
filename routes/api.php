@@ -21,6 +21,8 @@ Route::get('/contenu/{id_contenu}', 'ContenuController@getContenu')->where('id_c
 Route::get('/contenu/start/{latitude}/{longitude}', 'MapsController@getContenuStart')->name('getContenuStart');
 Route::get('/contenu/zoom/{lvl}/{latitude}/{longitude}', 'MapsController@getContenuZoom')->name('getContenuZoom');
 
+Route::get('/adresses', 'MapsController@getAdressCsvByFilter')->name('getAdressCsvByFilter');
+
 
 Route::get('/contenu/getAllCoordonnees', 'ContenuController@getAllCoordonnees')->name('getAllCoordonnees');
 

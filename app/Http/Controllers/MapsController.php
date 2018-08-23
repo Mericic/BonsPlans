@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Contenu;
+use Exception;
+use SplFileObject;
 use Illuminate\Http\Request;
 
 class MapsController extends Controller
@@ -55,5 +57,4 @@ class MapsController extends Controller
         $Contenu = Contenu::getContenus($epicentre, $zoom);
         return $Contenu;
     }
-
 }
