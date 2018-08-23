@@ -1,4 +1,3 @@
-var DivClass = "col-11 col-md-7 newDiv";
 
 function getLocation() {
     if(navigator.geolocation)
@@ -18,7 +17,7 @@ function succes(position) {
     if (window.location.search.substring(1,8) == "contenu")
         MapsOfContenu(latitude, longitude, msg);
     else
-        maps(latitude, longitude, msg)
+        maps()
 }
 function error() {
     var longitude = 4.832487;
@@ -27,25 +26,37 @@ function error() {
     if (window.location.search.substring(1,8) == "contenu")
         MapsOfContenu(latitude, longitude, msg);
     else
-        maps(latitude, longitude)
+        maps()
 }
 
-function maps(latitude, longitude) {
-    $.ajax({
-        type: "GET",
-        url: "api/contenu/start/"+latitude+'/'+longitude,
-        success: function(data){
-            console.log(data);
-            for (i = 0; i < data.length; i++) {
-                var listChild = document.createElement('div');
-                listChild.className = "col-11 col-md-7 newDiv";
-                listChild.style.backgroundImage = "url(" + data[i]['images']['path'] + ")";
-                
+function maps() {
+    var data = getCookie('mapData');
+    data = JSON.parse(data);
+    for (i = 0; i < data.length; i++) {
+        var listChild = document.createElement('div');
+        listChild.className = "col-11 col-md-7 newDiv data-toggle='tooltip' data-placement='top' title='Vers la page du contenu !'";
+        listChild.style.backgroundImage = "url(" + data[i]['images']['path'] + ")";
+        listChild.innerHTML = '<div class="text" onclick=location.href="contenu/' + data[i]['id_Contenu'] + '"> <h1>' 
+                            + data[i]["nom_contenu"].toUpperCase()
+                            + '</h1> <i class="fas fa-map-marker-alt"></i> '
+                            + data[i]['Adresse'] + '</div>';
+        var list = document.getElementById('row');
+        list.appendChild(listChild);
+    };
+}
 
-                var list = document.getElementById('row');
-                list.appendChild(listChild);
-            }
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
         }
-    });
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
-

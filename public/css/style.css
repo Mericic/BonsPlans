@@ -38,8 +38,7 @@ time, mark, audio, video {
 }
 
 html, body {
-    background-color: #fff;
-    color: #636b6f;
+    background-color: rgb(36, 36, 36);
     font-family: 'Nunito', sans-serif;
     font-weight: 200;
     height: 100vh;
@@ -161,7 +160,7 @@ nav{
 
 #list {
     top: 100%;
-    background-color: black;
+    background-color: rgb(36, 36, 36);
     position: absolute;
     width: 100%;
     margin: 0;
@@ -182,11 +181,27 @@ nav{
 }
 
 .newDiv {
+    position: relative;
     background-color: white;
     height: 300px;
-    border: solid 2px blue;
-    grid-column: 2 / 5;
+    box-shadow: 2px 2px 2px black;
     margin-bottom: 20px;
+    text-align: center;
+    background-size: 100% auto;
+}
+
+.newDiv  .text {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.541);
+    color: white;
+    position: absolute;
+    top: 80%;
+    margin-bottom: 0;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
 }
 
 #cadre {
@@ -346,6 +361,10 @@ nav{
     grid-template-rows: repeat(6, 1fr);
     grid-gap: 4% !important;
     position: relative;
+}
+
+#row {
+    margin-top: 73.333px;
 }
 
 #profile-wrapper > div {
@@ -665,4 +684,27 @@ nav{
 
 .contenuPopUp{
     width: 300px;
+}
+
+#categorieSelected {
+    background-color: black;
+    color: white;
+    font-size: 1.3em;
+    margin: 5px;
+    width: 30%;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+#elementCategorie {
+    display: none;
+    left: 10px; 
+    bottom: 110px; 
+    z-index: 5; 
+    position: absolute; 
+    background-color: white; 
+    width: 180px; 
+    overflow: auto; 
+    max-height: 300px;
 }

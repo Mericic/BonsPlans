@@ -21,7 +21,7 @@
     <div style="position: absolute; width: 100%; height: 100%; transition-duration: 0.7s;" class="UP" id="all">
         <div id="main-container">
             <iframe style="position: absolute; z-index: 1; top: 0px; overflow: hidden; border: hidden;" id="iframeCarte" title="carte" src="{{route('carte')}}" width="100%"></iframe>
-            <div id="elementCategorie" style="display: none; left: 10px; bottom: 110px; z-index: 5; position: absolute; background-color: white; width: 180px; overflow: auto; max-height: 300px;">
+            <div id="elementCategorie">
                 <p class="categorie">Sport</p>
                 <p class="categorie">Sortie</p>
                 <p class="categorie">Game</p>
@@ -76,7 +76,7 @@
             });
             $(".categorie").click(function(){
                 console.log(this.innerHTML);
-                document.getElementById('categoriesSelected').innerHTML += '<div id="categorieSelected">'+this.innerHTML+' <i onclick="deleteCategorieSelected(this);" style="color: red; cursor: pointer;" class="fas fa-times"></i></div>';
+                document.getElementById('categoriesSelected').innerHTML += '<div id="categorieSelected">'+this.innerHTML+' <i onclick="deleteCategorieSelected(this);" style="color: red; cursor: pointer; float: right; magin-top: 40%;" class="fas fa-times" ></i></div>';
                 document.getElementById('iframeCarte').src += "?filtre";
                 var nb = document.getElementById('categoriesSelected').innerHTML.split('<div');
                 nb = nb.length-1;
@@ -110,6 +110,10 @@
     </script>
 
     <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+
         document.getElementById('iframeCarte').height = window.innerHeight;
         function search() {
             if(document.getElementById('adresse').value != ""){
@@ -197,6 +201,7 @@
     </script>
 
 
+    <script type="text/javascript" src="{{ asset('js/infiniteScroll.js') }}"></script>
 
 @endsection
 
