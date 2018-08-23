@@ -160,7 +160,7 @@
 
         function change(position) {
             if (position == 'droite') {
-                getLocation();
+                getMapData();
                 toggleContainer.style.clipPath = 'inset(0 0 0 50%)';
                 toggleContainer.style.backgroundColor = 'black';
             } else {

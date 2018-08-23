@@ -54,7 +54,11 @@ class MapsController extends Controller
         $epicentre=(object)'epicentre';
         $epicentre->latitude=$latitude;
         $epicentre->longitude=$longitude;
-        $Contenu = Contenu::getContenus($epicentre, $zoom);
-        return $Contenu;
+        $Contenus = Contenu::getContenus($epicentre, $zoom);
+        foreach ($Contenus as $contenu) {
+            $imgArray = Contenu::getContentImages($contenu['id_Contenu']);
+            $contenu['images'] = $imgArray[0];
+        }
+        return $Contenus;
     }
 }
