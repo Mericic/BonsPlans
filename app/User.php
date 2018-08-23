@@ -30,13 +30,23 @@ class User extends Authenticatable
 
     public static function getProfilePic($id_user) {
         $profilPic = User::
-        join('images', 'users.id', '=', 'images.id_proprietaire')
+        join('images', 'users.id_imageprofil', '=', 'images.id')
         ->where('images.id_proprietaire', '=', $id_user)
         ->first();
-        if ($profilPic)
-           return ($profilPic);
-        $profilPic = new User();
-        $profilPic->path = 'https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png';
+
         return ($profilPic);
+    }
+
+    public static function getInfoByPseudo($pseudo){
+        $user = User::where('pseudo', $pseudo)->join('images', 'users.id_imageprofil', '=', 'images.id')->first();
+        if($user!=null)
+            return $user;
+
+        $user = User::where('pseudo', $pseudo)->first();
+        $user->id_imageprofil = 1;
+        $user->save();
+        $user2 = User::leftjoin('images', 'users.id', '=', 'images.id_proprietaire')
+            ->where('pseudo', $pseudo)->first();
+        return $user2;
     }
 }
