@@ -72,9 +72,28 @@ class Contenu extends Model
 
     }
 
+    public static function getContenusConsole(){
+        $contenus = Contenu::join('users', 'contenus.id_Contenu', '=', 'users.id')->get();
+        $returntext = "";
+        foreach($contenus as $contenu){
+            $returntext .= $contenu->id_Contenu.' : '.$contenu->nom_contenu.'  - créé par '.$contenu->pseudo."\n";
+        }
+        return $returntext;
+    }
+
+    public static function delContenuConsole($id_Contenu){
+        $contenu = Contenu::findOrFail($id_Contenu);
+        $contenu->delete();
+        return "Contenu supprimé";
+    }
+
     //renvoie les coordonnées pour la map avec les données récup par getContenus
     //epicentre ['latitude'=>value, 'longitude'=>value]
     public static function getContenus($epicentre, $zoom){
+        if($zoom == 0)
+            abort(500);
+        if($epicentre->latitude>90 || $epicentre->latitude<0 || $epicentre->longitude>90 || $epicentre->longitude<0)
+
         return Contenu::join('users', 'contenus.id_User', '=', 'users.id')
             ->select('users.pseudo', 'contenus.*')
             ->where('contenus.CoordonneesX', '<=', $epicentre->latitude + $zoom)

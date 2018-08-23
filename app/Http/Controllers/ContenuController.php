@@ -84,7 +84,7 @@ class ContenuController extends Controller
 
     public function addContenu(Request $request){
         if(!Auth::check())
-            return 'fuck you you are not connected';
+            return redirect('/login');
 
         if (!Input::hasFile('imageContenu'))
             return 'erreur image';
