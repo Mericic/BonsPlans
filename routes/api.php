@@ -38,4 +38,5 @@ Route::get('/criteres/recherche/{value}', 'CritereController@rechercheCritere')-
 Route::get('/categories/recherche/{value}', 'CategorieController@rechercheCategorie')->name('rechercheCategorie');
 
 Route::get('/user/{pseudo}', 'UserController@getInfo');
+Route::get('/contenu/mobile/{id_Contenu}', 'ContenuController@getContenuApi');
 

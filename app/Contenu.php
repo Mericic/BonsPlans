@@ -22,44 +22,54 @@ class Contenu extends Model
         if(!isset($this->id_contenu))
             return -1;
 
-        $contenu = Contenu::join('Users', 'contenus.id_User', '=', 'Users.id')
-            ->where('contenus.id_contenu', '=', $this->id_contenu)
-            ->select('contenus.id_contenu', 'contenus.nom_contenu', 'contenus.adresse', 'contenus.description', 'contenus.coordonneesX', 'contenus.coordonneesY', 'users.pseudo', 'users.id as id_user')
-            ->get();
+        $this->contenu= Contenu::getContenuBRUT($this->id_contenu);
+        $this->categories = $this->contenu->categories;
+        $this->images = $this->contenu->images;
+        $this->commentaires = $this->contenu->commentaires;
+        $this->criteres = $this->contenu->criteres;
+        return $this->contenu;
+    }
 
-        $this->categories = Contenu::join('contenu_categories', 'contenus.id_Contenu', '=', 'contenu_categories.id_Contenu')
+    public static function getContenuBRUT($id_contenu){
+        $contenu = Contenu::join('Users', 'contenus.id_User', '=', 'Users.id')
+            ->where('contenus.id_contenu', '=', $id_contenu)
+            ->select('contenus.id_contenu', 'contenus.nom_contenu', 'contenus.adresse', 'contenus.description', 'contenus.coordonneesX', 'contenus.coordonneesY', 'users.pseudo', 'users.id as id_user')
+            ->first();
+
+        $categories = Contenu::join('contenu_categories', 'contenus.id_Contenu', '=', 'contenu_categories.id_Contenu')
             ->join('Categories', 'contenu_categories.id_Categorie', '=', 'Categories.id_Categorie')
-            ->where('contenus.id_contenu', '=', $this->id_contenu)
+            ->where('contenus.id_contenu', '=', $id_contenu)
             ->select('categories.nom as nom_categorie', 'categories.id_categorie')
             ->get();
 
-        $this->criteres = Contenu::select(DB::raw('criteres.nom as nom_critere, criteres.id_critere, AVG(votes_criteres.value) as moyenne'))
+        $criteres = Contenu::select(DB::raw('criteres.nom as nom_critere, criteres.id_critere, AVG(votes_criteres.value) as moyenne'))
             ->join('Contenu_Criteres', 'contenus.id_Contenu', '=', 'Contenu_Criteres.id_Contenu')
             ->join('criteres', 'Contenu_Criteres.id_Critere', '=', 'criteres.id_critere')
             ->leftjoin('votes_criteres', function($join){
                 $join->on('contenus.id_contenu',  '=', 'votes_criteres.id_contenu');
                 $join->on('criteres.id_critere', '=', 'votes_criteres.id_critere');
             })
-            ->where('contenus.id_contenu', '=', $this->id_contenu)
+            ->where('contenus.id_contenu', '=', $id_contenu)
             ->groupby('criteres.id_critere')
             ->get();
 
 //dd($this->criteres);
-        $this->images = Contenu::join('Contenu_Images', 'contenus.id_Contenu', '=', 'contenu_images.id_contenu')
+        $images = Contenu::join('Contenu_Images', 'contenus.id_Contenu', '=', 'contenu_images.id_contenu')
             ->join('images', 'Contenu_Images.id_image', '=', 'images.id')
-            ->where('contenus.id_contenu', '=', $this->id_contenu)
+            ->where('contenus.id_contenu', '=', $id_contenu)
             ->select('nom as nom_image', 'path')
             ->get();
 
-        $this->commentaires = Commentaire::leftjoin('Reponses', 'Commentaires.id_Commentaire', '=', 'Reponses.id_Commentaire')
+        $commentaires = Commentaire::leftjoin('Reponses', 'Commentaires.id_Commentaire', '=', 'Reponses.id_Commentaire')
             ->join('users', 'commentaires.id_User', '=', 'users.id' )
-            ->where('commentaires.id_Contenu', '=', $this->id_contenu)
+            ->where('commentaires.id_Contenu', '=', $id_contenu)
+            ->select('Commentaire', 'Reponse', 'first_name', 'last_name')
             ->get();
-
-        $this->contenu = $contenu;
-        $contenu->categories = $this->categories;
-        $contenu->criteres = $this->criteres;
-        $contenu->images = $this->images;
+//dd($commentaires);
+        $contenu->categories = $categories;
+        $contenu->criteres = $criteres;
+        $contenu->images = $images;
+        $contenu->commentaires = $commentaires;
 
         return $contenu;
     }
