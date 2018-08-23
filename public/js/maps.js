@@ -3,7 +3,7 @@ var DivClass = "col-11 col-md-7 newDiv";
 function getLocation() {
     if(navigator.geolocation)
     {
-        navigator.geolocation.watchPosition(succes, error);
+        navigator.geolocation.getCurrentPosition(succes, error);
     }
     else
     {

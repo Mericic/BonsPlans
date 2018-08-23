@@ -49,7 +49,7 @@
         else{
             if(navigator.geolocation)
             {
-                navigator.geolocation.watchPosition(succes, error);
+                navigator.geolocation.getCurrentPosition(succes, error);
             }
             else
             {
