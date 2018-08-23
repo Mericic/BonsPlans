@@ -56,7 +56,7 @@
                 </li>
             @else
                 <li class="nav-item">
-                    <a style="color: white" class="nav-link" href="{{ route('profil', ['pseudo'=>Auth::user()->pseudo]) }}">Mon Profil</a>
+                    <a style="color: white" class="nav-link" href="{{ route('profil', ['pseudo'=>Auth::user()->pseudo]) }}">{{ Auth::user()->pseudo }} - Mon Profil</a>
                 </li>
                 <li class="nav-item">
                     <a style="color: white" class="nav-link" onclick="$('#formdeco').submit()">Deconnexion</a>
