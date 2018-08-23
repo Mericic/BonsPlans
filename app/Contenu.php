@@ -85,6 +85,14 @@ class Contenu extends Model
 
     }
 
+    public static function getContentImages($id_contenu) {
+        $images = Contenu::join('Contenu_Images', 'contenus.id_Contenu', '=', 'contenu_images.id_contenu')
+            ->join('images', 'Contenu_Images.id_image', '=', 'images.id')
+            ->where('contenus.id_contenu', '=', $id_contenu)
+            ->select('path')
+            ->get();
+        return ($images);
+    }
 
 
 }

@@ -1,4 +1,4 @@
-var DBdata = "hello";
+var DivClass = "col-11 col-md-7 newDiv";
 
 function getLocation() {
     if(navigator.geolocation)
@@ -27,15 +27,24 @@ function error() {
     if (window.location.search.substring(1,8) == "contenu")
         MapsOfContenu(latitude, longitude, msg);
     else
-        maps(latitude, longitude, msg)
+        maps(latitude, longitude)
 }
 
-function maps(latitude, longitude, msg) {
+function maps(latitude, longitude) {
     $.ajax({
         type: "GET",
         url: "api/contenu/start/"+latitude+'/'+longitude,
         success: function(data){
             console.log(data);
+            for (i = 0; i < data.length; i++) {
+                var listChild = document.createElement('div');
+                listChild.className = "col-11 col-md-7 newDiv";
+                listChild.style.backgroundImage = "url(" + data[i]['images']['path'] + ")";
+                
+
+                var list = document.getElementById('row');
+                list.appendChild(listChild);
+            }
         }
     });
 }

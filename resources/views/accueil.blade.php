@@ -60,16 +60,8 @@
                 <button type="button" class="btn" id="chercher" onclick="search()"><i class="fas fa-search"></i></button>
             </div>
         </div>
-        <div onLoad="getLocation()" id="list">
+        <div id="list">
             <div class="row justify-content-center list" id="row">
-                <div class="col-11 col-md-7 newDiv"></div>
-                <div class="col-11 col-md-7 newDiv"></div>
-                <div class="col-11 col-md-7 newDiv"></div>
-                <div class="col-11 col-md-7 newDiv"></div>
-                <div class="col-11 col-md-7 newDiv"></div>
-                <div class="col-11 col-md-7 newDiv"></div>
-                <div class="col-11 col-md-7 newDiv"></div>
-                <div class="col-11 col-md-7 newDiv"></div>
             </div>
         </div>
         <img id="imgGIF" src="{{ asset('img/wait.gif')}}">
@@ -170,7 +162,6 @@
     </script>
 
 
-    <script src="\js\infiniteScroll.js"></script>
 
 
 
