@@ -75,6 +75,10 @@ class Contenu extends Model
     //renvoie les coordonnées pour la map avec les données récup par getContenus
     //epicentre ['latitude'=>value, 'longitude'=>value]
     public static function getContenus($epicentre, $zoom){
+        if($zoom == 0)
+            abort(500);
+        if($epicentre->latitude>90 || $epicentre->latitude<0 || $epicentre->longitude>90 || $epicentre->longitude<0)
+
         return Contenu::join('users', 'contenus.id_User', '=', 'users.id')
             ->select('users.pseudo', 'contenus.*')
             ->where('contenus.CoordonneesX', '<=', $epicentre->latitude + $zoom)

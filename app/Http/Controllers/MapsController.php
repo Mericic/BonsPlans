@@ -14,6 +14,8 @@ class MapsController extends Controller
         $epicentre->latitude=$latitude;
         $epicentre->longitude=$longitude;
         $Contenus = Contenu::getContenus($epicentre, 0.012);
+        if($Contenus == null)
+            return ;
         foreach ($Contenus as $contenu) {
             $imgArray = Contenu::getContentImages($contenu['id_Contenu']);
             $contenu['images'] = $imgArray[0];
@@ -55,6 +57,8 @@ class MapsController extends Controller
         $epicentre->latitude=$latitude;
         $epicentre->longitude=$longitude;
         $Contenus = Contenu::getContenus($epicentre, $zoom);
+        if($Contenus == null)
+            return ;
         foreach ($Contenus as $contenu) {
             $imgArray = Contenu::getContentImages($contenu['id_Contenu']);
             $contenu['images'] = $imgArray[0];
