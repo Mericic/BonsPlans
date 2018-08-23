@@ -456,6 +456,8 @@ nav{
 #participation {
     box-shadow: 1px 1px 1px grey;
     display: block;
+    overflow: scroll;
+    max-height: 50vh;
 }
 
 .participation-info {
@@ -470,6 +472,7 @@ nav{
 
 .participation-div {
     position: relative;
+    height: 10rem !important;
 }
 
 .participation-title {
@@ -495,7 +498,7 @@ nav{
 
 #creation {
     box-shadow: 1px 1px 1px grey;
-    grid-row: 6 / 7;
+    max-height: 50vh;
 }
 
 #criteres, #categories, #descriptiondetaillee, #commentaires{

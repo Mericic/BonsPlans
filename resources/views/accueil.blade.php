@@ -56,6 +56,7 @@
         </div>
         <img id="imgGIF" src="{{ asset('img/wait.gif')}}">
     </div>
+    <script src="{{ asset('js/lodash.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/maps.js') }}"></script>
     <script>
         $(document).ready(function(){
@@ -156,9 +157,13 @@
 
         function change(position) {
             if (position == 'droite') {
-                getMapData();
-                toggleContainer.style.clipPath = 'inset(0 0 0 50%)';
-                toggleContainer.style.backgroundColor = 'black';
+                try {
+                    if (indexLength <= data.length)
+                        getMapData();
+                } finally {
+                    toggleContainer.style.clipPath = 'inset(0 0 0 50%)';
+                    toggleContainer.style.backgroundColor = 'black';
+                }
             } else {
                 toggleContainer.style.clipPath = 'inset(0 50% 0 0)';
                 toggleContainer.style.backgroundColor = 'black';
