@@ -1,5 +1,5 @@
 
-function getLocation() {
+function testLocation() {
     if(navigator.geolocation)
     {
         navigator.geolocation.getCurrentPosition(succes, error);
@@ -17,7 +17,7 @@ function succes(position) {
     if (window.location.search.substring(1,8) == "contenu")
         MapsOfContenu(latitude, longitude, msg);
     else
-        maps()
+        getMapData()
 }
 function error() {
     var longitude = 4.832487;
@@ -26,10 +26,10 @@ function error() {
     if (window.location.search.substring(1,8) == "contenu")
         MapsOfContenu(latitude, longitude, msg);
     else
-        maps()
+        getMapData()
 }
 
-function maps() {
+function getMapData() {
     var data = getCookie('mapData');
     data = JSON.parse(data);
     for (i = 0; i < data.length; i++) {

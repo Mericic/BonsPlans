@@ -31,6 +31,7 @@
 </head>
 <body onLoad="getLocation()">
 <div id="mapid"></div>
+<script type="text/javascript" src="{{ asset('js/maps.js') }}"></script>
 <script>
     function getLocation() {
         console.log(window.location.search.substring(1,8));
@@ -223,7 +224,6 @@
                 url: "api/contenu/start/"+latitude+'/'+longitude,
                 success: function(data){
                     console.log(data);
-
                     document.cookie = "mapData=" + JSON.stringify(data);
                     data.forEach(function (element) {
                         L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
