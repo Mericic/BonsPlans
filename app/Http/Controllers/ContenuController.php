@@ -144,4 +144,16 @@ class ContenuController extends Controller
         return redirect('/contenu/'.$id);
     }
 
+    public function getContenuApi(Request $request){
+        $contenu = Contenu::getContenuBRUT($request->id_Contenu);
+//        $contenu->
+        return response()->json([
+            'contenu' => $contenu,
+            'criteres' => $contenu->criteres,
+            'categories' => $contenu->categories,
+            'images' => $contenu->images,
+            'commentaires' => $contenu->commentaires,
+        ], 200);
+    }
+
 }
