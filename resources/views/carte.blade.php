@@ -133,6 +133,17 @@
 
         var mymap = L.map('mapid').setView([latitude, longitude], 15);
 
+        if(msg == "search"){
+            var redIcon = L.icon({
+                iconUrl: '{{ asset('img/marker-icon-red.png') }}',
+                shadowUrl: '{{ asset('img/marker-shadow.png') }}',
+                iconAnchor:   [10, 40],
+                popupAnchor:  [4, -30]
+            });
+            L.marker([latitude, longitude], {icon: redIcon}).addTo(mymap)
+                    .bindPopup('<div style="font-size: : 1.5em;">Centre de la recherche</div>');
+        }
+
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
             maxZoom: 18,
             minZoom: 1,
@@ -228,7 +239,12 @@
                     document.cookie = "mapData=" + JSON.stringify(data);
                     data.forEach(function (element) {
                         L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
-                                .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'"><b style="font-size: 1.5em">'+element.nom_contenu+'</b><hr><p style="font-size: 1.2em">'+element.Description+'</p><hr><a onclick="callMethod("changePage/Profile/'+element.pseudo+')" href="profil/'+element.pseudo+'" target="_parent" style="font-size: 1.4em">'+element.pseudo+'</a><a href="contenu/'+element.id_Contenu+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a></div>');
+                                .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'">' +
+                                        '<b style="font-size: 1.5em">'+element.nom_contenu+'</b>' +
+                                        '<hr><p style="font-size: 1.2em">'+element.Description+'</p>' +
+                                        '<hr><a onclick="callMethod("changePage/Profile/'+element.pseudo+')" href="profil/'+element.pseudo+'" target="_parent" style="font-size: 1.4em">'+element.pseudo+'</a>' +
+                                        '<a href="contenu/'+element.id_Contenu+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a>' +
+                                        '</div>');
                     });
 
                 }
@@ -256,7 +272,7 @@
                 var display_name = myObj[0].display_name.substr(myObj[0].display_name.length-6, myObj[0].display_name.length)
                 console.log(display_name);
                 if(display_name == "France")
-                    maps(myObj[0].lat, myObj[0].lon, "succes");
+                    maps(myObj[0].lat, myObj[0].lon, "search");
                 else {
                     maps(45.758399, 4.832487, "succes");
                     alert('Erreur: Aucune correspondance en France');

@@ -708,3 +708,7 @@ nav{
     overflow: auto; 
     max-height: 300px;
 }
+
+.categorie :hover{
+    background-color: rgba(128,128,128,0.6);
+}

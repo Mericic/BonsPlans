@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Categorie;
 use App\Contenu;
 use App\User;
 use App\Commentaire;
@@ -28,7 +29,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('accueil');
+        $categorie = Categorie::getAllCategorie();
+        return view('accueil')->with(['Categories'=>$categorie]);
     }
 
     public function profil($pseudo) {

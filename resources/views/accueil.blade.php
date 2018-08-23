@@ -3,18 +3,18 @@
     <div id="switchContainer">
         <div class="inner-switchContainer">
             <div class="switchToggle" id="vers-list">
-                <p class="toList">Liste</p>
+                <p class="toList">Liste (490)</p>
             </div>
             <div class="switchToggle" id="vers-carte">
-                <p class="toMap">Carte</p>
+                <p class="toMap">Carte (490)</p>
             </div>
         </div>
         <div class="inner-switchContainer" id='toggle-switchContainer'>
             <div class="switchToggle" id="vers-list">
-                <p class="toList">Liste</p>
+                <p class="toList">Liste (490)</p>
             </div>
             <div class="switchToggle" id="vers-carte">
-                <p class="toMap">Carte</p>
+                <p class="toMap">Carte (490)</p>
             </div>
         </div>
     </div>
@@ -22,14 +22,9 @@
         <div id="main-container">
             <iframe style="position: absolute; z-index: 1; top: 0px; overflow: hidden; border: hidden;" id="iframeCarte" title="carte" src="{{route('carte')}}" width="100%"></iframe>
             <div id="elementCategorie">
-                <p class="categorie">Sport</p>
-                <p class="categorie">Sortie</p>
-                <p class="categorie">Game</p>
-                <p class="categorie">Lecture</p>
-                <p class="categorie">Sport</p>
-                <p class="categorie">Sortie</p>
-                <p class="categorie">Game</p>
-                <p class="categorie">Lecture</p>
+                @foreach($Categories as $Categorie)
+                    <p id="{{  $Categorie->id_Categorie }}" class="categorie">{{  $Categorie->nom }}</p>
+                @endforeach
             </div>
             <p>Selected: <strong id="address-value">none</strong></p>
             <div id="cadre">
@@ -37,13 +32,6 @@
                 <div id="inputsCadre">
                     <div style="font-size: 1.2em;" class="inputCadre">
                         <input id="inputCategorie" type="text" placeholder="Catégorie (max 3)" name="categorie">
-                        {{--<select id="categorie">--}}
-                            {{--<option value='' disabled selected>Choisis un filtre...</option>--}}
-                            {{--<option value='1'>1</option>--}}
-                            {{--<option value='2'>2</option>--}}
-                            {{--<option value='3'>3</option>--}}
-                            {{--<option value='4'>4</option>--}}
-                        {{--</select>--}}
                     </div>
                     <div style="font-size: 1.2em;" class="inputCadre">
                         <select id="range">
@@ -76,8 +64,8 @@
             });
             $(".categorie").click(function(){
                 console.log(this.innerHTML);
-                document.getElementById('categoriesSelected').innerHTML += '<div id="categorieSelected">'+this.innerHTML+' <i onclick="deleteCategorieSelected(this);" style="color: red; cursor: pointer; float: right; magin-top: 40%;" class="fas fa-times" ></i></div>';
-                document.getElementById('iframeCarte').src += "?filtre";
+                document.getElementById('categoriesSelected').innerHTML += '<div id="categorieSelected">'+this.innerHTML+' <i onclick="deleteCategorieSelected(this);" style="color: red; cursor: pointer; float: right; margin-top: 3px;" class="fas fa-times" ></i></div>';
+
                 var nb = document.getElementById('categoriesSelected').innerHTML.split('<div');
                 nb = nb.length-1;
                 console.log('nb:'+nb);
@@ -115,9 +103,20 @@
         });
 
         document.getElementById('iframeCarte').height = window.innerHeight;
+
         function search() {
-            if(document.getElementById('adresse').value != ""){
+            if(document.getElementById('adresse').value != "" || document.getElementById('categoriesSelected').innerHTML != ""){
                 var adress = document.getElementById('adresse').value;
+                var categories = document.getElementById('categoriesSelected').innerHTML.split('<div id="categorieSelected">');
+                var nb = categories.length-1;
+                var categorie = '';
+                for(var i=1; i <= nb; i++){
+                    if(categories[i] != undefined){
+                        var tampon = categories[i].split(' <svg');
+                        categorie += tampon[0];
+                    }
+                }
+                console.log(categorie);
                 adress = adress.replace(' ', '%20');
 
                 document.getElementById('iframeCarte').src = '{{route('carte')}}?'+adress;

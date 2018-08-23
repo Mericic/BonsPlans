@@ -22,4 +22,5 @@ class CategorieController extends Controller
 
         echo implode('|', $Categories);
     }
+    
 }
