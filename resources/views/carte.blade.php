@@ -104,7 +104,7 @@
                             L.latLng(latitude, longitude),
                             L.latLng(data.contenu[0].coordonneesX, data.contenu[0].coordonneesY)
                         ],
-                        localize: 'fr',
+                        language: 'fr',
                         routeWhileDragging: true,
                         router: L.Routing.mapbox('pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw')
                     }).addTo(mymap);
