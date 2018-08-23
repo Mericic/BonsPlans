@@ -154,6 +154,8 @@
 
         startMaps(latitude, longitude);
 
+        var markers = new Array();
+
         /*L.marker([45.758419, 4.832507]).addTo(mymap)
             .bindPopup("<b>Night Mario Kart</b><br>Pour la sortie du nouveau mario kart, venez-vous amusé avec nous !!!<hr>Organisateur : <a href=\"#\">Maxou</a><a href=\"#\"><i style=\"float: right; font-size: 2em;\" class=\"fas fa-long-arrow-alt-right\"></i></a>");
         */
@@ -165,6 +167,18 @@
         */
 
         var popup = L.popup();
+        var action = 0;
+
+        function refreshMap(){
+            mymap.eachLayer(function (layer) {
+                mymap.removeLayer(layer);
+            });
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                maxZoom: 18,
+                minZoom: 10,
+                id: 'mapbox.streets'
+            }).addTo(mymap);
+        }
 
         function onMapClick(e) {
             popup
@@ -174,7 +188,13 @@
         }
 
         function onMapMove(e) {
-            mymap.clearLayers();
+
+            action = action + 1;
+            if(action == 10){
+                refreshMap();
+                action = 0;
+            }
+
             var style = document.getElementsByClassName('leaflet-proxy leaflet-zoom-animated')[0].style.transform;
             var lvl = style.substring(0,style.length-1).split("(")[2];
 
@@ -182,6 +202,7 @@
             var latitude = center[0].substring(0,center[0].length-1);
             var longitude = center[1].substring(0,center[1].length-1);
             console.log(latitude+'/'+longitude);
+
             $.ajax({
                 type: "GET",
                 url: "api/contenu/zoom/"+lvl+"/"+latitude+'/'+longitude,
@@ -190,9 +211,11 @@
                     console.log('onMapMove');
                     console.log(data);
                     data.forEach(function (element) {
-                        L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
+                        var marker = new L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
                                 .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'"></div>')
                                 .on('click', function(){console.log(element.id_Contenu); clickOnBalise(element.id_Contenu); $('#'+element.id_Contenu).parents('.leaflet-popup-content').css('width', '300px');});
+                        mymap.addLayer(marker);
+                        markers[marker._leaflet_id] = marker;
                     });
 
                 }
@@ -200,23 +223,25 @@
         }
 
         function zoom(e){
-            mymap.clearLayers();
+            action = action + 1;
+            if(action == 10){
+                refreshMap();
+                action = 0;
+            }
             var style = document.getElementsByClassName('leaflet-proxy leaflet-zoom-animated')[0].style.transform;
-            //if(lvl !== undefined || lvl > style.substring(0,style.length-1).split("(")[2]){
-                var lvl = style.substring(0,style.length-1).split("(")[2];
-                $.ajax({
-                    type: "GET",
-                    url: "api/contenu/zoom/"+lvl+"/"+latitude+'/'+longitude,
-                    success: function(data){
-                        console.log(data);
-                        data.forEach(function (element) {
-                            L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
-                                    .bindPopup('<div class="contenuPopUp" id='+element.id_Contenu+'><b style="font-size: 1.5em">'+element.nom_contenu+'</b><hr><p style="font-size: 1.2em">'+element.Description+'</p><hr><a href="profil/'+element.pseudo+'" target="_parent" style="font-size: 1.4em">'+element.pseudo+'</a><a href="contenu/'+element.id_Contenu+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a></div>');
-                        });
-
-                    }
-                });
-            //}
+            var lvl = style.substring(0,style.length-1).split("(")[2];
+            $.ajax({
+                type: "GET",
+                url: "api/contenu/zoom/"+lvl+"/"+latitude+'/'+longitude,
+                success: function(data){
+                    console.log(data);
+                    data.forEach(function (element) {
+                        var marker = new L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
+                                .bindPopup('<div class="contenuPopUp" id='+element.id_Contenu+'><b style="font-size: 1.5em">'+element.nom_contenu+'</b><hr><p style="font-size: 1.2em">'+element.Description+'</p><hr><a href="profil/'+element.pseudo+'" target="_parent" style="font-size: 1.4em">'+element.pseudo+'</a><a href="contenu/'+element.id_Contenu+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a></div>');
+                        mymap.addLayer(marker);
+                    });
+                }
+            });
         }
 
         function clickOnBalise(id){
@@ -233,7 +258,7 @@
         }
 
         function startMaps(latitude, longitude){
-            mymap.clearLayers();
+            console.log('markers:'+markers);
             $.ajax({
                 type: "GET",
                 url: "api/contenu/start/"+latitude+'/'+longitude,
@@ -249,7 +274,6 @@
                                         '<a href="contenu/'+element.id_Contenu+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a>' +
                                         '</div>');
                     });
-
                 }
             });
         }
