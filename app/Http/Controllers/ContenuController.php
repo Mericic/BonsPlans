@@ -13,7 +13,8 @@ use App\votes_critere;
 use Criteres;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\Console\Input\Input;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
 
 class ContenuController extends Controller
 {
@@ -91,28 +92,28 @@ class ContenuController extends Controller
         if(!Input::file('imageContenu')->isValid())
             return 'ton image est pas valide pd';
 
-
         $contenu = new Contenu();
-        $contenu->id_User = Auth::user()->id;
+        $contenu->id_User = Auth::id();
         $contenu->nom_contenu = $request->titre;
         $contenu->Description = $request->description;
         $contenu->Annonce = 0;
-        $contenu->Date = "15/09/2018";
+        $contenu->Date = $request->date;
         $contenu->CoordonneesX = "45.459529";
         $contenu->CoordonneesY = "6.697969";
-        $contenu->Adresse = "6.697969";
+        $contenu->Adresse = "Par là";
         $contenu->save();
         $id = $contenu->id_Contenu;
 
-
-        Input::file('imageContenu')->move('/img/contenu/'.$id, Input::file('imageContenu')->getClientOriginalName());
-        $path = Input::file('imageContenu')->getRealPath();
+        $path = 'img\contenu\\'.$id;
+        File::makeDirectory($path);
         $name = Input::file('imageContenu')->getClientOriginalName();
+        Input::file('imageContenu')->move(public_path().'/'.$path, $name);
+
 
         $image = new Image();
         $image->nom = $name;
-        $image->path = $path;
-        $image->id_proprietaire = Auth::user()->id;
+        $image->path = $path.'\\'.$name;
+        $image->id_proprietaire = Auth::id();
         $image->save();
         $id_image = $image->id;
 

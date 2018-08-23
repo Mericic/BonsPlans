@@ -36,14 +36,15 @@ class Contenu extends Model
         $this->criteres = Contenu::select(DB::raw('criteres.nom as nom_critere, criteres.id_critere, AVG(votes_criteres.value) as moyenne'))
             ->join('Contenu_Criteres', 'contenus.id_Contenu', '=', 'Contenu_Criteres.id_Contenu')
             ->join('criteres', 'Contenu_Criteres.id_Critere', '=', 'criteres.id_critere')
-            ->join('votes_criteres', function($join){
+            ->leftjoin('votes_criteres', function($join){
                 $join->on('contenus.id_contenu',  '=', 'votes_criteres.id_contenu');
                 $join->on('criteres.id_critere', '=', 'votes_criteres.id_critere');
             })
-            ->where('contenus.id_contenu', '=', '1')
+            ->where('contenus.id_contenu', '=', $this->id_contenu)
             ->groupby('criteres.id_critere')
             ->get();
 
+//dd($this->criteres);
         $this->images = Contenu::join('Contenu_Images', 'contenus.id_Contenu', '=', 'contenu_images.id_contenu')
             ->join('images', 'Contenu_Images.id_image', '=', 'images.id')
             ->where('contenus.id_contenu', '=', $this->id_contenu)

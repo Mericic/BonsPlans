@@ -19,6 +19,16 @@
         <div id="description" class="container-fluid">
             <div class="row">
                 <section id="criteres" class="col-sm">
+                    <h2  style="text-decoration: underline">Infos de Base</h2>
+                    <label for="">Date (facultatif)</label>
+                    <input type="text" value="" name="date" id="champ_date" size="12" maxlength="10">
+                    <div id="calendarMain"></div>
+
+
+                </section>
+            </div>
+            <div class="row">
+                <section id="criteres" class="col-sm">
                     <h2  style="text-decoration: underline">Criteres (qualité notée par la communauté)</h2>
                     <input type="hidden" value="" id="inputCriteres" name="inputCriteres"/>
                     <div class="row" id="listeCriteres">
@@ -55,7 +65,7 @@
 
             </div>
             <div clas="row">
-                <button type="submit">Enregistrer</button>
+                <button type="submit" class="btn btn-light">Enregistrer</button>
             </div>
 
         </div>
@@ -67,6 +77,15 @@
     @endif
 
     <script type='text/javascript' src='{{ asset('/js/contenu/creation.js') }}'></script>
+    <script type='text/javascript' src='{{ asset('/js/contenu/datePicker.js') }}'></script>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        window.loaded(
+                calInit("calendarMain", "", "champ_date", "jsCalendar", "day", "selectedDay")
+        )
+        //]]>
+    </script>
     <script>
         (function() {
 

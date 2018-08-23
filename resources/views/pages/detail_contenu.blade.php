@@ -4,8 +4,12 @@
 
 <body>
     <div id="image_haut">
+        @if(count($images))
         <img src="{{ asset($images[0]->path) }}" alt="{{ $images[0]->nom_image }}"/>
-        <h1>{{ $contenu->nom_contenu }}</h1>
+        @else
+            <img src="{{ asset('img/contenu/default/image.png') }}" alt="pas d'image"/>
+        @endif
+            <h1 style="background-color: #9BA2AB30">{{ $contenu->nom_contenu }}</h1>
     </div>
 
     <script>
@@ -39,7 +43,7 @@
                             <i id="moins_{{ $critere->id_critere }}" class="clicable fas fa-minus-circle" onclick="votemoins({{ $contenu->id_contenu }}, {{ $critere->id_critere }})" style="color: red; float: left;"> </i>
                         @endif
                         <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: {{ $critere->moyenne*100 }}%; background-color: red;"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar" role="progressbar" style="width: {{ $critere->moyenne*100 }}%; background-color: @if($critere->moyenne*100 >= 70) green @elseif($critere->moyenne*100 >= 40) orange @else red @endif;"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         @if(Auth::check()  && $critere->prenom == '')
                             <i id="plus_{{ $critere->id_critere }}" class="clicable fas fa-plus-circle"  onclick="voteplus({{ $contenu->id_contenu }}, {{ $critere->id_critere }})" style="color: green; float: right"> </i>
@@ -208,7 +212,7 @@
 </script>
     <script>
         function votemoins(id_contenu, id_critere){
-                    @if(Auth::check())
+            @if(Auth::check())
             var id_profil = {{ Auth::user()->id }};
             @endif
 

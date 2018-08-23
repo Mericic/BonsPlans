@@ -58,7 +58,6 @@ class HomeController extends Controller
             $commentaire_User = "";
         }
 
-
         return view('pages.detail_contenu')
             ->with(['contenu'=>$contenu->contenu[0], 'images'=>$contenu->images, 'categories'=>$contenu->categories, 'criteres'=>$contenu->criteres, 'commentaires'=>$contenu->commentaires, 'commentaire_User'=>$commentaire_User]);
     }
