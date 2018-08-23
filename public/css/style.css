@@ -204,6 +204,21 @@ nav{
     cursor: pointer;
 }
 
+.newDiv .textNoResult {
+    width: 60%;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 30px;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.541);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
 #cadre {
     position: absolute;
     bottom: 25px;

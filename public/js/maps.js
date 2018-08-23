@@ -1,48 +1,38 @@
-
-function testLocation() {
-    if(navigator.geolocation)
-    {
-        navigator.geolocation.getCurrentPosition(succes, error);
-    }
-    else
-    {
-        alert("Votre navigateur ne prend pas en charge la localisation... il serait temps de se mettre au gout du jour cher ami ^^");
-    }
-}
-
-function succes(position) {
-    var longitude = position.coords.longitude;
-    var latitude = position.coords.latitude;
-    var msg = "succes";
-    if (window.location.search.substring(1,8) == "contenu")
-        MapsOfContenu(latitude, longitude, msg);
-    else
-        getMapData()
-}
-function error() {
-    var longitude = 4.832487;
-    var latitude = 45.758399;
-    var msg = "error";
-    if (window.location.search.substring(1,8) == "contenu")
-        MapsOfContenu(latitude, longitude, msg);
-    else
-        getMapData()
+function clearList() {
+    var list = document.getElementById('row');
+    if (list.children) {
+        console.log('clear');
+        $('.newDiv').remove();
+    };
 }
 
 function getMapData() {
-    var data = getCookie('mapData');
+    let data = getCookie('mapData');
     data = JSON.parse(data);
-    for (i = 0; i < data.length; i++) {
-        var listChild = document.createElement('div');
-        listChild.className = "col-11 col-md-7 newDiv data-toggle='tooltip' data-placement='top' title='Vers la page du contenu !'";
-        listChild.style.backgroundImage = "url(" + data[i]['images']['path'] + ")";
-        listChild.innerHTML = '<div class="text" onclick=location.href="contenu/' + data[i]['id_Contenu'] + '"> <h1>' 
-                            + data[i]["nom_contenu"].toUpperCase()
-                            + '</h1> <i class="fas fa-map-marker-alt"></i> '
-                            + data[i]['Adresse'] + '</div>';
+    clearList();
+    if (data.length) {
+        for (i = 0; i < data.length; i++) {
+            var listChild = document.createElement('div');
+            listChild.className = "col-11 col-md-7 newDiv data-toggle='tooltip' data-placement='top' title='Vers la page du contenu !'";
+            listChild.style.backgroundImage = "url(" + data[i]['images']['path'] + ")";
+            listChild.innerHTML = '<div class="text" onclick=location.href="contenu/' + data[i]['id_Contenu'] + '"> <h1>' 
+                                + data[i]["nom_contenu"].toUpperCase()
+                                + '</h1> <i class="fas fa-map-marker-alt"></i> '
+                                + data[i]['Adresse'] + '</div>';
+            var list = document.getElementById('row');
+            list.appendChild(listChild);
+        }
+    }
+    else {
+        var noResultDiv = document.createElement('div');
+        noResultDiv.className = "col-11 col-md-7 newDiv data-toggle='tooltip' data-placement='top' title='Vers la page du contenu !'";
+        noResultDiv.style.backgroundColor = '#3d5c5c';
+        noResultDiv.style.color = '#b3cccc';
+        noResultDiv.innerHTML = '<div class="textNoResult" onclick=location.href="home"><h1>Il n\'y a rien a voir dans ce coin <i class="fas fa-grin-beam-sweat"></i>, <br> Clic ici pour retourner a ta position ! </h1></div>';
         var list = document.getElementById('row');
-        list.appendChild(listChild);
-    };
+        list.appendChild(noResultDiv);
+    }
+
 }
 
 function getCookie(cname) {
