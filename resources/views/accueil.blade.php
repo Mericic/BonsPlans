@@ -107,20 +107,17 @@
         function search() {
             if(document.getElementById('adresse').value != "" || document.getElementById('categoriesSelected').innerHTML != ""){
                 var adress = document.getElementById('adresse').value;
-                var categories = document.getElementById('categoriesSelected').innerHTML.split('<div id="categorieSelected">');
-                var nb = categories.length-1;
-                var categorie = '';
-                for(var i=1; i <= nb; i++){
-                    if(categories[i] != undefined){
-                        var tampon = categories[i].split(' <svg');
-                        categorie += tampon[0];
+                var categories = document.getElementById('categoriesSelected').children;
+                var val = '?adress='+adress+'&filtre=';
+                if(categories[i] != null)
+                    for(var i=0; i < categories.length; i++){
+                        val += categories[i].id+',';
                     }
-                }
-                console.log(categorie);
-                adress = adress.replace(' ', '%20');
+                console.log(val);
+                if(categories != '' || adress != '')
+                    document.getElementById('iframeCarte').src = '{{route('carte')}}'+val;
+                console.log('{{route('carte')}}'+val);
 
-                document.getElementById('iframeCarte').src = '{{route('carte')}}?'+adress;
-                console.log(document.location.href);
             }
         }
         var all = document.querySelector("#all");

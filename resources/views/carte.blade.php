@@ -36,7 +36,7 @@
     function getLocation() {
         console.log(window.location.search.substring(1,8));
         var verif = document.location.href.split('?');
-        console.log(verif[1]);
+        console.log('verif:'+verif[1]);
         if(verif[1] != null && window.location.search.substring(1,8) != "contenu"){
             if(verif[1].substr(0, 8) == "latitude"){
                 var position = verif[1].split('&');
@@ -146,7 +146,7 @@
 
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
             maxZoom: 18,
-            minZoom: 1,
+            minZoom: 10,
             id: 'mapbox.streets'
         }).addTo(mymap);
 
@@ -174,6 +174,7 @@
         }
 
         function onMapMove(e) {
+            mymap.clearLayers();
             var style = document.getElementsByClassName('leaflet-proxy leaflet-zoom-animated')[0].style.transform;
             var lvl = style.substring(0,style.length-1).split("(")[2];
 
@@ -199,6 +200,7 @@
         }
 
         function zoom(e){
+            mymap.clearLayers();
             var style = document.getElementsByClassName('leaflet-proxy leaflet-zoom-animated')[0].style.transform;
             //if(lvl !== undefined || lvl > style.substring(0,style.length-1).split("(")[2]){
                 var lvl = style.substring(0,style.length-1).split("(")[2];
@@ -231,6 +233,7 @@
         }
 
         function startMaps(latitude, longitude){
+            mymap.clearLayers();
             $.ajax({
                 type: "GET",
                 url: "api/contenu/start/"+latitude+'/'+longitude,
@@ -251,6 +254,44 @@
             });
         }
 
+        function filtreMaps(latitude, longitude){
+            function getCookie(cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for(var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+            var filtre = getCookie("filtre");
+            console.log(filtre);
+//            $.ajax({
+//                type: "GET",
+//                url: "api/contenu/filtre/"+latitude+'/'+longitude+'/'+filtre,
+//                success: function(data){
+//                    console.log(data);
+//                    document.cookie = "mapData=" + JSON.stringify(data);
+//                    data.forEach(function (element) {
+//                        L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
+//                                .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'">' +
+//                                        '<b style="font-size: 1.5em">'+element.nom_contenu+'</b>' +
+//                                        '<hr><p style="font-size: 1.2em">'+element.Description+'</p>' +
+//                                        '<hr><a onclick="callMethod("changePage/Profile/'+element.pseudo+')" href="profil/'+element.pseudo+'" target="_parent" style="font-size: 1.4em">'+element.pseudo+'</a>' +
+//                                        '<a href="contenu/'+element.id_Contenu+'" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a>' +
+//                                        '</div>');
+//                    });
+//
+//                }
+//            });
+        }
+
         mymap.on('click', onMapClick);
         mymap.on('zoom', zoom);
         mymap.on('moveend', onMapMove);
@@ -261,27 +302,52 @@
     }
 
     function search(adress) {
-
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var test = this.responseText.substr(17);
-                test = test.substr(0, test.length-1);
-                var myObj = JSON.parse(test);
-
-                var display_name = myObj[0].display_name.substr(myObj[0].display_name.length-6, myObj[0].display_name.length)
+        adress = adress.replace('adress=', '').split('&filtre=');
+        $.ajax({
+            type: "GET",
+            url: "https://nominatim.openstreetmap.org/search?q="+adress[0]+"&json_callback=_l_osmgeocoder_2&format=json",
+            success: function(data){
+                data = data.substr(17);
+                data = JSON.parse(data.substr(0, data.length-1));
+                var display_name = data[0].display_name.substr(data[0].display_name.length-6, data[0].display_name.length)
                 console.log(display_name);
-                if(display_name == "France")
-                    maps(myObj[0].lat, myObj[0].lon, "search");
+                if(display_name == "France"){
+                    var filtre = adress[1];
+                    console.log(filtre);
+                    document.cookie = "filtres="+filtre[1];
+                    maps(data[0].lat, data[0].lon, "search");
+                }
                 else {
                     maps(45.758399, 4.832487, "succes");
-                    alert('Erreur: Aucune correspondance en France');
+                    alert('Oups...\n\nDésolé l\'application n\'est disponible qu\'en France\nMerci pour votre intéret\n\nBisous ;)');
                 }
             }
-        };
-        adress = adress.replace(' ', '%20');
-        xmlhttp.open("GET", "https://nominatim.openstreetmap.org/search?q="+adress+"&json_callback=_l_osmgeocoder_2&format=json", true);
-        xmlhttp.send();
+        });
+
+
+//        var xmlhttp = new XMLHttpRequest();
+//        xmlhttp.onreadystatechange = function() {
+//            if (this.readyState == 4 && this.status == 200) {
+//                var test = this.responseText.substr(17);
+//                test = test.substr(0, test.length-1);
+//                var myObj = JSON.parse(test);
+//
+//                var display_name = myObj[0].display_name.substr(myObj[0].display_name.length-6, myObj[0].display_name.length)
+//                console.log(display_name);
+//                if(display_name == "France"){
+//                    var filtre = adress.split('filtre=');
+//                    document.cookie = "filtres="+filtre[1];
+//                    maps(myObj[0].lat, myObj[0].lon, "search");
+//                }
+//                else {
+//                    maps(45.758399, 4.832487, "succes");
+//                    alert('Erreur: Aucune correspondance en France');
+//                }
+//            }
+//        };
+//        adress = adress.replace(' ', '%20');
+//        xmlhttp.open("GET", "https://nominatim.openstreetmap.org/search?q="+adress+"&json_callback=_l_osmgeocoder_2&format=json", true);
+//        xmlhttp.send();
     }
 
 </script>
