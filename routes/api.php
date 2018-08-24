@@ -20,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/contenu/{id_contenu}', 'ContenuController@getContenu')->where('id_contenu', '[0-9]{1,6}')->name('getContenu');
 Route::get('/contenu/start/{latitude}/{longitude}', 'MapsController@getContenuStart')->name('getContenuStart');
 Route::get('/contenu/zoom/{lvl}/{latitude}/{longitude}', 'MapsController@getContenuZoom')->name('getContenuZoom');
+Route::get('/contenu/filtre/{latitude}/{longitude}/{filtre}', 'MapsController@getContenuFiltre')->name('getContenuFiltre');
+
+Route::get('/profil/{pseudo}', 'ProfilController@profil')->name('profil');
 
 Route::get('/adresses', 'MapsController@getAdressCsvByFilter')->name('getAdressCsvByFilter');
 
