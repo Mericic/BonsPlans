@@ -7,7 +7,7 @@ function clearList() {
         console.log('clear');
         $('.newDiv').remove();
         indexLength = 0;
-    };
+    }
 }
 
 function createListDivs(data) {

@@ -10,64 +10,60 @@
     <form method="POST" action="{{ route('addcontenuForm') }}"  enctype="multipart/form-data">
         @csrf
         <div id="image_haut">
-            <img src="{{ asset('/img/contenu/default/image.png') }}" alt="image par défaut" id="image_haut_defaut"/>
-            <input type="text" style="margin: auto" class="form-control col-4" value="Titre" name="titre" />
-            <input name="imageContenu" onchange="readURL(this);" type="file" class="form-control-file col-4" id="uploadImage" style="margin:auto; margin-top: 5px; font-size: 1em!important;"/>
-
+            <input type="text" style="margin: auto" class="form-control col-8 col-md-4" value="" name="titre" placeholder="Nom d'affichage"/>
+            <div id="upload" class="input-group col-12 col-md-4">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Ajouter une image&hellip;<input name="imageContenu" onchange="readURL(this);" type="file" class="form-control-file" id="uploadImage" style="display: none;" multiple>
+                    </span>
+                </label>
+                <input type="text" class="form-control" readonly>
+            </div>
         </div>
-
         <div id="description" class="container-fluid">
-            <div class="row">
-                <section id="criteres" class="col-sm">
-                    <h2  style="text-decoration: underline">Infos de Base</h2>
-                    <label for="">Date (facultatif)</label>
-                    <input type="text" value="" name="date" id="champ_date" size="12" maxlength="10">
+            <div class="row creationRow justify-content-center">
+                <div id="criteres" class="row creationRow justify-content-center input-group col-3 col-md-2">
+                    <input type="text" value="" class="form-control" name="date" id="champ_date" placeholder="Date (facultatif)" size="12" maxlength="10">
                     <div id="calendarMain"></div>
-
-
-                </section>
+                </div>
             </div>
-            <div class="row">
-                <section id="criteres" class="col-sm">
-                    <h2  style="text-decoration: underline">Criteres (qualité notée par la communauté)</h2>
-                    <input type="hidden" value="" id="inputCriteres" name="inputCriteres"/>
-                    <div class="row" id="listeCriteres">
+            <div class="row creationRow justify-content-center">
+                <div id="criteres" class="row creationRow justify-content-center input-group col-10 col-md-8">
+                    <div class="row creationRow justify-content-center col-12">
+                        <input type="hidden" value="" id="inputCriteres" name="inputCriteres"/>
+                        <div class="row creationRow justify-content-center" id="listeCriteres"></div>
                     </div>
-                    <div class="row">
-                        <input id="CritereInput" type="text" autocomplete="off" class="form-control">
-                        <div id="resultsCriteres" class="col" style="display: none;"></div>
-                        <button type="button" class="col btn btn-sm btn-outline-dark" id="btn_ajout_critere" onclick="ajoutCritere()">Ajouter un critère de vote</button>
+                    <div class="row creationRow justify-content-center col-12">                    
+                        <span class="input-group-text col-3" id="basic-addon2">Ajoutes des criteres</span>
+                        <input id="CritereInput" type="text" class="form-control col-8" placeholder="..." aria-label="..." aria-describedby="basic-addon2">
+                        <div id="resultsCriteres" style="display: none;"></div>
+                        <button type="button" class="btn btn-primary" id="btn_ajout_critere" onclick="ajoutCritere()"><i class="fas fa-plus"></i></button>
                     </div>
-
-                </section>
-                <section id="categories" class="col-sm">
-                    <p  style="text-decoration: underline">Catégories</p>
-                    <input type="hidden" value="" id="inputCategories" name="inputCategories"/>
-
-                    <div class="row" id="listeCategorie">
-                    </div>
-                    <div class="row">
-                        <input id="CategorieInput" type="text" autocomplete="off" class="form-control">
-                        <div id="resultsCategories" class="col" style="display: none;"></div>
-                        <button type="button" class="col btn btn-sm btn-outline-dark" id="btn_ajout_critere" onclick="ajoutCategorie()">Ajouter une catégorie</button>
-                    </div>
-
-                </section>
+                </div>
             </div>
-            <div class="row">
-                <section id="descriptiondetaillee" class="col-sm">
-                    <h2 class="col-sm-12"  style="text-decoration: underline">Description détaillée</h2>
-                    <div class="row">
-                        <textarea class="form-control" name="description">Saisissez une description détaillée</textarea>
+            <div class="row creationRow justify-content-center">
+                <div id="categories" class="row creationRow justify-content-center input-group col-10 col-md-8">
+                    <div class="row creationRow justify-content-center col-12">
+                        <input type="hidden" value="" id="inputCategories" name="inputCategories"/>
+                        <div class="row creationRow justify-content-center" id="listeCategorie"></div>
                     </div>
-
-                </section>
-
+                    <div class="row creationRow justify-content-center col-12">                    
+                        <span class="input-group-text col-3" id="basic-addon2">Ajoutes des catégories</span>
+                        <input id="CategorieInput" type="text" class="form-control col-8" placeholder="..." aria-label="..." aria-describedby="basic-addon2">
+                        <div id="resultsCategories" style="display: none;"></div>
+                        <button type="button" class="btn btn-primary" id="btn_ajout_categorie" onclick="ajoutCategorie()"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
             </div>
-            <div clas="row">
-                <button type="submit" class="btn btn-light">Enregistrer</button>
+            <div class="row creationRow justify-content-center">
+                <div id="descriptiondetaillee" class="row creationRow justify-content-center input-group col-10 col-md-8">
+                    <span class="input-group-text">Description du lieu / evenement</span>
+                    <textarea class="form-control col-10 col-md-8" aria-label="With textarea"  name="description"></textarea>
+                </div>
             </div>
-
+            <div class="row creationRow justify-content-center">
+                <button type="submit" class="btn btn-primary col-10 col-md-8">Enregistrer</button>
+            </div>
         </div>
     </form>
     @if ($errors->has('id_Commentaire'))
@@ -81,9 +77,7 @@
 
     <script type="text/javascript">
         //<![CDATA[
-        window.loaded(
-                calInit("calendarMain", "", "champ_date", "jsCalendar", "day", "selectedDay")
-        )
+        window.onload = calInit("calendarMain", "", "champ_date", "jsCalendar", "day", "selectedDay")
         //]]>
     </script>
     <script>

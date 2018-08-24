@@ -3,8 +3,6 @@ var data = new Array();
 
 function infiniteScroll() {
     if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100) {
-        console.log(data.length);
-        console.log(indexLength);
         getMapData();
     }
 }

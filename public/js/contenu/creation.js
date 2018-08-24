@@ -23,19 +23,19 @@ function ajoutCritere(){
 
     var div = document.createElement("div");
     div.setAttribute('class', 'critere col-6')
-    var p = document.createElement("p")
-    p.setAttribute('class', 'critere col-6 col-md-3')
-    p.innerHTML=critere
-    document.getElementById('listeCriteres').appendChild(p)
+    var btn = document.createElement("button")
+    btn.setAttribute('class', 'critere btn btn-secondary');
+    btn.setAttribute('type', 'button');
+    btn.addEventListener("click", function() {this.parentElement.removeChild(this)});
+    btn.innerHTML=critere;
+    document.getElementById('listeCriteres').appendChild(btn)
 
     //on ajoute au input hidden la valeur
     var hidden = $('#inputCriteres').val();
     hidden += critere+'|';
     $('#inputCriteres').val(hidden)
-    console.log(hidden)
 
     $('#CritereInput').val('')
-    console.log('fini')
 }
 
 function ajoutCategorie(){
@@ -59,10 +59,11 @@ function ajoutCategorie(){
 
     var div = document.createElement("div");
     div.setAttribute('class', 'categorie col-6')
-    var p = document.createElement("p")
-    p.setAttribute('class', 'categorie col-6 col-md-3')
-    p.innerHTML=categorie
-    document.getElementById('listeCategorie').appendChild(p)
+    var btn = document.createElement("button")
+    btn.setAttribute('class', 'btn btn-secondary categorie')
+    btn.addEventListener('click', function(){this.parentElement.removeChild(this)});
+    btn.innerHTML=categorie
+    document.getElementById('listeCategorie').appendChild(btn)
 
     //on ajoute au input hidden la valeur
     var hidden = $('#inputCategories').val();

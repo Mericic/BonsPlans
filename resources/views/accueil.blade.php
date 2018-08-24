@@ -158,8 +158,7 @@
         function change(position) {
             if (position == 'droite') {
                 try {
-                    if (indexLength <= data.length)
-                        getMapData();
+                    getMapData();
                 } finally {
                     toggleContainer.style.clipPath = 'inset(0 0 0 50%)';
                     toggleContainer.style.backgroundColor = 'black';
