@@ -3,15 +3,8 @@ var data = new Array();
 
 function infiniteScroll() {
     if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100) {
-        let list = document.getElementById('row');
-        var i = 0;
-        while (i++ < 15) {
-            let newDiv = document.createElement('div');
-            newDiv.className = 'col-11 col-md-7 newDiv';
-            newDiv.id = 'content' + i;
-            list.appendChild(newDiv);
-        }
-    }	    
+        getMapData();
+    }
 }
 
 

@@ -1,38 +1,54 @@
+var data;
+var indexLength = 0;
+
 function clearList() {
     var list = document.getElementById('row');
     if (list.children) {
         console.log('clear');
         $('.newDiv').remove();
-    };
+        indexLength = 0;
+    }
+}
+
+function createListDivs(data) {
+    var listChild = document.createElement('div');
+    listChild.className = "col-11 col-md-7 newDiv data-toggle='tooltip' data-placement='top' title='Vers la page du contenu !'";
+    listChild.style.backgroundImage = "url(" + data['images']['path'] + ")";
+    listChild.innerHTML = '<div class="text" onclick=location.href="contenu/' + data['id_Contenu'] + '"> <h1>' 
+                        + data["nom_contenu"].toUpperCase()
+                        + '</h1> <i class="fas fa-map-marker-alt"></i> '
+                        + data['Adresse'] + '</div>';
+    var list = document.getElementById('row');
+    list.appendChild(listChild);
 }
 
 function getMapData() {
-    let data = getCookie('mapData');
-    data = JSON.parse(data);
-    clearList();
-    if (data.length) {
-        for (i = 0; i < data.length; i++) {
-            var listChild = document.createElement('div');
-            listChild.className = "col-11 col-md-7 newDiv data-toggle='tooltip' data-placement='top' title='Vers la page du contenu !'";
-            listChild.style.backgroundImage = "url(" + data[i]['images']['path'] + ")";
-            listChild.innerHTML = '<div class="text" onclick=location.href="contenu/' + data[i]['id_Contenu'] + '"> <h1>' 
-                                + data[i]["nom_contenu"].toUpperCase()
-                                + '</h1> <i class="fas fa-map-marker-alt"></i> '
-                                + data[i]['Adresse'] + '</div>';
-            var list = document.getElementById('row');
-            list.appendChild(listChild);
+    var newData = JSON.parse(getCookie('mapData'));
+    if (!(_.isEqual(data, newData))) { //nouveau cookie
+        if (data.length) //si data pas vide alors efface anciennes divs
+            clearList();
+        data = newData; //recupere nouveau cookie
+    }
+    if (data.length && indexLength < data.length) { 
+        for (i = 0; i < 5 && indexLength < data.length; i++, indexLength++) {
+            createListDivs(data[indexLength]);
         }
+        if (indexLength == data.length)
+            return (createEndDiv());
     }
-    else {
-        var noResultDiv = document.createElement('div');
-        noResultDiv.className = "col-11 col-md-7 newDiv data-toggle='tooltip' data-placement='top' title='Vers la page du contenu !'";
-        noResultDiv.style.backgroundColor = '#3d5c5c';
-        noResultDiv.style.color = '#b3cccc';
-        noResultDiv.innerHTML = '<div class="textNoResult" onclick=location.href="home"><h1>Il n\'y a rien a voir dans ce coin <i class="fas fa-grin-beam-sweat"></i>, <br> Clic ici pour retourner a ta position ! </h1></div>';
-        var list = document.getElementById('row');
-        list.appendChild(noResultDiv);
-    }
+    else if (indexLength == data.length)
+        createEndDiv();
+}
 
+function createEndDiv() {
+    var noResultDiv = document.createElement('div');
+    noResultDiv.className = "col-11 col-md-7 newDiv data-toggle='tooltip' data-placement='top' title='Vers la page du contenu !'";
+    noResultDiv.style.backgroundColor = '#3d5c5c';
+    noResultDiv.style.color = '#b3cccc';
+    noResultDiv.innerHTML = '<div class="textNoResult"><h1>Il n\'y a rien de plus a voir dans ce coin <i class="fas fa-grin-beam-sweat"></i></h1></div>';
+    var list = document.getElementById('row');
+    list.appendChild(noResultDiv);
+    indexLength = indexLength + 1;
 }
 
 function getCookie(cname) {

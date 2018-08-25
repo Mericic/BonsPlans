@@ -40,4 +40,6 @@ Route::post('/contenu/creation/addImage', 'ImageController@addImage')->name('add
 Route::get('/criteres/recherche/{value}', 'CritereController@rechercheCritere')->name('rechercheCritere');
 Route::get('/categories/recherche/{value}', 'CategorieController@rechercheCategorie')->name('rechercheCategorie');
 
+Route::get('/user/{pseudo}', 'UserController@getInfo');
+Route::get('/contenu/mobile/{id_Contenu}', 'ContenuController@getContenuApi');
 
