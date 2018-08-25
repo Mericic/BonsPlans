@@ -20,7 +20,8 @@ class ProfilController extends Controller
         $img = User::getProfilePic($user->id);
 
         $com = Commentaire::getCommentaireByUser($user->id);
-        
-        echo str_replace('\\', '', json_encode($img.$com));
+
+        echo '{"profil":['.json_encode($img).','.json_encode($user).','.json_encode($com).']}';
+
     }
 }

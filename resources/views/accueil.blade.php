@@ -21,14 +21,18 @@
     <div style="position: absolute; width: 100%; height: 100%; transition-duration: 0.7s;" class="UP" id="all">
         <div id="main-container">
             <iframe style="position: absolute; z-index: 1; top: 0px; overflow: hidden; border: hidden;" id="iframeCarte" title="carte" src="{{route('carte')}}" width="100%"></iframe>
-            <div id="elementCategorie">
+            <div id="Categories">
                 @foreach($Categories as $Categorie)
-                    <p id="{{  $Categorie->id_Categorie }}" class="categorie">{{  $Categorie->nom }}</p>
+                    <p id="{{  $Categorie->nom }}" class="Categorie">{{  $Categorie->nom }}</p>
                 @endforeach
             </div>
             <p>Selected: <strong id="address-value">none</strong></p>
             <div id="cadre">
-                <div id="categoriesSelected" style="display: block; width: 100%;"></div>
+                <div id="categoriesSelected" style="display: block; width: 100%;">
+                    <div id="filtre1" class="categorieSelected"></div>
+                    <div id="filtre2" class="categorieSelected"></div>
+                    <div id="filtre3" class="categorieSelected"></div>
+                </div>
                 <div id="inputsCadre">
                     <div style="font-size: 1.2em;" class="inputCadre">
                         <input id="inputCategorie" type="text" placeholder="Catégorie (max 3)" name="categorie">
@@ -58,84 +62,89 @@
     </div>
     <script src="{{ asset('js/lodash.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/maps.js') }}"></script>
+    <script type="text/javascript">
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+            }
+            }
+            return "";
+        }
+    </script>
     <script>
         $(document).ready(function(){
+            document.cookie = "Url=";
             $("#inputCategorie").focusin(function(){
-                $("#elementCategorie").css("display", "block");
+                $("#Categories").css("display", "block");
             });
-            $(".categorie").click(function(){
-                console.log(this.innerHTML);
-                document.getElementById('categoriesSelected').innerHTML += '<div id="' + this.innerHTML + '" class="categorieSelected">'+this.innerHTML+' <i onclick="deleteCategorieSelected(this);" style="color: red; cursor: pointer; float: right; margin-top: 3px;" class="fas fa-times" ></i></div>';
-
-                var nb = document.getElementById('categoriesSelected').innerHTML.split('<div');
-                nb = nb.length-1;
-                console.log('nb:'+nb);
-                if (nb == 3){
-                    document.getElementById('inputCategorie').disabled = true;
+            $(".Categorie").click(function(){
+                for(var i=1; i <= 3; i++){
+                    if(document.getElementById('filtre'+i).innerText == ''){
+                        document.getElementById(this.innerText).style.display = 'none';
+                        document.getElementById('filtre'+i).innerHTML = this.innerText+'<i style="color: red;  cursor: pointer;  float: right;  margin-top: 3px;" onclick="deleteCategorieSelected(this);" class="fas fa-times"></i>';
+                        document.getElementById('filtre'+i).style.display = 'inline-block';
+                        var val = getCookie('Url')+'&filtre'+i+'='+this.innerText;
+                        document.cookie = "Url="+val;
+                        break;
+                    }
                 }
             });
             $("#inputCategorie").blur(function(e){
                 setTimeout(function () {
                     if (e.type == 'blur') {
-                        $("#elementCategorie").css("display", "none");
+                        $("#Categories").css("display", "none");
                     }
-                }, 100);
-
+                }, 150);
             });
             $("#inputCategorie").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                $("#elementCategorie p").filter(function() {
+                $("#Categories p").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
-            $("#adresse").click(function(){
-                adresseFiltre();
-            });
         });
         function deleteCategorieSelected(elem){
-            $(elem).parent().remove();
+            document.getElementById($(elem).parent()[0].innerText).style.display = 'block';
+            document.getElementById($(elem).parent()[0].id).style.display = 'none';
+            document.getElementById($(elem).parent()[0].id).innerHTML = '';
+            var content = []
+            for(var i=1; i <= 3; i++){
+                if(document.getElementById('filtre'+i).innerHTML != '')
+                    content[i] = '&filtre'+i+'='+document.getElementById('filtre'+i).innerText;
+                else
+                    content[i] = '';
+            }
+            document.cookie = "Url="+content[1]+content[2]+content[3];
             document.getElementById('inputCategorie').disabled = false;
         }
     </script>
-
     <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        });
-
         document.getElementById('iframeCarte').height = window.innerHeight;
-
         function search() {
-            if(document.getElementById('adresse').value != "" || document.getElementById('categoriesSelected').innerHTML != ""){
-                var adress = document.getElementById('adresse').value;
-                var categories = document.getElementById('categoriesSelected').children;
-                var val = '?adress='+adress+'&filtre=';
-                if(categories[i] != null)
-                    for(var i=0; i < categories.length; i++){
-                        val += categories[i].id+',';
-                    }
-                console.log(val);
-                if(categories != '' || adress != '')
-                    document.getElementById('iframeCarte').src = '{{route('carte')}}'+val;
-                console.log('{{route('carte')}}'+val);
-
-            }
+            if(document.getElementById('adresse').value == '')
+                document.cookie = "LocalisationSearch=";
+            document.getElementById('iframeCarte').src = '{{route('carte')}}/search';
         }
         var all = document.querySelector("#all");
         var UP = document.querySelector("#vers-carte");
         var DOWN = document.querySelector("#vers-list");
-
         UP.addEventListener("click", function () {
             all.className = 'UP';
         });
         DOWN.addEventListener("click", function () {
             all.className = 'DOWN';
         });
-
         var toggle = document.getElementById('switchContainer');
         var toggleContainer = document.getElementById('toggle-switchContainer');
         var toggleNumber = 'vers-carte';
-
         document.getElementById('vers-list').addEventListener('click', function() {
             if(toggleNumber != 'vers-list'){
                 toggleNumber = 'vers-list';
@@ -143,7 +152,6 @@
                 change('droite');
             }
         })
-
         document.getElementById('vers-carte').addEventListener('click', function() {
             if(toggleNumber != 'vers-carte'){
                 toggleNumber = 'vers-carte';
@@ -168,16 +176,6 @@
                 toggleContainer.style.backgroundColor = 'black';
             }
         };
-
-        function adresseFiltre(){
-            $.ajax({
-                type: "POST",
-                url: "https://places-dsn.algolia.net/1/places/query?x-algolia-agent=Algolia%20for%20vanilla%20JavaScript%20(lite)%203.27.1%3BAlgolia%20Places%201.9.0&x-algolia-application-id=&x-algolia-api-key=",
-                success: function(data){
-                    console.log(data);
-                }
-            });
-        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/places.js@1.9.0"></script>
     <script>
@@ -185,22 +183,19 @@
             var placesAutocomplete = places({
                 container: document.querySelector('#adresse')
             });
-
             var $address = document.querySelector('#address-value');
             document.getElementById("algolia-places-listbox-0").style.top = '-320px';
             document.getElementById("algolia-places-listbox-0").style.color = 'black';
             placesAutocomplete.on('change', function(e) {
                 $address.textContent = e.suggestion.value;
+                document.cookie = "LocalisationSearch="+$address.textContent+', '+e.suggestion.latlng.lat+', '+e.suggestion.latlng.lng;
             });
-
             placesAutocomplete.on('clear', function() {
                 $address.textContent = 'none';
+                document.cookie = "LocalisationSearch=";
             });
-
         })();
     </script>
-
-
     <script type="text/javascript" src="{{ asset('js/infiniteScroll.js') }}"></script>
 
 @endsection

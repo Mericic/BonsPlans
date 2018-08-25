@@ -23,6 +23,10 @@ class MapsController extends Controller
         return $Contenus;
     }
 
+    public function getContenuFiltre($latitude, $longitude, $filtre){
+        return Contenu::getContenusFiltre($latitude, $longitude, $filtre);
+    }
+
     public function getContenuZoom($lvl, $latitude, $longitude){
         switch ($lvl) {
             case "512":

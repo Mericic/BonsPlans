@@ -17,6 +17,14 @@ Route::get('/carte', function () {
     return view('carte');
 })->name('carte');
 
+Route::get('/carte/search', function () {
+    return view('carte');
+})->name('carte_search');
+
+Route::get('/carte/contenu', function () {
+    return view('carte');
+})->name('carte_contenu');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('accueil');

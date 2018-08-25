@@ -10,7 +10,7 @@ class Commentaire extends Model
 
     public static function getCommentaireByUser($id_user) {
         $commentaires = Commentaire::
-        join('Contenus', 'commentaires.id_contenu', '=', 'contenus.id_contenu')
+        join('contenus', 'commentaires.id_contenu', '=', 'contenus.id_contenu')
         ->leftjoin('reponses', 'commentaires.id_commentaire', '=', 'reponses.id_commentaire')
         ->where('commentaires.id_user', '=', $id_user)
         ->get();

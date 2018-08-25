@@ -110,6 +110,49 @@ class Contenu extends Model
             ->get();
     }
 
+    public static function getContenusFiltre($latitude, $longitude, $filtre){
+        $zoom = 0.012;
+        $filtre = explode('&', $filtre);
+        if(count($filtre) == 2)
+            $contenu = Contenu::select('contenus.*', 'users.pseudo')
+                ->join('contenu_categories', 'contenus.id_Contenu', '=', 'contenu_categories.id_Contenu')
+                ->join('categories', 'contenu_categories.id_Categorie', '=', 'categories.id_Categorie')
+                ->join('users', 'contenus.id_User', '=', 'users.id')
+                ->where('contenus.CoordonneesX', '<=', $latitude + $zoom)
+                ->where('contenus.CoordonneesY', '<=', $longitude + $zoom)
+                ->where('contenus.CoordonneesX', '>=', $latitude - $zoom)
+                ->where('contenus.CoordonneesY', '>=', $longitude - $zoom)
+                ->where('categories.nom', '=', substr($filtre[1], 8))
+                ->get();
+        if(count($filtre) == 3)
+            $contenu = Contenu::select('contenus.*', 'users.pseudo')
+                ->join('contenu_categories', 'contenus.id_Contenu', '=', 'contenu_categories.id_Contenu')
+                ->join('categories', 'contenu_categories.id_Categorie', '=', 'categories.id_Categorie')
+                ->join('users', 'contenus.id_User', '=', 'users.id')
+                ->where('contenus.CoordonneesX', '<=', $latitude + $zoom)
+                ->where('contenus.CoordonneesY', '<=', $longitude + $zoom)
+                ->where('contenus.CoordonneesX', '>=', $latitude - $zoom)
+                ->where('contenus.CoordonneesY', '>=', $longitude - $zoom)
+                ->where('categories.nom', '=', substr($filtre[0], 8))
+                ->where('categories.nom', '=', substr($filtre[1], 8))
+                ->toSql();
+        if(count($filtre) == 4)
+            $contenu = Contenu::select('contenus.*', 'users.pseudo')
+                ->join('contenu_categories', 'contenus.id_Contenu', '=', 'contenu_categories.id_Contenu')
+                ->join('categories', 'contenu_categories.id_Categorie', '=', 'categories.id_Categorie')
+                ->join('users', 'contenus.id_User', '=', 'users.id')
+                ->where('contenus.CoordonneesX', '<=', $latitude + $zoom)
+                ->where('contenus.CoordonneesY', '<=', $longitude + $zoom)
+                ->where('contenus.CoordonneesX', '>=', $latitude - $zoom)
+                ->where('contenus.CoordonneesY', '>=', $longitude - $zoom)
+                ->where('categories.nom', '=', substr($filtre[0], 8))
+                ->where('categories.nom', '=', substr($filtre[1], 8))
+                ->where('categories.nom', '=', substr($filtre[2], 8))
+                ->get();
+
+        return $contenu;
+    }
+
     public static function getContentImages($id_contenu) {
         $images = Contenu::join('Contenu_Images', 'contenus.id_Contenu', '=', 'contenu_images.id_contenu')
             ->join('images', 'Contenu_Images.id_image', '=', 'images.id')
@@ -118,6 +161,5 @@ class Contenu extends Model
             ->get();
         return ($images);
     }
-
 
 }
