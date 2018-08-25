@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Categorie;
+use App\Critere;
 use App\Contenu;
 use App\User;
 use App\Commentaire;
@@ -68,8 +69,9 @@ class HomeController extends Controller
     public function addContenu(Request $request){
         if(!Auth::check())
             return redirect('/login');
-        $categorie = Categorie::getAllCategorie();        
-        return view('pages.creationContenu')->with(['Categories'=>$categorie]);
+        $categorie = Categorie::getAllCategorie();     
+        $critere = Critere::all();
+        return view('pages.creationContenu')->with(['Categories'=>$categorie, 'Criteres'=>$critere]);
     }
 
 }

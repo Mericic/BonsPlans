@@ -1,4 +1,4 @@
-.categorieSelected {
+.categorieSelected, .critereSelected {
     background-color: black;
     color: white;
     font-size: 1.3em;
@@ -9,7 +9,7 @@
     display: inline-block;
 }
 
-#elementCategorie {
+#elementCategorie, #elementCritere {
     display: none;
     left: 10px; 
     bottom: 110px; 
@@ -46,7 +46,7 @@
     margin: auto;
 }
 
-#elemCateCreation {
+#elemCateCreation, #elemCritCreation {
     display: none;
     position: absolute;
     background-color: white;
@@ -57,6 +57,6 @@
     box-shadow: 1px 1px 1px grey;
 }
 
-#elemCateCreation > p {
+#elemCateCreation > p, #elemCritCreation > p {
     border-radius: 4px;
 }

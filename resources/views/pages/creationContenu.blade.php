@@ -35,8 +35,13 @@
                     <input required type="hidden" value="" id="inputCriteres" name="inputCriteres"/>
                     <div class="row creationRow justify-content-center col-12" id="listeCriteres"></div>
                 </div>
-                <div class="row creationRow justify-content-center col-12">                    
-                    <span class="input-group-text col-2" id="basic-addon2"><i class="fas fa-hashtag" style="margin-right: 3%"></i>Criteres</span>
+                <div class="row creationRow justify-content-center col-12">   
+                    <div id="elemCritCreation" class="col-10 col-md-8">
+                        @foreach($Criteres as $Critere)
+                            <p id="{{  $Critere->id_Critere }}" class="critere">{{  $Critere->nom }}</p>
+                        @endforeach
+                    </div>                 
+                    <span class="input-group-text col-2" id="basic-addon2"><i class="fas fa-hashtag" style="margin-right: 3%"></i></i>Criteres</span>
                     <input id="CritereInput" type="text" class="form-control col-8" placeholder="(3 au maximum)" aria-label="(3 au maximum)" aria-describedby="basic-addon2">
                     <div id="resultsCriteres" style="display: none;"></div>
                     <button type="button" class="btn btn-primary" id="btn_ajout_critere" onclick="ajoutCritere()"><i class="fas fa-plus"></i></button>
@@ -138,6 +143,41 @@
         $("#inputCategorie").on("keyup", function() {
             var value = $(this).val().toLowerCase();
             $("#elemCateCreation p").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        $("#adresse").click(function(){
+            adresseFiltre();
+        });
+        $("#inputCritere").focusin(function(){
+            $("#elemCritCreation").css("display", "block");
+        });
+        $(".critere").click(function(){
+            console.log(this.innerHTML);
+            var listeCritere = document.getElementById('listeCritere');
+            if (listeCritere.children.length < 3) {
+                var btn = document.createElement("button")
+                btn.setAttribute('class', 'btn btn-secondary critere')
+                btn.addEventListener('click', function(){this.parentElement.removeChild(this)});
+                btn.innerHTML = this.innerHTML;
+                document.getElementById('listeCritere').appendChild(btn);
+            }
+            var nb = document.getElementById('resultsCriteres').children.length;
+            if (nb == 3){
+                document.getElementById('inputCritere').disabled = true;
+            }
+        });
+        $("#inputCritere").blur(function(e){
+            setTimeout(function () {
+                if (e.type == 'blur') {
+                    $("#elemCritCreation").css("display", "none");
+                }
+            }, 100);
+
+        });
+        $("#inputCritere").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#elemCritCreation p").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
