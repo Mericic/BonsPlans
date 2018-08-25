@@ -60,16 +60,16 @@ class HomeController extends Controller
         }else{
             $commentaire_User = "";
         }
-
         return view('pages.detail_contenu')
-            ->with(['contenu'=>$contenu->contenu[0], 'images'=>$contenu->images, 'categories'=>$contenu->categories, 'criteres'=>$contenu->criteres, 'commentaires'=>$contenu->commentaires, 'commentaire_User'=>$commentaire_User]);
+            ->with(['contenu'=>$contenu->contenu, 'images'=>$contenu->images, 'categories'=>$contenu->categories, 'criteres'=>$contenu->criteres, 'commentaires'=>$contenu->commentaires, 'commentaire_User'=>$commentaire_User]);
     }
 
 
     public function addContenu(Request $request){
         if(!Auth::check())
             return redirect('/login');
-        return view('pages.creationContenu');
+        $categorie = Categorie::getAllCategorie();        
+        return view('pages.creationContenu')->with(['Categories'=>$categorie]);
     }
 
 }

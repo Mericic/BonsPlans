@@ -1,0 +1,62 @@
+.categorieSelected {
+    background-color: black;
+    color: white;
+    font-size: 1.3em;
+    margin: 5px;
+    width: 30%;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+#elementCategorie {
+    display: none;
+    left: 10px; 
+    bottom: 110px; 
+    z-index: 5; 
+    position: absolute; 
+    background-color: white; 
+    width: 180px; 
+    overflow: auto; 
+    max-height: 300px;
+}
+
+.categorie :hover{
+    background-color: rgba(128,128,128,0.6);
+}
+
+#btn_ajout_critere {
+    background-color: #007bff;
+    color: white;
+    font-weight: 500;
+}
+
+#contentName {
+    position: absolute !important;
+    top: 40% !important;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+}
+
+#upload {
+    position: absolute;
+    bottom: 5%;
+    margin: auto;
+}
+
+#elemCateCreation {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border-radius: 4px;
+    z-index: 201;
+    margin-left: 7%;
+    margin-top: 5%;
+    box-shadow: 1px 1px 1px grey;
+}
+
+#elemCateCreation > p {
+    border-radius: 4px;
+}

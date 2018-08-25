@@ -87,10 +87,10 @@ class ContenuController extends Controller
             return redirect('/login');
 
         if (!Input::hasFile('imageContenu'))
-            return 'erreur image';
+            return 'Pas d\'image';
 
         if(!Input::file('imageContenu')->isValid())
-            return 'ton image est pas valide pd';
+            return 'Image invalide';
 
         $contenu = new Contenu();
         $contenu->id_User = Auth::id();

@@ -43,7 +43,7 @@
     <div class="collapse navbar-collapse right float-right" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ route('addcontenu') }}"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un événement</button></a>
+                <a class="nav-link" href="{{ route('addcontenu') }}"><button type="button" class="btn btn-dark"><i class="fas fa-plus"></i> &nbsp; Ajouter un lieu / événement</button></a>
             </li>
         </ul>
         <ul class="navbar-nav" id="auth" style="background-color: rgba(128, 128, 128, 0.7)">

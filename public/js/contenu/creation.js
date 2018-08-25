@@ -20,15 +20,15 @@ function ajoutCritere(){
         }
     }
 
-
-    var div = document.createElement("div");
-    div.setAttribute('class', 'critere col-6')
-    var btn = document.createElement("button")
-    btn.setAttribute('class', 'critere btn btn-secondary');
-    btn.setAttribute('type', 'button');
-    btn.addEventListener("click", function() {this.parentElement.removeChild(this)});
-    btn.innerHTML=critere;
-    document.getElementById('listeCriteres').appendChild(btn)
+    var listeCriteres = document.getElementById('listeCriteres');
+    if (listeCriteres.children.length < 3) {
+        var btn = document.createElement("button");
+        btn.setAttribute('class', 'critere btn btn-secondary');
+        btn.setAttribute('type', 'button');
+        btn.addEventListener("click", function() {this.parentElement.removeChild(this)});
+        btn.innerHTML=critere;
+        listeCriteres.appendChild(btn)
+    }
 
     //on ajoute au input hidden la valeur
     var hidden = $('#inputCriteres').val();
@@ -57,13 +57,14 @@ function ajoutCategorie(){
     }
 
 
-    var div = document.createElement("div");
-    div.setAttribute('class', 'categorie col-6')
-    var btn = document.createElement("button")
-    btn.setAttribute('class', 'btn btn-secondary categorie')
-    btn.addEventListener('click', function(){this.parentElement.removeChild(this)});
-    btn.innerHTML=categorie
-    document.getElementById('listeCategorie').appendChild(btn)
+    var listeCategorie = document.getElementById('listeCategorie');
+    if (listeCategorie.children.length < 3) {
+        var btn = document.createElement("button")
+        btn.setAttribute('class', 'btn btn-secondary categorie')
+        btn.addEventListener('click', function(){this.parentElement.removeChild(this)});
+        btn.innerHTML=categorie;
+        document.getElementById('listeCategorie').appendChild(btn);
+    }
 
     //on ajoute au input hidden la valeur
     var hidden = $('#inputCategories').val();
@@ -75,18 +76,16 @@ function ajoutCategorie(){
     console.log('fini')
 }
 
-
-
-
 function readURL(input) {
-    console.log('coucou')
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
+        let reader = new FileReader();
+        var data = new FormData();
+        data = input.files[0]
         reader.onload = function(e) {
-            $('#image_haut_defaut').attr('src', e.target.result);
+            var img = $('#image_haut_defaut');
+            img.attr('src', e.target.result);
+            img.css('display', 'block');
         }
-
         reader.readAsDataURL(input.files[0]);
     }
 }

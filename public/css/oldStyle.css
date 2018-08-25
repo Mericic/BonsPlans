@@ -242,25 +242,20 @@ nav{
 }
 
 #chercher {
-    background-color: #007bff;
+    background-color: rgb(33, 101, 189);
     color: white;
     padding: 10px 20px 10px 20px;
     margin: 0;
     height: 100%;
 }
 
-#remove {
-    position: absolute;
-    z-index: 200;
-    bottom: 5%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    display: none;
-}
-
 .clicable{
     cursor: pointer;
+}
+
+#image_haut img{
+    width : 100%;
+    position: absolute;
 }
 
 #image_haut{
@@ -270,16 +265,9 @@ nav{
     top: 0;
     z-index: 0;
     position: absolute;
-    background-color: rgb(36, 36, 36);
-    background-image: radial-gradient(rgb(78, 78, 78), rgb(46, 46, 46), rgb(36, 36, 36));
 }
 
-#image_haut_defaut {
-    width: 100%;
-    height: auto;
-}
-
-#image_haut h2{
+#image_haut h1{
     z-index: 1;
     color: white;
     text-align: center;
@@ -291,32 +279,41 @@ nav{
     text-align: center;
     position: relative;
     top: 30%;
-    font-size: 1.5em;
+    font-size: 3em;
 }
 
-.calendarWrap {
-    width: auto !important;
+#image_haut a{
+    z-index: 1;
+    position: relative;
+    display: block;
+    top: 80%;
+    text-align: center;
+
 }
 
+#image_haut button{
+    color: white;
+    background-color: black;
 
-.critere:hover, .categorie:hover {
-    background-color: red;
+    border-radius: 50%;
+
+    font-size: 2em;
 }
 
 #description{
-    margin-top: 1%;
-    margin-bottom: 5%;
+    margin-top: 20px;
     position: absolute;
     top: 80%;
     width:100%;
 }
 
-.critere, .categorie{
-    padding: 5px 5px;
-    margin: 1%;
-
+#criteres{
+    /*float: left;*/
 }
 
+.critere, .categorie{
+    padding: 5px 5px;
+}
 .critere p, .div_progress{
     width: 50%;
     padding: 0;
@@ -331,20 +328,6 @@ nav{
 .critere p{
     padding-right: 15px;
     float: left
-}
-
-#sendBtn {
-    background-color: #007bff;    
-    color: white;
-    border-color: #007bff;
-    transition: color .15s ease-in-out,
-        background-color .15s ease-in-out,
-        border-color .15s ease-in-out,
-        box-shadow .15s ease-in-out;
-}
-
-#sendBtn:hover {
-    background-color: #0067d4;    
 }
 
 .div_progress{
@@ -413,10 +396,6 @@ nav{
     margin-top: 73.333px;
 }
 
-.creationRow {
-    background-color: rgba(255, 253, 253, 0);
-}
-
 #profile-wrapper > div {
     background-color: rgb(243, 248, 253);
     grid-column: 1 / 5;
@@ -428,10 +407,6 @@ nav{
 
 #user-info-container {
     grid-column: 2 / 8;
-}
-
-.userBtn {
-    margin-bottom: 0px;
 }
 
 #user-info-container > div {
@@ -495,8 +470,6 @@ nav{
 #participation {
     box-shadow: 1px 1px 1px grey;
     display: block;
-    overflow: scroll;
-    max-height: 50vh;
 }
 
 .participation-info {
@@ -511,7 +484,6 @@ nav{
 
 .participation-div {
     position: relative;
-    height: 10rem !important;
 }
 
 .participation-title {
@@ -537,11 +509,13 @@ nav{
 
 #creation {
     box-shadow: 1px 1px 1px grey;
-    max-height: 50vh;
+    grid-row: 6 / 7;
 }
 
 #criteres, #categories, #descriptiondetaillee, #commentaires{
     margin: 2px;
+    background-color: rgb(243, 248, 253);
+    box-shadow: 1px 1px 1px grey;
     padding-bottom: 15px;
 }
 .commentaire, .reponse{

@@ -104,7 +104,7 @@
                     L.Routing.control({
                         waypoints: [
                             L.latLng(latitude, longitude),
-                            L.latLng(data.contenu[0].coordonneesX, data.contenu[0].coordonneesY)
+                            L.latLng(data.contenu.coordonneesX, data.contenu.coordonneesY)
                         ],
                         language: 'fr',
                         routeWhileDragging: true,
@@ -112,7 +112,7 @@
                     }).addTo(mymap);
                     L.marker([latitude, longitude]).addTo(mymap)
                             .bindPopup('<h1 style="text-align:center; width: 100%;">Vous</h1>');
-                    L.marker([data.contenu[0].coordonneesX, data.contenu[0].coordonneesY]).addTo(mymap)
+                    L.marker([data.contenu.coordonneesX, data.contenu.coordonneesY]).addTo(mymap)
                             .bindPopup('<h1 style="text-align:center; width: 100%;">Destination</h1>');
 
                 }

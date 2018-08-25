@@ -2,9 +2,7 @@ var data;
 var indexLength = 0;
 
 function clearList() {
-    var list = document.getElementById('row');
-    if (list.children) {
-        console.log('clear');
+    if (document.getElementById('row').children) {
         $('.newDiv').remove();
         indexLength = 0;
     }
@@ -24,10 +22,9 @@ function createListDivs(data) {
 
 function getMapData() {
     var newData = JSON.parse(getCookie('mapData'));
-    if (!(_.isEqual(data, newData))) { //nouveau cookie
-        if (data.length) //si data pas vide alors efface anciennes divs
-            clearList();
-        data = newData; //recupere nouveau cookie
+    if (!(_.isEqual(data, newData))) {
+        clearList();
+        data = newData;
     }
     if (data.length && indexLength < data.length) { 
         for (i = 0; i < 5 && indexLength < data.length; i++, indexLength++) {
