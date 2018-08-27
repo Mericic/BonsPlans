@@ -1,5 +1,13 @@
+var mapData;
 var data;
 var indexLength = 0;
+        
+function passData(data) {
+    mapData = data;
+    console.log('passData');
+    console.log(data);
+    console.log(mapData);
+}
 
 function clearList() {
     if (document.getElementById('row').children) {
@@ -8,20 +16,22 @@ function clearList() {
     }
 }
 
-function createListDivs(data) {
+function createListDivs(mapData) {
     var listChild = document.createElement('div');
     listChild.className = "col-11 col-md-7 newDiv data-toggle='tooltip' data-placement='top' title='Vers la page du contenu !'";
-    listChild.style.backgroundImage = "url(" + data['images']['path'] + ")";
-    listChild.innerHTML = '<div class="text" onclick=location.href="contenu/' + data['id_Contenu'] + '"> <h1>' 
-                        + data["nom_contenu"].toUpperCase()
+    listChild.style.backgroundImage = "url(" + mapData['images']['path'] + ")";
+    listChild.innerHTML = '<div class="text" onclick=location.href="contenu/' + mapData['id_Contenu'] + '"> <h1>' 
+                        + mapData["nom_contenu"].toUpperCase()
                         + '</h1> <i class="fas fa-map-marker-alt"></i> '
-                        + data['Adresse'] + '</div>';
+                        + mapData['Adresse'] + '</div>';
     var list = document.getElementById('row');
     list.appendChild(listChild);
 }
 
 function getMapData() {
-    var newData = JSON.parse(getCookie('mapData'));
+    console.log('getMapData');
+    console.log(mapData);
+    var newData = mapData;
     if (!(_.isEqual(data, newData))) {
         clearList();
         data = newData;

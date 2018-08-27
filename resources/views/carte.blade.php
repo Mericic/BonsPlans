@@ -100,7 +100,8 @@
                 type: "GET",
                 url: "api/contenu/"+adress.get("contenu"),
                 success: function(data){
-                    document.cookie = "mapData=" + JSON.stringify(data);
+                    //document.cookie = "mapData=" + JSON.stringify(data);
+                    parent.passData(data);                    
                     L.Routing.control({
                         waypoints: [
                             L.latLng(latitude, longitude),
@@ -125,7 +126,7 @@
     }
 
     function maps(latitude, longitude) {
-
+        console.log('maps');
         var hauteur = window.innerHeight+'px';
         var largeur = window.innerWidth+'px';
         document.getElementById('mapid').style.width = largeur;
@@ -143,6 +144,8 @@
             L.marker([latitude, longitude], {icon: redIcon}).addTo(mymap)
                     .bindPopup('<div style="font-size: : 1.5em;">Centre de la recherche</div>');
             filtreMaps();
+            startMaps(latitude, longitude);
+
         }
         else if(getCookie('LocationSearch') != ''){
             var split = getCookie('LocationSearch').split(',');
@@ -157,6 +160,7 @@
             L.marker([latitude, longitude], {icon: redIcon}).addTo(mymap)
                     .bindPopup('<div style="font-size: : 1.5em;">Centre de la recherche</div>');
             filtreMaps();
+            startMaps(latitude, longitude);
         }
         else
             startMaps(latitude, longitude);
@@ -217,6 +221,7 @@
         }
 
         function onMapMove(e) {
+            console.log('onMapMove');
             action = action + 1;
             if(action == 10){
                 refreshMap();
@@ -237,7 +242,8 @@
                     type: "GET",
                     url: "../api/contenu/zoom/" + lvl + "/" + latitude + '/' + longitude,
                     success: function (data) {
-                        document.cookie = "mapData=" + JSON.stringify(data);
+                        //document.cookie = "mapData=" + JSON.stringify(data);
+                        parent.passData(data);
                         data.forEach(function (element) {
                             var marker = new L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
                                     .bindPopup('<div class="contenuPopUp" id="' + element.id_Contenu + '"></div>')
@@ -256,6 +262,7 @@
         }
 
         function zoom(e){
+            console.log('zoom');
             action = action + 1;
             if(action == 10){
                 refreshMap();
@@ -270,6 +277,8 @@
                     type: "GET",
                     url: "../api/contenu/zoom/" + lvl + "/" + latitude + '/' + longitude,
                     success: function (data) {
+                        //document.cookie = "mapData=" + JSON.stringify(data);
+                        parent.passData(data);                        
                         data.forEach(function (element) {
                             var marker = new L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
                                     .bindPopup('<div class="contenuPopUp" id=' + element.id_Contenu + '><b style="font-size: 1.5em">' + element.nom_contenu + '</b><hr><p style="font-size: 1.2em">' + element.Description + '</p><hr><a href="profil/' + element.pseudo + '" target="_parent" style="font-size: 1.4em">' + element.pseudo + '</a><a href="contenu/' + element.id_Contenu + '" target="_parent"><i style="float: right; font-size: 2em;" class="fas fa-long-arrow-alt-right"></i></a></div>');
@@ -293,11 +302,14 @@
         }
 
         function startMaps(latitude, longitude){
+            console.log('startMaps');
             $.ajax({
                 type: "GET",
                 url: "../api/contenu/start/"+latitude+'/'+longitude,
                 success: function(data){
-                    document.cookie = "mapData=" + JSON.stringify(data);
+                    //document.cookie = "mapData=" + JSON.stringify(data);
+                    parent.passData(data);
+                    console.log(data);
                     data.forEach(function (element) {
                         L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
                                 .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'">' +
@@ -343,7 +355,7 @@
                     type: "GET",
                     url: "../api/contenu/filtre/"+latitude+'/'+longitude+'/'+filtre,
                     success: function(data){
-                        document.cookie = "mapData=" + JSON.stringify(data);
+                        parent.passData(data);
                         data.forEach(function (element) {
                             L.marker([element.CoordonneesX, element.CoordonneesY]).addTo(mymap)
                                     .bindPopup('<div class="contenuPopUp" id="'+element.id_Contenu+'">' +
