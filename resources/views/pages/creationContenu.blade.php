@@ -33,7 +33,7 @@
             <div id="criteres" class="row creationRow justify-content-center input-group col-10 col-md-8">
                 <div class="row creationRow justify-content-center col-12">
                     <input required type="hidden" value="" id="inputCriteres" name="inputCriteres"/>
-                    <div class="row creationRow justify-content-center col-12" id="listeCriteres"></div>
+                    <div class="row creationRow justify-content-center col-12" id="listeCritere"></div>
                 </div>
                 <div class="row creationRow justify-content-center col-12">   
                     <div id="elemCritCreation" class="col-10 col-md-8">
@@ -42,9 +42,9 @@
                         @endforeach
                     </div>                 
                     <span class="input-group-text col-2" id="basic-addon2"><i class="fas fa-hashtag" style="margin-right: 3%"></i></i>Criteres</span>
-                    <input id="CritereInput" type="text" class="form-control col-8" placeholder="(3 au maximum)" aria-label="(3 au maximum)" aria-describedby="basic-addon2">
+                    <input id="inputCritere" type="text" class="form-control col-9" placeholder="(3 au maximum)" aria-label="(3 au maximum)" aria-describedby="basic-addon2">
                     <div id="resultsCriteres" style="display: none;"></div>
-                    <button type="button" class="btn btn-primary" id="btn_ajout_critere" onclick="ajoutCritere()"><i class="fas fa-plus"></i></button>
+                   <!-- <button type="button" class="btn btn-primary" id="btn_ajout_critere" onclick="ajoutCritere()"><i class="fas fa-plus"></i></button> -->
                 </div>
             </div>
         </div>
@@ -61,16 +61,16 @@
                         @endforeach
                     </div>                 
                     <span class="input-group-text col-2" id="basic-addon2"><i class="fas fa-list-ul" style="margin-right: 3%;"></i>Catégories</span>
-                    <input id="inputCategorie" type="text" class="form-control col-8" placeholder="(3 au maximum)" aria-label="(3 au maximum)" aria-describedby="basic-addon2">
+                    <input id="inputCategorie" type="text" class="form-control col-9" placeholder="(3 au maximum)" aria-label="(3 au maximum)" aria-describedby="basic-addon2">
                     <div id="resultsCategories" style="display: none;"></div>
-                    <button type="button" class="btn btn-primary" id="btn_ajout_categorie" onclick="ajoutCategorie()"><i class="fas fa-plus"></i></button>
+                     <!-- <button type="button" class="btn btn-primary" id="btn_ajout_categorie" onclick="ajoutCategorie()"><i class="fas fa-plus"></i></button> -->
                 </div>
             </div>
         </div>
         <div class="row creationRow justify-content-center">
-            <div id="descriptiondetaillee" class="row creationRow justify-content-center input-group col-12 col-md-7">
+            <div id="descriptiondetaillee" class="row creationRow justify-content-center input-group col-10 col-md-7">
                 <span class="input-group-text col-2 col-md-2"><i class="fas fa-align-left" style="margin-right: 4%;"></i>Description</span>
-                <textarea id="descriptionArea" class="form-control col-10 col-md-10" aria-label="With textarea" maxlength="200" name="description"></textarea>
+                <textarea required id="descriptionArea" class="form-control col-10 col-md-10" aria-label="With textarea" maxlength="200" name="description"></textarea>
                 <span class="input-group-text col-md-2" id="charactersRemaining">200 / 200</span>
             </div>
         </div>
@@ -173,7 +173,6 @@
                     $("#elemCritCreation").css("display", "none");
                 }
             }, 100);
-
         });
         $("#inputCritere").on("keyup", function() {
             var value = $(this).val().toLowerCase();

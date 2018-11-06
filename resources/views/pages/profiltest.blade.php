@@ -37,8 +37,8 @@
                             </div>
                         @endforeach
                     </div>
-                    <div id="creation" class="mySlides" style="margin: auto">
-                        <div class="row justify-content-center">
+                    <div id="creation" class="mySlides" style="margin: auto" id="testtest">
+                        <div class="row justify-content-center" id="creationWrapper">
                             @foreach($contenus as $contenu)
                                 <a class="participation-div col-11 col-sm-5" href="{{ route('contenu', $contenu->id_Contenu) }}">
                                         <p class="participation-title">{{ $contenu->nom_contenu }}</p>
